@@ -1,0 +1,204 @@
+---- Minecraft Crash Report ----
+// Surprise! Haha. Well, this is awkward.
+
+Time: 2025-06-16 18:46:09
+Description: Bootstrap
+
+java.lang.IllegalAccessError: class net.minecraft.registry.SimpleRegistry tried to access method 'void net.minecraft.registry.entry.RegistryEntry$Reference.setRegistryKey(net.minecraft.registry.RegistryKey)' (net.minecraft.registry.SimpleRegistry and net.minecraft.registry.entry.RegistryEntry$Reference are in unnamed module of loader 'knot' @3c87521)
+	at knot//net.minecraft.registry.SimpleRegistry.add(SimpleRegistry.java:120)
+	at knot//net.minecraft.registry.SimpleDefaultedRegistry.add(SimpleDefaultedRegistry.java:23)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:126)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:122)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:118)
+	at knot//net.minecraft.fluid.Fluids.register(Fluids.java:14)
+	at knot//net.minecraft.fluid.Fluids.<clinit>(Fluids.java:7)
+	at knot//net.minecraft.block.AbstractBlock$AbstractBlockState.<init>(AbstractBlock.java:849)
+	at knot//net.minecraft.block.BlockState.<init>(BlockState.java:17)
+	at knot//net.minecraft.state.StateManager.method_28484(StateManager.java:64)
+	at java.base/java.util.stream.Streams$StreamBuilderImpl.forEachRemaining(Streams.java:411)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at knot//net.minecraft.state.StateManager.<init>(StateManager.java:59)
+	at knot//net.minecraft.state.StateManager$Builder.build(StateManager.java:160)
+	at knot//net.minecraft.block.Block.<init>(Block.java:240)
+	at knot//net.minecraft.block.AirBlock.<init>(AirBlock.java:20)
+	at knot//net.minecraft.block.Blocks.register(Blocks.java:1309)
+	at knot//net.minecraft.block.Blocks.register(Blocks.java:1322)
+	at knot//net.minecraft.block.Blocks.<clinit>(Blocks.java:161)
+	at knot//net.minecraft.block.FireBlock.registerDefaultFlammables(FireBlock.java:331)
+	at knot//net.minecraft.Bootstrap.initialize(Bootstrap.java:55)
+	at knot//net.minecraft.client.main.Main.main(Main.java:139)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: main
+Stacktrace:
+	at knot//net.minecraft.registry.SimpleRegistry.add(SimpleRegistry.java:120)
+	at knot//net.minecraft.registry.SimpleDefaultedRegistry.add(SimpleDefaultedRegistry.java:23)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:126)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:122)
+	at knot//net.minecraft.registry.Registry.register(Registry.java:118)
+	at knot//net.minecraft.fluid.Fluids.register(Fluids.java:14)
+	at knot//net.minecraft.fluid.Fluids.<clinit>(Fluids.java:7)
+	at knot//net.minecraft.block.AbstractBlock$AbstractBlockState.<init>(AbstractBlock.java:849)
+	at knot//net.minecraft.block.BlockState.<init>(BlockState.java:17)
+	at knot//net.minecraft.state.StateManager.method_28484(StateManager.java:64)
+	at java.base/java.util.stream.Streams$StreamBuilderImpl.forEachRemaining(Streams.java:411)
+	at java.base/java.util.stream.ReferencePipeline$Head.forEach(ReferencePipeline.java:762)
+	at knot//net.minecraft.state.StateManager.<init>(StateManager.java:59)
+	at knot//net.minecraft.state.StateManager$Builder.build(StateManager.java:160)
+	at knot//net.minecraft.block.Block.<init>(Block.java:240)
+	at knot//net.minecraft.block.AirBlock.<init>(AirBlock.java:20)
+	at knot//net.minecraft.block.Blocks.register(Blocks.java:1309)
+	at knot//net.minecraft.block.Blocks.register(Blocks.java:1322)
+	at knot//net.minecraft.block.Blocks.<clinit>(Blocks.java:161)
+	at knot//net.minecraft.block.FireBlock.registerDefaultFlammables(FireBlock.java:331)
+	at knot//net.minecraft.Bootstrap.initialize(Bootstrap.java:55)
+
+-- Initialization --
+Details:
+	Modules: 
+		ADVAPI32.dll:Erweiterte Windows 32 Base-API:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		COMCTL32.dll:Bibliothek für Steuerelemente:6.10 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTBASE.dll:Base cryptographic API DLL:10.0.26100.4061 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTSP.dll:Cryptographic Service Provider API:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		DBGHELP.DLL:Windows Image Helper:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		DNSAPI.dll:DNS-Client-API-DLL:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		GDI32.dll:GDI Client DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		IMM32.DLL:Multi-User Windows IMM32 API Client DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		IPHLPAPI.DLL:IP-Hilfs-API:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		KERNEL32.DLL:Client-DLL für Windows NT-Basis-API:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		KERNELBASE.dll:Client-DLL für Windows NT-Basis-API:10.0.26100.4343 (WinBuild.160101.0800):Microsoft Corporation
+		MpOav.dll:IOfficeAntiVirus Module:4.18.25050.5 (bcf51ab773be21957c5713cae9cb3adf2fd75bf5):Microsoft Corporation
+		NSI.dll:NSI User-mode interface DLL:10.0.26100.4061 (WinBuild.160101.0800):Microsoft Corporation
+		OLEAUT32.dll:OLEAUT32.DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		Ole32.dll:Microsoft OLE für Windows:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		POWRPROF.dll:Power Profile Helper DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		PSAPI.DLL:Process Status Helper:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		Pdh.dll:Windows Unterstützungs-DLL für Leistungsdaten:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		RPCRT4.dll:Remoteprozeduraufruf-Laufzeitumgebung:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		SHCORE.dll:SHCORE:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		SHELL32.dll:Allgemeine Windows-Shell-DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		UMPDC.dll:User Mode Power Dependency Coordinator:10.0.26100.1301 (WinBuild.160101.0800):Microsoft Corporation
+		USER32.dll:Client-DLL für Windows USER-API (mehrere Benutzer):10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		USERENV.dll:Userenv:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		VCRUNTIME140.dll:Microsoft® C Runtime Library:14.29.30153.0 built by: cloudtest:Microsoft Corporation
+		VERSION.dll:Version Checking and File Installation Libraries:10.0.26100.1150 (WinBuild.160101.0800):Microsoft Corporation
+		WINHTTP.dll:Windows HTTP-Dienste:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		WINMM.dll:MCI API-DLL:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		WS2_32.dll:Windows Socket 2.0-32-Bit-DLL:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		amsi.dll:Anti-Malware Scan Interface:10.0.26100.1150 (WinBuild.160101.0800):Microsoft Corporation
+		bcrypt.dll:Bibliothek mit kryptografischen Primitiven von Windows:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		bcryptPrimitives.dll:Windows Cryptographic Primitives Library:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		clbcatq.dll:COM+ Configuration Catalog:2001.12.10941.16384 (WinBuild.160101.0800):Microsoft Corporation
+		combase.dll:Microsoft COM für Windows:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		dbgcore.DLL:Windows Core Debugging Helpers:10.0.26100.3624 (WinBuild.160101.0800):Microsoft Corporation
+		fwpuclnt.dll:FWP/IPsec Benutzermodus-API:10.0.26100.3915 (WinBuild.160101.0800):Microsoft Corporation
+		gdi32full.dll:GDI Client DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		instrument.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		java.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		java.exe:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		jimage.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		jli.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		jna13048122107509266949.dll:JNA native library:7.0.2:Java(TM) Native Access (JNA)
+		jsvml.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		jvm.dll:OpenJDK 64-Bit server VM:21.0.7.0:JetBrains s.r.o.
+		kernel.appcore.dll:AppModel API Host:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		management.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		management_ext.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		msvcp140.dll:Microsoft® C Runtime Library:14.29.30153.0 built by: cloudtest:Microsoft Corporation
+		msvcp_win.dll:Microsoft® C Runtime Library:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		msvcrt.dll:Windows NT CRT DLL:7.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		mswsock.dll:Microsoft Windows Sockets 2.0-Dienstanbieter:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		napinsp.dll:E-Mail-Namenshimanbieter:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		net.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		nio.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		nlansp_c.dll:NLA Namespace Service Provider DLL:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		ntdll.dll:DLL für NT-Layer:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		perfos.dll:DLL für Windows-Systemleistungsobjekte:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		pfclient.dll:SysMain Client:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		profapi.dll:User Profile Basic API:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		rasadhlp.dll:Remote Access AutoDial Helper:10.0.26100.1150 (WinBuild.160101.0800):Microsoft Corporation
+		rsaenh.dll:Microsoft Enhanced Cryptographic Provider:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		sechost.dll:Host for SCM/SDDL/LSA Lookup APIs:10.0.26100.1 (WinBuild.160101.0800):Microsoft Corporation
+		shlwapi.dll:Shell Light-weight-Hilfsprogrammbibliothek:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		ucrtbase.dll:Microsoft® C Runtime Library:10.0.26100.4202 (WinBuild.160101.0800):Microsoft Corporation
+		vcruntime140_1.dll:Microsoft® C Runtime Library:14.29.30153.0 built by: cloudtest:Microsoft Corporation
+		verify.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+		win32u.dll:Win32u:10.0.26100.4343 (WinBuild.160101.0800):Microsoft Corporation
+		windows.storage.dll:Microsoft WinRT Storage-API:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		winrnr.dll:LDAP RnR Provider DLL:10.0.26100.1882 (WinBuild.160101.0800):Microsoft Corporation
+		wintypes.dll:Windows-Basistypen-DLL:10.0.26100.2308 (WinBuild.160101.0800):Microsoft Corporation
+		wshbth.dll:Windows Sockets Helper DLL:10.0.26100.4061 (WinBuild.160101.0800):Microsoft Corporation
+		zip.dll:OpenJDK Platform binary:21.0.7.0:JetBrains s.r.o.
+Stacktrace:
+	at knot//net.minecraft.client.main.Main.main(Main.java:139)
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480)
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74)
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23)
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.21.5
+	Minecraft Version ID: 1.21.5
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 21.0.7, JetBrains s.r.o.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), JetBrains s.r.o.
+	Memory: 360539296 bytes (343 MiB) / 612368384 bytes (584 MiB) up to 17163091968 bytes (16368 MiB)
+	CPUs: 24
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 9 5900X 12-Core Processor            
+	Identifier: AuthenticAMD Family 25 Model 33 Stepping 2
+	Microarchitecture: Zen 3
+	Frequency (GHz): 3.69
+	Number of physical packages: 1
+	Number of physical CPUs: 12
+	Number of logical CPUs: 24
+	Graphics card #0 name: NVIDIA GeForce RTX 5070 Ti
+	Graphics card #0 vendor: NVIDIA
+	Graphics card #0 VRAM (MiB): 16303.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 32.0.15.7652
+	Memory slot #0 capacity (MiB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MiB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Memory slot #2 capacity (MiB): 16384.00
+	Memory slot #2 clockSpeed (GHz): 3.20
+	Memory slot #2 type: DDR4
+	Memory slot #3 capacity (MiB): 16384.00
+	Memory slot #3 clockSpeed (GHz): 3.20
+	Memory slot #3 type: DDR4
+	Virtual memory max (MiB): 75187.27
+	Virtual memory used (MiB): 42202.63
+	Swap memory total (MiB): 9728.00
+	Swap memory used (MiB): 630.22
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 233925.81, total: 1906134.75
+	Space in storage for workdir (MiB): available: 233925.81, total: 1906134.75
+	JVM Flags: 4 total; -XX:+AllowEnhancedClassRedefinition -XX:HotswapAgent=core -XX:+AllowEnhancedClassRedefinition -XX:HotswapAgent=core
+	Launched Version: Fabric
+	Backend library: LWJGL version 3.3.3-snapshot
+	Backend API: Unknown
+	Window size: <not initialized>
+	GFLW Platform: <error>
+	Render Extensions: ERR
+	GL debug messages: <no renderer available>
+	Is Modded: Definitely; Client brand changed to 'fabric'
+	Universe: 404
+	Type: Client (map_client.txt)
+	Locale: de_DE
+	System encoding: Cp1252
+	File encoding: UTF-8
+	CPU: 24x AMD Ryzen 9 5900X 12-Core Processor 
