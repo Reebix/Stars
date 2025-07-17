@@ -6,6 +6,7 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.LoreComponent
 import net.minecraft.component.type.NbtComponent
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.player.PlayerEntity
@@ -105,6 +106,26 @@ class Stars : ModInitializer {
                         DataComponentTypes.ITEM_NAME,
                         Text.literal("Perfect Helmet - Tier XIII").formatted(Formatting.GOLD).append(getStarText(10))
                     )
+                    helmet.set(
+                        DataComponentTypes.LORE, LoreComponent.DEFAULT.with(
+                            Text.literal("Defense: ").styled { it.withItalic(false) }
+                                .formatted(Formatting.GRAY).append(Text.literal("+350").formatted(Formatting.GREEN))
+                        ).with(
+                            Text.literal(" [").styled { it.withItalic(false) }.formatted(Formatting.DARK_GRAY)
+                                .append(Text.literal("❈").formatted(Formatting.GRAY))
+                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
+                                .append(Text.literal(" [").formatted(Formatting.DARK_GRAY))
+                                .append(Text.literal("❈").formatted(Formatting.GRAY))
+                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
+                                .append(Text.literal(" [").formatted(Formatting.DARK_GRAY))
+                                .append(Text.literal("❈").formatted(Formatting.GRAY))
+                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
+                        ).with(Text.literal(""))
+                            .with(Text.literal("This item can be reforged!").styled { it.withItalic(false) }
+                                .formatted(Formatting.DARK_GRAY))
+                            .with(Text.literal("LEGENDARY HELMET").styled { it.withItalic(false) }
+                                .formatted(Formatting.GOLD, Formatting.BOLD)))
+
                     helmet.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
                         comp.apply({ currentNbt ->
                             currentNbt.putString("id", "PERFECT_HELMET_13")

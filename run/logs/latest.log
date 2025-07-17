@@ -1,6 +1,6 @@
-[19:38:29] [main/WARN] (FabricLoader/Knot) Class path entries reference missing files: C:\coding\java\Stars\build\classes\java\main - the game may not load properly!
-[19:38:29] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
-[19:38:29] [main/INFO] (FabricLoader) Loading 45 mods:
+[20:33:25] [main/WARN] (FabricLoader/Knot) Class path entries reference missing files: C:\coding\java\Stars\build\classes\java\main - the game may not load properly!
+[20:33:25] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
+[20:33:26] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.127.0+1.21.5
 	- fabric-api-base 0.4.62+73a52b4b49
 	- fabric-api-lookup-api-v1 1.6.96+86c3a9f149
@@ -46,47 +46,29 @@
 	- minecraft 1.21.5
 	- mixinextras 0.4.1
 	- stars 1.0-SNAPSHOT
-[19:38:29] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[19:38:30] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[19:38:30] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[19:38:30] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[19:38:36] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
-[19:38:37] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[19:38:38] [main/INFO] (Minecraft) Loaded 1373 recipes
-[19:38:38] [main/INFO] (Minecraft) Loaded 1484 advancements
-[19:38:38] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.538 ms
-[19:38:38] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
-[19:38:38] [Server thread/INFO] (Minecraft) Loading properties
-[19:38:38] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[19:38:38] [Server thread/INFO] (Minecraft) Generating keypair
-[19:38:38] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
-[19:38:39] [Server thread/INFO] (Minecraft) Using default channel type
-[19:38:39] [Server thread/INFO] (Minecraft) Preparing level "world"
-[19:38:39] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[19:38:40] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[19:38:40] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[19:38:40] [Server thread/INFO] (Minecraft) Time elapsed: 646 ms
-[19:38:40] [Server thread/INFO] (Minecraft) Done (1.005s)! For help, type "help"
-[19:38:49] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[19:38:50] [Server thread/INFO] (Minecraft) Rebbix[/127.0.0.1:52156] logged in with entity id 2 at (-792.4860800742318, 115.0, 1751.270630336425)
-[19:38:50] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[19:39:24] [Server thread/INFO] (Minecraft) Rebbix lost connection: Disconnected
-[19:39:24] [Server thread/INFO] (Minecraft) Rebbix left the game
-[19:39:34] [User Authenticator #2/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[19:39:34] [Server thread/INFO] (Minecraft) Rebbix[/87.78.178.173:59991] logged in with entity id 267 at (-790.6056681020442, 115.0, 1753.3247518261455)
-[19:39:34] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[19:39:37] [Server thread/INFO] (Minecraft) [Rebbix: Whitelist is now turned on]
-[19:39:43] [Server thread/INFO] (Minecraft) [Rebbix: Made NicLev a server operator]
-[19:39:48] [Server thread/INFO] (Minecraft) [Rebbix: Added Rebbix to the whitelist]
-[19:39:50] [Server thread/INFO] (Minecraft) [Rebbix: Added NicLev to the whitelist]
-[19:40:02] [Server thread/INFO] (Minecraft) [Rebbix: Stopping the server]
-[19:40:02] [Server thread/INFO] (Minecraft) Stopping server
-[19:40:02] [Server thread/INFO] (Minecraft) Saving players
-[19:40:02] [Server thread/INFO] (Minecraft) Saving worlds
-[19:40:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[19:40:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
-[19:40:02] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[19:40:02] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
-[19:40:02] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[19:40:02] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[19:40:02] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[20:33:26] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[20:33:26] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[20:33:26] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[20:33:27] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[20:33:33] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
+[20:33:33] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[20:33:35] [main/INFO] (Minecraft) Loaded 1373 recipes
+[20:33:35] [main/INFO] (Minecraft) Loaded 1484 advancements
+[20:33:35] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.566 ms
+[20:33:35] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
+[20:33:35] [Server thread/INFO] (Minecraft) Loading properties
+[20:33:35] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[20:33:35] [Server thread/INFO] (Minecraft) Generating keypair
+[20:33:35] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
+[20:33:35] [Server thread/INFO] (Minecraft) Using default channel type
+[20:33:35] [Server thread/INFO] (Minecraft) Preparing level "world"
+[20:33:35] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[20:33:36] [Worker-Main-17/INFO] (Minecraft) Preparing spawn area: 0%
+[20:33:36] [Worker-Main-17/INFO] (Minecraft) Preparing spawn area: 0%
+[20:33:36] [Server thread/INFO] (Minecraft) Time elapsed: 660 ms
+[20:33:36] [Server thread/INFO] (Minecraft) Done (0.972s)! For help, type "help"
+[20:33:48] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
+[20:33:48] [Server thread/INFO] (Minecraft) Rebbix[/127.0.0.1:61494] logged in with entity id 64 at (-791.0358926571986, 108.0, 1756.6900774057472)
+[20:33:48] [Server thread/INFO] (Minecraft) Rebbix joined the game
+[20:36:41] [Server thread/INFO] (Minecraft) Rebbix lost connection: Disconnected
+[20:36:41] [Server thread/INFO] (Minecraft) Rebbix left the game
