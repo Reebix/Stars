@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "uuid": "0ed8b527-d3cf-48a4-b9fc-c35c9efee447",
+    "name": "Rebbix"
+  },
+  {
+    "uuid": "db4bd5ca-b959-4d00-9300-b745c405ad85",
+    "name": "NicLev"
+  }
+]

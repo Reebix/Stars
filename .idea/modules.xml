@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SacksMod.client.iml" filepath="$PROJECT_DIR$/.idea/modules/SacksMod.client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SacksMod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/SacksMod.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SacksMod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/SacksMod.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stars.client.iml" filepath="$PROJECT_DIR$/.idea/modules/Stars.client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stars.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Stars.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Stars.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Stars.test.iml" />
     </modules>
   </component>
 </project>

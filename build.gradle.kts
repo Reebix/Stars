@@ -27,7 +27,7 @@ loom {
     splitEnvironmentSourceSets()
 
     mods {
-        register("sacksmod") {
+        register("stars") {
             sourceSet("main")
             sourceSet("client")
         }
