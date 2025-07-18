@@ -66,6 +66,17 @@ enum class SGemstoneType(
             SRarity.MYTHIC to SStat(SStatType.INTELLIGENCE, 12),
         )
     ),
+    PERFECT_SAPPHIRE(
+        SRarity.LEGENDARY, "✎",
+        Formatting.BLUE, hashMapOf(
+            SRarity.COMMON to SStat(SStatType.INTELLIGENCE, 12),
+            SRarity.UNCOMMON to SStat(SStatType.INTELLIGENCE, 14),
+            SRarity.RARE to SStat(SStatType.INTELLIGENCE, 17),
+            SRarity.EPIC to SStat(SStatType.INTELLIGENCE, 20),
+            SRarity.LEGENDARY to SStat(SStatType.INTELLIGENCE, 24),
+            SRarity.MYTHIC to SStat(SStatType.INTELLIGENCE, 30),
+        )
+    ),
     FINE_AMETHYST(
         SRarity.RARE, "❈",
         Formatting.GREEN, hashMapOf(

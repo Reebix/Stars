@@ -50,6 +50,7 @@ class Stars : ModInitializer {
     }
 
     fun getStarText(amount: Int): Text {
+        if (amount == 0) return Text.empty()
         val remainder = amount % 5
 //        println(Integer.parseInt((amount / 5).toString()))
 
@@ -247,8 +248,14 @@ class Stars : ModInitializer {
                     hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 350))
                     hype.baseStats.add(SStat(SStatType.FEROCITY, 30))
                     hype.reforge = SReforge.HEROIC
-                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.SAPPHIRE))
-                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.COMBAT))
+                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.SAPPHIRE).apply {
+                        gemstone = SGemstoneType.PERFECT_SAPPHIRE
+                        unlocked = true
+                    })
+                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.SAPPHIRE).apply {
+                        gemstone = SGemstoneType.PERFECT_SAPPHIRE
+                        unlocked = true
+                    })
 
                     hype.updateItemStack()
                     inv.setStack(9 * 5 + 4, hype.itemStack)
@@ -259,7 +266,7 @@ class Stars : ModInitializer {
 
                     1
                 }.then(
-                    CommandManager.argument("amount", IntegerArgumentType.integer(1, colors.size * 5))
+                    CommandManager.argument("amount", IntegerArgumentType.integer(0, colors.size * 5))
                         .executes { context: CommandContext<ServerCommandSource?>? ->
 
                             if (context!!.source?.player == null) {

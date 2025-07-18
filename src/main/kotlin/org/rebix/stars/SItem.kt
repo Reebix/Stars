@@ -134,9 +134,16 @@ class SItem(var id: String, var itemType: Item) {
         }
 
         // Apply gemstone bonuses
+        val gemstoneStats: MutableList<SStat> = mutableListOf()
         gemstoneSlots.forEach { slot ->
             if (slot.gemstone != null) {
                 val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
+                val existingGemstoneStat = gemstoneStats.find { it.type == gemstoneStat.type }
+                if (existingGemstoneStat != null) {
+                    existingGemstoneStat.value += gemstoneStat.value
+                } else {
+                    gemstoneStats.add(SStat(gemstoneStat.type, gemstoneStat.value))
+                }
                 val existingStat = stats.find { it.type == gemstoneStat.type }
                 if (existingStat != null) {
                     existingStat.value += gemstoneStat.value
@@ -188,9 +195,10 @@ class SItem(var id: String, var itemType: Item) {
             if (gemstoneSlots.isNotEmpty()) {
                 gemstoneSlots.forEach { slot ->
                     if (slot.gemstone != null && slot.gemstone!!.getStatByRarity(effectiveRarity).type == stat.type) {
-                        val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
-                        gemstoneText = Text.literal(" (${statText(gemstoneStat).string})")
-                            .formatted(Formatting.LIGHT_PURPLE)
+                        slot.gemstone!!.getStatByRarity(effectiveRarity)
+                        gemstoneText =
+                            Text.literal(" (${statText(gemstoneStats.find { it.type == stat.type }!!).string})")
+                                .formatted(Formatting.LIGHT_PURPLE)
                     }
                 }
             }
