@@ -30,6 +30,6 @@ enum class SRarity(val formatting: Formatting) {
     fun isAdmin(): Boolean = this == ADMIN
 
     fun getText(): MutableText {
-        return Text.literal(name).formatted(Formatting.BOLD).formatted(formatting)
+        return Text.literal(name.replace("_", " ")).formatted(Formatting.BOLD).formatted(formatting)
     }
 }

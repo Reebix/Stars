@@ -288,11 +288,12 @@ class Stars : ModInitializer {
                     hype.rarity = SRarity.LEGENDARY
                     hype.type = SItemType.SWORD
                     hype.reforgeable = true
-                    hype.baseStats.add(SStat(SStatType.GEAR_SCORE, 715))
                     hype.baseStats.add(SStat(SStatType.DAMAGE, 310))
+                    hype.baseStats.add(SStat(SStatType.GEAR_SCORE, 715))
                     hype.baseStats.add(SStat(SStatType.STRENGTH, 150))
                     hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 450))
                     hype.baseStats.add(SStat(SStatType.FEROCITY, 30))
+                    hype.reforge = SReforge.HEROIC
 
                     hype.updateItemStack()
                     inv.setStack(9 * 5 + 4, hype.itemStack)

@@ -1,3 +1,3 @@
 package org.rebix.stars
 
-class GemstoneSlot
+class SGemstoneSlot
