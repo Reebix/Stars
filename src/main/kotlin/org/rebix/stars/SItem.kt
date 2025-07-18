@@ -122,6 +122,24 @@ class SItem(var id: String, var itemType: Item) {
             }
         }
 
+        // Apply hot potato books
+        if (hotPotatoBooks + fumingPotatoBooks > 0) {
+            stats.forEach { stat ->
+                if (type.categories.contains(SItemCategory.WEAPONS)) {
+                    if (stat.type == SStatType.DAMAGE || stat.type == SStatType.STRENGTH) {
+                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 2
+                    }
+                }
+                if (type.categories.contains(SItemCategory.ARMOR)) {
+                    if (stat.type == SStatType.DEFENSE) {
+                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 2
+                    } else if (stat.type == SStatType.HEALTH) {
+                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 4
+                    }
+                }
+            }
+        }
+
         fun statText(stat: SStat): MutableText {
             return Text.literal("${if (stat.type.display == SStatTypeDisplay.BASE || stat.type.display == SStatTypeDisplay.PERCENTAGE) if (stat.value >= 0) "+" else "-" else ""}${stat.formattedValue}${if (stat.type.display == SStatTypeDisplay.PERCENTAGE) "%" else ""}")
         }
@@ -153,10 +171,31 @@ class SItem(var id: String, var itemType: Item) {
                 }
             }
 
+            var potatoText = Text.empty()
+            if (hotPotatoBooks + fumingPotatoBooks > 0) {
+                if (type.categories.contains(SItemCategory.WEAPONS)) {
+                    if (stat.type == SStatType.DAMAGE || stat.type == SStatType.STRENGTH) {
+                        potatoText = Text.literal(" (+${(hotPotatoBooks + fumingPotatoBooks) * 2})")
+                            .formatted(Formatting.YELLOW)
+                    }
+                }
+                if (type.categories.contains(SItemCategory.ARMOR)) {
+                    if (stat.type == SStatType.DEFENSE) {
+                        potatoText = Text.literal(" (+${(hotPotatoBooks + fumingPotatoBooks) * 2})")
+                            .formatted(Formatting.YELLOW)
+                    } else if (stat.type == SStatType.HEALTH) {
+                        potatoText = Text.literal(" (+${(hotPotatoBooks + fumingPotatoBooks) * 4})")
+                            .formatted(Formatting.YELLOW)
+                    }
+                }
+            }
+
+            // Stat Line
             loreBuilder.addLine(
                 Text.literal(stat.type.displayName + ": ")
                     .formatted(Formatting.GRAY)
-                    .append(statText(stat).formatted(stat.type.formatting)).append(reforgeText).append(gemstoneText)
+                    .append(statText(stat).formatted(stat.type.formatting)).append(potatoText).append(reforgeText)
+                    .append(gemstoneText)
             )
 
         }

@@ -227,6 +227,7 @@ class Stars : ModInitializer {
                     lividDagger.reforgeable = true
                     lividDagger.reforge = SReforge.DIRTY
                     lividDagger.stars = 5
+                    lividDagger.hotPotatoBooks = 10
                     lividDagger.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.JASPER).apply {
                         gemstone = SGemstoneType.FINE_JASPER
                         unlocked = true
