@@ -1,9 +1,11 @@
 package org.rebix.stars
 
 import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.LoreComponent
@@ -63,6 +65,67 @@ class Stars : ModInitializer {
         // You can use this to register commands, events, and other mod-related functionality.
         println("Stars has been initialized!")
 
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("analyze").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    val itemStack = player.getStackInHand(Hand.MAIN_HAND)
+                    val item = SItem(itemStack)
+                    player.sendMessage(Text.literal(item.id).append(" ").append(item.name))
+                    1
+                }
+            )
+        }
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("setrarity").then(
+                    CommandManager.argument("rarity", StringArgumentType.word())
+                        .suggests { _, builder ->
+                            for (rarity in SRarity.values()) {
+                                builder.suggest(rarity.name.lowercase())
+                            }
+                            builder.buildFuture()
+                        }.executes { context: CommandContext<ServerCommandSource?>? ->
+                            if (context!!.source?.player == null) {
+                                context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                            }
+                            val player = context.source?.player!!
+                            val itemStack = player.getStackInHand(Hand.MAIN_HAND)
+                            val item = SItem(itemStack)
+                            val rarityName = StringArgumentType.getString(context, "rarity").uppercase()
+                            val rarity = SRarity.valueOf(rarityName)
+                            item.rarity = rarity
+                            item.updateItemStack()
+                            1
+                        }
+                ))
+        }
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("giveitem").then(
+                    CommandManager.argument("id", StringArgumentType.string()).then(
+                        CommandManager.argument(
+                            "item",
+                            ItemStackArgumentType.itemStack(registryAccess)
+                        ).executes { context: CommandContext<ServerCommandSource?>? ->
+                            if (context!!.source?.player == null) {
+                                context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                            }
+                            val player = context.source?.player!!
+                            val id = StringArgumentType.getString(context, "id")
+                            val itemStack = ItemStackArgumentType.getItemStackArgument(context, "item").item
+                            val item = SItem(id, itemStack)
+                            item.updateItemStack()
+                            player.inventory.offerOrDrop(item.itemStack)
+                            1
+                        }
+                    )))
+        }
+
 
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             // Register a command that can be used in the game
@@ -100,6 +163,16 @@ class Stars : ModInitializer {
                     for (i in 0 until inv.size()) {
                         inv.setStack(i, item.copy())
                     }
+
+                    val sHelmet = SItem("PERFECT_HELMET_13", Items.DIAMOND_HELMET)
+                    sHelmet.name = "Perfect Helmet - Tier XIII"
+                    sHelmet.rarity = SRarity.LEGENDARY
+                    sHelmet.type = SItemType.HELMET
+                    sHelmet.reforgeable = true
+                    sHelmet.baseStats.add(SStat(SStatType.DEFENSE, 350))
+
+                    sHelmet.updateItemStack()
+                    inv.setStack(4, sHelmet.itemStack)
 
                     var helmet = ItemStack(Items.DIAMOND_HELMET)
                     helmet.set(
@@ -197,49 +270,45 @@ class Stars : ModInitializer {
 
 
         /*
-         CommandRegistrationCallback.EVENT.register({ dispatcher, registryAccess, environment ->
-             dispatcher.register(
-                 CommandManager.literal("test_command").then(CommandManager.argument("value", IntegerArgumentType.integer(1, 100))
-                     .executes { context: CommandContext<ServerCommandSource?>? ->
-                         context!!.getSource()!!
-                             .sendFeedback({ Text.literal("${context.source?.player?.uuid} Called /test_command") }, false)
-                         val player = context.source?.player!!
-                         val amount = IntegerArgumentType.getInteger(context, "value")
-                         val sack = ItemStack(Items.CHEST, amount)
+                CommandRegistrationCallback.EVENT.register({ dispatcher, registryAccess, environment ->
+                    dispatcher.register(
+                        CommandManager.literal("test_command").then(
+                            CommandManager.argument("value", StringArgumentType.string())
+                                .executes { context: CommandContext<ServerCommandSource?>? ->
+                                    context!!.getSource()!!
+                                        .sendFeedback(
+                                            { Text.literal("${context.source?.player?.uuid} Called /test_command") },
+                                            false
+                                        )
+                                    val player = context.source?.player!!
 
-                         sack.set(DataComponentTypes.ITEM_NAME, Text.literal("Test Sack"))
-                         sack.set(DataComponentTypes.LORE, LoreComponent.DEFAULT.with( Text.literal("This is a lore test!").formatted(
-                             Formatting.RED)))
-                         sack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
-                             comp.apply({ currentNbt ->
-                                 currentNbt.putInt("key", 0)
-                             })
+                                    val value = StringArgumentType.getString(context, "value")
+
+                                    player.sendMessage(
+                                        Text.literal("You called /test_command with value: $value").formatted(Formatting.GREEN),
+                                        false
+                                    )
+                                    1
+                                }
+                        ))
+                })
+
+                         UseItemCallback.EVENT.register { player, world, hand ->
+                             if (!world.isClient) {
+                                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} interagiert?")
+                                 player.sendMessage(Text.literal("${player.name.string} hat mit ${Text.translatable(player.getStackInHand(hand).name.string).string} interagiert!"), false)
+                             }
+                             ActionResult.PASS // Event nicht
                          }
- //                        player.inventory.insertStack(sack)
-                         player.velocity = Vec3d(0.0, amount.toDouble(), 0.0)
-                         player.velocityModified = true
-                         test = true
-                         1
-                     }
-             ))
-         })
+                         UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
+                             if (!world.isClient) {
+                                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} auf ${hitResult.blockPos} interagiert!")
 
-         UseItemCallback.EVENT.register { player, world, hand ->
-             if (!world.isClient) {
-                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} interagiert?")
-                 player.sendMessage(Text.literal("${player.name.string} hat mit ${Text.translatable(player.getStackInHand(hand).name.string).string} interagiert!"), false)
-             }
-             ActionResult.PASS // Event nicht
-         }
-         UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
-             if (!world.isClient) {
-                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} auf ${hitResult.blockPos} interagiert!")
+                             }
+                             ActionResult.PASS // Event nicht abbrechen
+                         }
 
-             }
-             ActionResult.PASS // Event nicht abbrechen
-         }
-
-          */
+                          */
     }
 
     companion object {
