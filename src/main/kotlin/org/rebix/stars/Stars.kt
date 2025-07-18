@@ -5,25 +5,33 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback
+import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.LoreComponent
 import net.minecraft.component.type.NbtComponent
 import net.minecraft.component.type.TooltipDisplayComponent
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
+import net.minecraft.util.math.Box
 import java.util.*
 import kotlin.math.min
 
@@ -34,6 +42,7 @@ class Stars : ModInitializer {
 
 
     init {
+        instance = this
         colors.add(Formatting.GOLD)
         colors.add(Formatting.LIGHT_PURPLE)
         colors.add(Formatting.AQUA)
@@ -65,6 +74,39 @@ class Stars : ModInitializer {
         // You can use this to register commands, events, and other mod-related functionality.
         println("Stars has been initialized!")
 
+
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("updateitem").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    val itemStack = player.getStackInHand(Hand.MAIN_HAND)
+                    val item = SItem(itemStack)
+                    item.updateItemStack()
+                    1
+                }
+            )
+        }
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("recombobulate").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    val itemStack = player.getStackInHand(Hand.MAIN_HAND)
+                    val item = SItem(itemStack)
+                    item.recombobulated = true
+                    item.updateItemStack()
+                    1
+                }
+            )
+        }
+
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("analyze").executes { context: CommandContext<ServerCommandSource?>? ->
@@ -74,7 +116,7 @@ class Stars : ModInitializer {
                     val player = context.source?.player!!
                     val itemStack = player.getStackInHand(Hand.MAIN_HAND)
                     val item = SItem(itemStack)
-                    player.sendMessage(Text.literal(item.id).append(" ").append(item.name))
+                    player.sendMessage(Text.literal(item.id).append(item.name))
                     1
                 }
             )
@@ -84,7 +126,7 @@ class Stars : ModInitializer {
                 CommandManager.literal("setrarity").then(
                     CommandManager.argument("rarity", StringArgumentType.word())
                         .suggests { _, builder ->
-                            for (rarity in SRarity.values()) {
+                            for (rarity in SRarity.entries) {
                                 builder.suggest(rarity.name.lowercase())
                             }
                             builder.buildFuture()
@@ -241,6 +283,21 @@ class Stars : ModInitializer {
                     }
                     inv.setStack(9 * 4 + 4, boots)
 
+                    var hype = SItem("HYPERION", Items.IRON_SWORD)
+                    hype.name = "Hyperion"
+                    hype.rarity = SRarity.LEGENDARY
+                    hype.type = SItemType.SWORD
+                    hype.reforgeable = true
+                    hype.baseStats.add(SStat(SStatType.GEAR_SCORE, 715))
+                    hype.baseStats.add(SStat(SStatType.DAMAGE, 310))
+                    hype.baseStats.add(SStat(SStatType.STRENGTH, 150))
+                    hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 450))
+                    hype.baseStats.add(SStat(SStatType.FEROCITY, 30))
+
+                    hype.updateItemStack()
+                    inv.setStack(9 * 5 + 4, hype.itemStack)
+
+
 
                     player.openHandledScreen(screenHanderFactory)
 
@@ -255,13 +312,9 @@ class Stars : ModInitializer {
                             val player = context.source?.player!!
 
                             val item = player.getStackInHand(Hand.MAIN_HAND)
-                            val amount = IntegerArgumentType.getInteger(context, "amount")
-
-                            item.set(
-                                DataComponentTypes.CUSTOM_NAME, Text.translatable(item.item.translationKey).append(
-                                    getStarText(amount)
-                                )
-                            )
+                            val sItem = SItem(item)
+                            sItem.stars = IntegerArgumentType.getInteger(context, "amount")
+                            sItem.updateItemStack()
                             //[434] ♫ [VIP+] Rebbix is holding [Pitchin' Hellfire Rod ✪✪✪✪✪]
                             1
                         })
@@ -292,27 +345,89 @@ class Stars : ModInitializer {
                                 }
                         ))
                 })
+*/
 
-                         UseItemCallback.EVENT.register { player, world, hand ->
-                             if (!world.isClient) {
-                                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} interagiert?")
-                                 player.sendMessage(Text.literal("${player.name.string} hat mit ${Text.translatable(player.getStackInHand(hand).name.string).string} interagiert!"), false)
-                             }
-                             ActionResult.PASS // Event nicht
-                         }
-                         UseBlockCallback.EVENT.register { player, world, hand, hitResult ->
-                             if (!world.isClient) {
-                                 println("${player.name.string} hat mit ${player.getStackInHand(hand)} auf ${hitResult.blockPos} interagiert!")
 
-                             }
-                             ActionResult.PASS // Event nicht abbrechen
-                         }
+        AttackEntityCallback.EVENT.register { player, world, hand, entity, hitResult ->
 
-                          */
+
+            ActionResult.PASS
+        }
+
+
+
+        UseItemCallback.EVENT.register { player, world, hand ->
+            if (!world.isClient) {
+                val itemStack = player.getStackInHand(hand)
+                var sItem = SItem(itemStack)
+                if (sItem.id == "HYPERION") {
+                    player.sendMessage(Text.literal("Wither Impact!"), false)
+
+                    var serverWorld = world as ServerWorld
+                    serverWorld.spawnParticles(
+                        ParticleTypes.EXPLOSION,
+                        player.x,
+                        player.y + 1F,
+                        player.z,
+                        20,
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.01
+                    )
+                    val allEntities = serverWorld.getOtherEntities(
+                        player, Box(
+                            player.x - 500.0,
+                            player.y - 500.0,
+                            player.z - 500.0,
+                            player.x + 500.0,
+                            player.y + 500.0,
+                            player.z + 500.0
+                        )
+                    )
+
+                    allEntities.forEach {
+                        it.damage(serverWorld, player.damageSources.playerAttack(player), 1.0F)
+                    }
+
+                }
+
+
+                if (sItem.id == "EGG") {
+                    player.sendMessage(Text.literal("Egg!"), false)
+
+                    var serverWorld = world as ServerWorld
+
+                    val allEntities = serverWorld.getOtherEntities(
+                        player, Box(
+                            player.x - 50.0,
+                            player.y - 50.0,
+                            player.z - 50.0,
+                            player.x + 50.0,
+                            player.y + 50.0,
+                            player.z + 50.0
+                        )
+                    )
+
+                    allEntities.forEach {
+                        val chicken: ChickenEntity =
+                            EntityType.get("minecraft:chicken").get().create(world, null) as ChickenEntity
+                        chicken.setPosition(it.x, it.y, it.z)
+                        serverWorld.spawnEntity(chicken)
+                    }
+                }
+
+
+            }
+            ActionResult.PASS // Event nicht
+        }
+
     }
 
     companion object {
         private val MOD_ID: String = "stars"
         private var test: Boolean = false
+        var instance: Stars? = null
+
     }
 }

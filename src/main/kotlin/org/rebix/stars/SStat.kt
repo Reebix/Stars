@@ -22,7 +22,7 @@ class SStat {
         }
 
     override fun toString(): String {
-        return "${type.displayName}: $value"
+        return "${type}:$value"
     }
 
     companion object

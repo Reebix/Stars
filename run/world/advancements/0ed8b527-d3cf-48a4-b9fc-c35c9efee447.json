@@ -337,5 +337,42 @@
     },
     "done": true
   },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:skeleton": "2025-07-18 16:58:24 +0200",
+      "minecraft:enderman": "2025-07-18 16:58:24 +0200",
+      "minecraft:witch": "2025-07-18 16:58:27 +0200",
+      "minecraft:spider": "2025-07-18 16:58:24 +0200",
+      "minecraft:zombie": "2025-07-18 16:09:50 +0200",
+      "minecraft:creeper": "2025-07-18 16:58:24 +0200",
+      "minecraft:drowned": "2025-07-18 16:58:24 +0200",
+      "minecraft:zombie_villager": "2025-07-18 16:58:29 +0200"
+    },
+    "done": false
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:zombie": "2025-07-18 16:09:50 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cake": {
+    "criteria": {
+      "has_egg": "2025-07-18 16:47:00 +0200"
+    },
+    "done": true
+  },
+  "minecraft:end/root": {
+    "criteria": {
+      "entered_end": "2025-07-18 17:03:38 +0200"
+    },
+    "done": true
+  },
+  "minecraft:story/enter_the_end": {
+    "criteria": {
+      "entered_end": "2025-07-18 17:03:38 +0200"
+    },
+    "done": true
+  },
   "DataVersion": 4325
 }

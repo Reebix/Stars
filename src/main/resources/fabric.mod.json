@@ -2,29 +2,32 @@
   "schemaVersion": 1,
   "id": "stars",
   "version": "${version}",
-
   "name": "Stars",
   "description": "",
   "authors": [],
   "contact": {},
-
   "license": "All-Rights-Reserved",
   "icon": "assets/stars/icon.png",
-
   "environment": "server",
   "entrypoints": {
-    "fabric-datagen": ["org.rebix.stars.client.StarsDataGenerator"],
-    "main": ["org.rebix.stars.Stars"]
+    "fabric-datagen": [
+      "org.rebix.stars.client.StarsDataGenerator"
+    ],
+    "main": [
+      "org.rebix.stars.Stars"
+    ]
   },
-
   "mixins": [
-    "stars.mixins.json"
-    ,{
+    "stars.mixins.json",
+    {
       "config": "stars.client.mixins.json",
       "environment": "client"
+    },
+    {
+      "config": "stars.server.mixins.json",
+      "environment": "server"
     }
   ],
-
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-language-kotlin": ">=${kotlin_loader_version}",

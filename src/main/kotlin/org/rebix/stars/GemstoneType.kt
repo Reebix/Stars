@@ -1,0 +1,4 @@
+package org.rebix.stars
+
+enum class GemstoneType {
+}

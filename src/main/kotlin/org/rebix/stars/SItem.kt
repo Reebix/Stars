@@ -18,8 +18,13 @@ class SItem(var id: String, var itemType: Item) {
     var type = SItemType.NONE
     var reforgeable: Boolean = false
     var baseStats: MutableList<SStat> = mutableListOf()
+    var stars: Int = 0
+    var recombobulated: Boolean = false
+    var gemstoneSlots: MutableList<GemstoneSlot> = mutableListOf()
 
     constructor(itemStack: ItemStack) : this(id = "NONE", itemType = itemStack.item) {
+        //TODO: create lookup for itemStack
+
         this.itemStack = itemStack
         this.itemType = itemStack.item
 
@@ -34,7 +39,7 @@ class SItem(var id: String, var itemType: Item) {
                 // Parse baseStats from string representation
                 if (statsString.isNotEmpty()) {
                     try {
-                        val statsList = statsString.removeSurrounding("[", "]").split(",")
+                        val statsList = statsString.removeSurrounding("[", "]").replace(" ", "").split(",")
                         statsList.forEach { stat ->
                             val parts = stat.split(":")
                             if (parts.size == 2) {
@@ -47,6 +52,8 @@ class SItem(var id: String, var itemType: Item) {
                         e.printStackTrace()
                     }
                 }
+                this.stars = currentNbt.getInt("stars", 0)
+                this.recombobulated = currentNbt.getBoolean("recombobulated", false)
             }
         }
     }
@@ -55,6 +62,17 @@ class SItem(var id: String, var itemType: Item) {
     fun updateItemStack() {
         itemStack.withItem { itemType }
 
+        var effectiveRarity = rarity
+        if (recombobulated) {
+            // If recombobulated, increase the rarity by one level
+            effectiveRarity = if (rarity.ordinal < SRarity.entries.size - 2) {
+                SRarity.entries[rarity.ordinal + 1]
+            } else {
+                rarity // Keep the same if already at max rarity or would be admin
+            }
+        }
+        val isDungeon = baseStats.any { it.type == SStatType.GEAR_SCORE }
+
         // Lore Builder
         val loreBuilder = LoreBuilder()
         baseStats.forEach { stat ->
@@ -62,7 +80,7 @@ class SItem(var id: String, var itemType: Item) {
                 Text.literal(stat.type.displayName + ": ")
                     .formatted(Formatting.GRAY)
                     .append(
-                        Text.literal("${if (stat.value >= 0) "+" else "-"}${stat.formattedValue}")
+                        Text.literal("${if (stat.type.display == SStatTypeDisplay.BASE) if (stat.value >= 0) "+" else "-" else ""}${stat.formattedValue}")
                             .formatted(stat.type.formatting)
                     )
             )
@@ -71,11 +89,32 @@ class SItem(var id: String, var itemType: Item) {
         if (reforgeable) {
             loreBuilder.addLine(Text.literal("This item can be reforged!").formatted(Formatting.DARK_GRAY))
         }
-        loreBuilder.addLine(rarity.getText().append(" ").append(type.toString())).build()
 
+        val dungeonText = Text.literal(if (isDungeon) "DUNGEON " else "")
+        if (recombobulated) {
+
+            var recomtext = Text.literal("K").formatted(Formatting.OBFUSCATED).formatted(effectiveRarity.formatting)
+                .formatted(Formatting.BOLD)
+
+            loreBuilder.addLine(
+                recomtext.copy().append(
+                    Text.literal(" ")
+                        .append(
+                            effectiveRarity.getText().append(" ").append(dungeonText).append(type.toString())
+                                .styled { style ->
+                                    style.withObfuscated(false)
+                                })
+                        .append(" ")
+                ).append(recomtext.copy())
+            )
+        } else loreBuilder.addLine(effectiveRarity.getText().append(" ").append(dungeonText).append(type.toString()))
+        // Lore builder ends here
 
         itemStack.set(DataComponentTypes.LORE, loreBuilder.build())
-        itemStack.set(DataComponentTypes.ITEM_NAME, Text.literal(name).formatted(rarity.formatting))
+        itemStack.set(
+            DataComponentTypes.ITEM_NAME,
+            Text.literal(name).formatted(effectiveRarity.formatting).append(Stars.instance!!.getStarText(stars))
+        )
 
         // Custom Data Component
         itemStack.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
@@ -86,6 +125,8 @@ class SItem(var id: String, var itemType: Item) {
                 currentNbt.putString("type", type.name)
                 currentNbt.putBoolean("reforgeable", reforgeable)
                 currentNbt.putString("baseStats", baseStats.toString())
+                currentNbt.putInt("stars", stars)
+                currentNbt.putBoolean("recombobulated", recombobulated)
             })
         }
 
@@ -95,4 +136,6 @@ class SItem(var id: String, var itemType: Item) {
         val tooltipDisplayComponent = TooltipDisplayComponent(false, emptySequencedSet)
         itemStack.set(DataComponentTypes.TOOLTIP_DISPLAY, tooltipDisplayComponent)
     }
+
+
 }

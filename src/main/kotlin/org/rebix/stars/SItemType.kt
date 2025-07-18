@@ -2,7 +2,8 @@ package org.rebix.stars
 
 enum class SItemType {
     NONE,
-    HELMET;
+    HELMET,
+    SWORD;
 
     override fun toString(): String {
         if (this == NONE) {

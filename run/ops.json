@@ -10,5 +10,11 @@
     "name": "NicLev",
     "level": 4,
     "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "ebd43142-716a-4caa-ac7f-a6bb2e43fb41",
+    "name": "Mathe01",
+    "level": 4,
+    "bypassesPlayerLimit": false
   }
 ]
