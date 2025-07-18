@@ -22,5 +22,11 @@ enum class SStatType(
     FEROCITY("Ferocity", Formatting.GREEN),
     HEALTH_REGEN("Health Regen", Formatting.GREEN),
     VITALITY("Vitality", Formatting.GREEN),
+    MINING_SPEED("Mining Speed", Formatting.GOLD),
+    PRISTINE("Pristine", Formatting.DARK_PURPLE),
+    MINING_FORTUNE("Mining Fortune", Formatting.GOLD),
+    FISHING_SPEED("Fishing Speed", Formatting.AQUA),
+    FORAGING_FORTUNE("Foraging Fortune", Formatting.GOLD),
+    FARMING_FORTUNE("Farming Fortune", Formatting.GOLD),
 
 }

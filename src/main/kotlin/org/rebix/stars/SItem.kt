@@ -21,8 +21,10 @@ class SItem(var id: String, var itemType: Item) {
     var baseStats: MutableList<SStat> = mutableListOf()
     var stars: Int = 0
     var recombobulated: Boolean = false
-    var gemstoneSlots: MutableList<SGemstoneSlot> = mutableListOf()
+    var gemstoneSlots: MutableList<SGemstoneSlot> = mutableListOf() //TODO: SAVE
     var reforge: SReforge = SReforge.NONE
+    var hotPotatoBooks = 0
+    var fumingPotatoBooks = 0
 
     constructor(itemStack: ItemStack) : this(id = "NONE", itemType = itemStack.item) {
         //TODO: create lookup for itemStack
@@ -57,6 +59,8 @@ class SItem(var id: String, var itemType: Item) {
                 this.stars = currentNbt.getInt("stars", 0)
                 this.recombobulated = currentNbt.getBoolean("recombobulated", false)
                 this.reforge = SReforge.valueOf(currentNbt.getString("reforge", "NONE").uppercase(Locale.getDefault()))
+                this.hotPotatoBooks = currentNbt.getInt("hotPotatoBooks", 0)
+                this.fumingPotatoBooks = currentNbt.getInt("fumingPotatoBooks", 0)
             }
         }
     }
@@ -75,7 +79,7 @@ class SItem(var id: String, var itemType: Item) {
             }
         }
         val isDungeon = baseStats.any { it.type == SStatType.GEAR_SCORE }
-        var highestRarity = rarity
+        var highestReforgeRarity = rarity
 
         // Calculate stats
         val stats: MutableList<SStat> =
@@ -91,9 +95,9 @@ class SItem(var id: String, var itemType: Item) {
 
         // Apply reforge bonuses
         if (reforge != SReforge.NONE) {
-            highestRarity = reforge.bonuses.keys.max()
+            highestReforgeRarity = reforge.bonuses.keys.max()
 
-            val bonuses = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
+            val bonuses = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestReforgeRarity])!!
             bonuses.forEach { bonusStat ->
                 val existingStat = stats.find { it.type == bonusStat.type }
                 if (existingStat != null) {
@@ -103,6 +107,19 @@ class SItem(var id: String, var itemType: Item) {
                 }
             }
 
+        }
+
+        // Apply gemstone bonuses
+        gemstoneSlots.forEach { slot ->
+            if (slot.gemstone != null) {
+                val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
+                val existingStat = stats.find { it.type == gemstoneStat.type }
+                if (existingStat != null) {
+                    existingStat.value += gemstoneStat.value
+                } else {
+                    stats.add(SStat(gemstoneStat.type, gemstoneStat.value))
+                }
+            }
         }
 
         fun statText(stat: SStat): MutableText {
@@ -115,7 +132,7 @@ class SItem(var id: String, var itemType: Item) {
         stats.forEach { stat ->
             var reforgeText = Text.empty()
             if (reforge != SReforge.NONE) {
-                val reforgeStat = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
+                val reforgeStat = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestReforgeRarity])!!
                     .find { it.type == stat.type }
                 reforgeText = if (reforgeStat != null) {
                     Text.literal(" (${statText(reforgeStat).string})")
@@ -125,13 +142,34 @@ class SItem(var id: String, var itemType: Item) {
                 }
             }
 
+            var gemstoneText = Text.empty()
+            if (gemstoneSlots.isNotEmpty()) {
+                gemstoneSlots.forEach { slot ->
+                    if (slot.gemstone != null && slot.gemstone!!.getStatByRarity(effectiveRarity).type == stat.type) {
+                        val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
+                        gemstoneText = Text.literal(" (${statText(gemstoneStat).string})")
+                            .formatted(Formatting.LIGHT_PURPLE)
+                    }
+                }
+            }
+
             loreBuilder.addLine(
                 Text.literal(stat.type.displayName + ": ")
                     .formatted(Formatting.GRAY)
-                    .append(statText(stat).formatted(stat.type.formatting)).append(reforgeText)
+                    .append(statText(stat).formatted(stat.type.formatting)).append(reforgeText).append(gemstoneText)
             )
 
         }
+
+        // gemstone slots
+        if (gemstoneSlots.isNotEmpty()) {
+            val text = Text.empty()
+            gemstoneSlots.forEach { slot ->
+                text.append(slot.getText())
+            }
+            loreBuilder.addLine(text)
+        }
+
         loreBuilder.addLine()
         if (reforgeable && reforge == SReforge.NONE) {
             loreBuilder.addLine(Text.literal("This item can be reforged!").formatted(Formatting.DARK_GRAY))
@@ -180,6 +218,9 @@ class SItem(var id: String, var itemType: Item) {
                 currentNbt.putInt("stars", stars)
                 currentNbt.putBoolean("recombobulated", recombobulated)
                 currentNbt.putString("reforge", reforge.name)
+                currentNbt.putString("gemstoneSlots", gemstoneSlots.joinToString(",") { it.toString() })
+                currentNbt.putInt("hotPotatoBooks", hotPotatoBooks)
+                currentNbt.putInt("fumingPotatoBooks", fumingPotatoBooks)
             })
         }
 

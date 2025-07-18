@@ -41,4 +41,38 @@ enum class SReforge(
             ),
         )
     ),
+    DIRTY(
+        "Dirty", setOf(SItemType.SWORD), hashMapOf(
+            SRarity.COMMON to setOf(
+                SStat(SStatType.FEROCITY, 2),
+                SStat(SStatType.STRENGTH, 2),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 2)
+            ),
+            SRarity.UNCOMMON to setOf(
+                SStat(SStatType.FEROCITY, 3),
+                SStat(SStatType.STRENGTH, 4),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 3)
+            ),
+            SRarity.RARE to setOf(
+                SStat(SStatType.FEROCITY, 6),
+                SStat(SStatType.STRENGTH, 6),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 5)
+            ),
+            SRarity.EPIC to setOf(
+                SStat(SStatType.FEROCITY, 9),
+                SStat(SStatType.STRENGTH, 10),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 10)
+            ),
+            SRarity.LEGENDARY to setOf(
+                SStat(SStatType.FEROCITY, 12),
+                SStat(SStatType.STRENGTH, 12),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 15)
+            ),
+            SRarity.MYTHIC to setOf(
+                SStat(SStatType.FEROCITY, 15),
+                SStat(SStatType.STRENGTH, 15),
+                SStat(SStatType.BONUS_ATTACK_SPEED, 20)
+            ),
+        )
+    ),
 }
