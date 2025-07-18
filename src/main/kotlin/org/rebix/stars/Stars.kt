@@ -10,8 +10,6 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.LoreComponent
-import net.minecraft.component.type.NbtComponent
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.passive.ChickenEntity
@@ -216,82 +214,15 @@ class Stars : ModInitializer {
                     sHelmet.updateItemStack()
                     inv.setStack(4, sHelmet.itemStack)
 
-                    var helmet = ItemStack(Items.DIAMOND_HELMET)
-                    helmet.set(
-                        DataComponentTypes.ITEM_NAME,
-                        Text.literal("Perfect Helmet - Tier XIII").formatted(Formatting.GOLD).append(getStarText(10))
-                    )
-                    helmet.set(
-                        DataComponentTypes.LORE, LoreComponent.DEFAULT.with(
-                            Text.literal("Defense: ").styled { it.withItalic(false) }
-                                .formatted(Formatting.GRAY).append(Text.literal("+350").formatted(Formatting.GREEN))
-                        ).with(
-                            Text.literal(" [").styled { it.withItalic(false) }.formatted(Formatting.DARK_GRAY)
-                                .append(Text.literal("❈").formatted(Formatting.GRAY))
-                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
-                                .append(Text.literal(" [").formatted(Formatting.DARK_GRAY))
-                                .append(Text.literal("❈").formatted(Formatting.GRAY))
-                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
-                                .append(Text.literal(" [").formatted(Formatting.DARK_GRAY))
-                                .append(Text.literal("❈").formatted(Formatting.GRAY))
-                                .append(Text.literal("]").formatted(Formatting.DARK_GRAY))
-                        ).with(Text.literal(""))
-                            .with(Text.literal("This item can be reforged!").styled { it.withItalic(false) }
-                                .formatted(Formatting.DARK_GRAY))
-                            .with(Text.literal("LEGENDARY HELMET").styled { it.withItalic(false) }
-                                .formatted(Formatting.GOLD, Formatting.BOLD)))
-
-                    helmet.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
-                        comp.apply({ currentNbt ->
-                            currentNbt.putString("id", "PERFECT_HELMET_13")
-                        })
-                    }
-                    inv.setStack(9 + 4, helmet)
-
-                    var chestplate = ItemStack(Items.DIAMOND_CHESTPLATE)
-                    chestplate.set(
-                        DataComponentTypes.ITEM_NAME,
-                        Text.literal("Perfect Chestplate - Tier XIII").formatted(Formatting.GOLD)
-                            .append(getStarText(10))
-                    )
-                    chestplate.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
-                        comp.apply({ currentNbt ->
-                            currentNbt.putString("id", "PERFECT_CHESTPLATE_13")
-                        })
-                    }
-                    inv.setStack(9 * 2 + 4, chestplate)
-                    var leggings = ItemStack(Items.DIAMOND_LEGGINGS)
-                    leggings.set(
-                        DataComponentTypes.ITEM_NAME,
-                        Text.literal("Perfect Leggings - Tier XIII").formatted(Formatting.GOLD).append(getStarText(10))
-                    )
-                    leggings.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
-                        comp.apply({ currentNbt ->
-                            currentNbt.putString("id", "PERFECT_LEGGINGS_13")
-                        })
-                    }
-                    inv.setStack(9 * 3 + 4, leggings)
-                    var boots = ItemStack(Items.DIAMOND_BOOTS)
-                    boots.set(
-                        DataComponentTypes.ITEM_NAME,
-                        Text.literal("Perfect Boots - Tier XIII").formatted(Formatting.GOLD).append(getStarText(10))
-                    )
-                    boots.apply(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT) { comp ->
-                        comp.apply({ currentNbt ->
-                            currentNbt.putString("id", "PERFECT_BOOTS_13")
-                        })
-                    }
-                    inv.setStack(9 * 4 + 4, boots)
-
                     var hype = SItem("HYPERION", Items.IRON_SWORD)
                     hype.name = "Hyperion"
                     hype.rarity = SRarity.LEGENDARY
                     hype.type = SItemType.SWORD
                     hype.reforgeable = true
-                    hype.baseStats.add(SStat(SStatType.DAMAGE, 310))
+                    hype.baseStats.add(SStat(SStatType.DAMAGE, 260))
                     hype.baseStats.add(SStat(SStatType.GEAR_SCORE, 715))
                     hype.baseStats.add(SStat(SStatType.STRENGTH, 150))
-                    hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 450))
+                    hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 350))
                     hype.baseStats.add(SStat(SStatType.FEROCITY, 30))
                     hype.reforge = SReforge.HEROIC
 

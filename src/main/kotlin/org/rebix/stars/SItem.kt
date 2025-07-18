@@ -75,13 +75,24 @@ class SItem(var id: String, var itemType: Item) {
             }
         }
         val isDungeon = baseStats.any { it.type == SStatType.GEAR_SCORE }
-        val highestRarity = reforge.bonuses.keys.maxOrNull()
+        var highestRarity = rarity
 
         // Calculate stats
         val stats: MutableList<SStat> =
             MutableList(baseStats.size) { index -> SStat(baseStats[index].type, baseStats[index].value) }
+
+        //Stars (Should only apply to base stats)
+        if (stars > 0) {
+            stats.forEach { stat ->
+                if (stat.type != SStatType.GEAR_SCORE)
+                    stat.value *= 1 + (0.02 * stars)
+            }
+        }
+
+        // Apply reforge bonuses
         if (reforge != SReforge.NONE) {
-            // Apply reforge bonuses
+            highestRarity = reforge.bonuses.keys.max()
+
             val bonuses = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
             bonuses.forEach { bonusStat ->
                 val existingStat = stats.find { it.type == bonusStat.type }
@@ -102,17 +113,16 @@ class SItem(var id: String, var itemType: Item) {
         val loreBuilder = LoreBuilder()
         stats.sortBy { it.type.ordinal } // Sort by type ordinal for consistent order
         stats.forEach { stat ->
-            println(
-                reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
+            var reforgeText = Text.empty()
+            if (reforge != SReforge.NONE) {
+                val reforgeStat = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
                     .find { it.type == stat.type }
-            )
-            val reforgeStat = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestRarity])!!
-                .find { it.type == stat.type }
-            val reforgeText = if (reforgeStat != null) {
-                Text.literal(" (${statText(stat).string})")
-                    .formatted(Formatting.BLUE)
-            } else {
-                Text.literal("")
+                reforgeText = if (reforgeStat != null) {
+                    Text.literal(" (${statText(reforgeStat).string})")
+                        .formatted(Formatting.BLUE)
+                } else {
+                    Text.empty()
+                }
             }
 
             loreBuilder.addLine(

@@ -18,7 +18,7 @@ class SStat {
         get() = if (value % 1.0 == 0.0) {
             value.toLong().toString()
         } else {
-            value.toString()
+            String.format("%.1f", value)
         }
 
     override fun toString(): String {
