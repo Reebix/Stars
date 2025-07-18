@@ -28,6 +28,6 @@ class SGemstoneSlot(val type: SGemstoneSlotType) {
     }
 
     override fun toString(): String {
-        return "SGemstoneSlot(type=$type, gemstone=$gemstone)"
+        return "SGemstoneSlot(type=$type; gemstone=$gemstone; unlocked=$unlocked)"
     }
 }

@@ -21,7 +21,7 @@ class SItem(var id: String, var itemType: Item) {
     var baseStats: MutableList<SStat> = mutableListOf()
     var stars: Int = 0
     var recombobulated: Boolean = false
-    var gemstoneSlots: MutableList<SGemstoneSlot> = mutableListOf() //TODO: SAVE
+    var gemstoneSlots: MutableList<SGemstoneSlot> = mutableListOf()
     var reforge: SReforge = SReforge.NONE
     var hotPotatoBooks = 0
     var fumingPotatoBooks = 0
@@ -39,8 +39,8 @@ class SItem(var id: String, var itemType: Item) {
                 this.rarity = SRarity.valueOf(currentNbt.getString("rarity", "COMMON").uppercase(Locale.getDefault()))
                 this.type = SItemType.valueOf(currentNbt.getString("type", "NONE").uppercase(Locale.getDefault()))
                 this.reforgeable = currentNbt.getBoolean("reforgeable", false)
-                val statsString = currentNbt.getString("baseStats", "[]")
                 // Parse baseStats from string representation
+                val statsString = currentNbt.getString("baseStats", "[]")
                 if (statsString.isNotEmpty()) {
                     try {
                         val statsList = statsString.removeSurrounding("[", "]").replace(" ", "").split(",")
@@ -50,6 +50,30 @@ class SItem(var id: String, var itemType: Item) {
                                 val type = SStatType.valueOf(parts[0].trim().uppercase(Locale.getDefault()))
                                 val value = parts[1].trim().toDoubleOrNull() ?: 0.0
                                 baseStats.add(SStat(type, value))
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                // Parse gemstone slots
+                val gemstoneSlotsString = currentNbt.getString("gemstoneSlots", "[]")
+                if (gemstoneSlotsString.isNotEmpty()) {
+                    try {
+                        val slotsList = gemstoneSlotsString.removeSurrounding("[", "]").replace(" ", "").split(",")
+                        slotsList.forEach { slot ->
+                            val parts = slot.split(";")
+                            if (parts.size == 3) {
+                                val type = SGemstoneSlotType.valueOf(
+                                    parts[0].split("=")[1].trim().uppercase(Locale.getDefault())
+                                )
+                                val gemstoneType =
+                                    SGemstoneType.valueOf(parts[1].split("=")[1].trim().uppercase(Locale.getDefault()))
+                                val unlocked = parts[2].split("=")[1].trim().removeSuffix(")").toBoolean()
+                                gemstoneSlots.add(SGemstoneSlot(type).apply {
+                                    this.gemstone = gemstoneType
+                                    this.unlocked = unlocked
+                                })
                             }
                         }
                     } catch (e: Exception) {
@@ -257,7 +281,7 @@ class SItem(var id: String, var itemType: Item) {
                 currentNbt.putInt("stars", stars)
                 currentNbt.putBoolean("recombobulated", recombobulated)
                 currentNbt.putString("reforge", reforge.name)
-                currentNbt.putString("gemstoneSlots", gemstoneSlots.joinToString(",") { it.toString() })
+                currentNbt.putString("gemstoneSlots", gemstoneSlots.toString())
                 currentNbt.putInt("hotPotatoBooks", hotPotatoBooks)
                 currentNbt.putInt("fumingPotatoBooks", fumingPotatoBooks)
             })
