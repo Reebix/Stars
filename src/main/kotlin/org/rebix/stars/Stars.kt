@@ -12,6 +12,7 @@ import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -29,6 +30,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
 import java.util.*
 import kotlin.math.min
@@ -273,36 +275,53 @@ class Stars : ModInitializer {
                             sItem.stars = IntegerArgumentType.getInteger(context, "amount")
                             sItem.updateItemStack()
                             //[434] ♫ [VIP+] Rebbix is holding [Pitchin' Hellfire Rod ✪✪✪✪✪]
+                            ///give @s minecraft:white_dye[minecraft:item_model="animated_java:blueprint/blueprint/base"]
                             1
                         })
             )
         }
 
 
-        /*
-                CommandRegistrationCallback.EVENT.register({ dispatcher, registryAccess, environment ->
-                    dispatcher.register(
-                        CommandManager.literal("test_command").then(
-                            CommandManager.argument("value", StringArgumentType.string())
-                                .executes { context: CommandContext<ServerCommandSource?>? ->
-                                    context!!.getSource()!!
-                                        .sendFeedback(
-                                            { Text.literal("${context.source?.player?.uuid} Called /test_command") },
-                                            false
-                                        )
-                                    val player = context.source?.player!!
 
-                                    val value = StringArgumentType.getString(context, "value")
 
-                                    player.sendMessage(
-                                        Text.literal("You called /test_command with value: $value").formatted(Formatting.GREEN),
-                                        false
-                                    )
-                                    1
-                                }
-                        ))
-                })
-*/
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
+                    val player = context!!.source?.player!!
+                    val base: DisplayEntity.ItemDisplayEntity =
+                        EntityType.ITEM_DISPLAY.create(player.world, null) as DisplayEntity.ItemDisplayEntity
+                    base.updatePosition(
+                        player.x,
+                        player.y + 0.4,
+                        player.z
+                    )
+                    base.itemStack = ItemStack(Items.WHITE_DYE)
+                    base.itemStack.set(
+                        DataComponentTypes.ITEM_MODEL,
+                        Identifier.of("animated_java:blueprint/blueprint/base")
+                    )
+                    player.world.spawnEntity(base)
+                    val top = DisplayEntity.ItemDisplayEntity(
+                        EntityType.ITEM_DISPLAY, player.world
+                    )
+                    
+                    top.updatePosition(
+                        player.x,
+                        player.y + 1.4,
+                        player.z
+                    )
+                    top.itemStack = ItemStack(Items.WHITE_DYE)
+                    top.itemStack.set(
+                        DataComponentTypes.ITEM_MODEL,
+                        Identifier.of("animated_java:blueprint/blueprint/top")
+                    )
+                    player.world.spawnEntity(top)
+                    1
+                }
+            )
+        }
+
 
 
         AttackEntityCallback.EVENT.register { player, world, hand, entity, hitResult ->
