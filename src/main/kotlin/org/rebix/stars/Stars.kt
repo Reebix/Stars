@@ -91,7 +91,7 @@ class Stars : ModInitializer {
             server.worlds.forEach { world ->
                 world.iterateEntities().forEach { entity ->
                     if (entity.commandTags.contains("REMOVE")) {
-                        entity.discard() // Entfernt die Entität sicher aus der Welt
+                        entity.kill(world)
                     }
                 }
 
@@ -101,7 +101,6 @@ class Stars : ModInitializer {
                     Text.literal("Dummy").formatted(Formatting.GOLD),
                     position = Vec3d(-788.50, 115.0, 1753.5)
                 )
-
                 dummy.addOnHitListener { dummy -> false }
 
             }
@@ -124,6 +123,19 @@ class Stars : ModInitializer {
 
             scoreboard.setObjectiveSlot(ScoreboardDisplaySlot.BELOW_NAME, healthObjective)
             return@register
+        }
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("removetagged").executes { context: CommandContext<ServerCommandSource?>? ->
+                    context!!.source!!.world.iterateEntities().forEach { entity ->
+                        if (entity.commandTags.contains("REMOVE")) {
+                            entity.kill(context.source!!.world)
+                        }
+                    }
+                    1
+                }
+            )
         }
 
 
@@ -376,7 +388,12 @@ class Stars : ModInitializer {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    SLivingEntity(SEntityType.DUMMY, player.world, Text.literal("Dummy"), position = player.pos)
+                    SLivingEntity(
+                        SEntityType.DUMMY,
+                        player.world,
+                        Text.literal("Dummy"),
+                        position = player.pos
+                    ).health = 100_000
                     1
                 }
             )
@@ -386,7 +403,7 @@ class Stars : ModInitializer {
 
         AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->
             val sEntity = entityMap[entity.uuid]
-            sEntity?.onHit()
+            sEntity?.onHit(player)
             ActionResult.PASS
         }
 
@@ -466,5 +483,6 @@ class Stars : ModInitializer {
         var instance: Stars? = null
         var inventoryMap = mutableMapOf<Int, Inventory>()
         var entityMap = mutableMapOf<UUID, SLivingEntity>()
+        val damageIndicatorHandler = DamageIndicatorHandler()
     }
 }

@@ -21,8 +21,13 @@ class SLivingEntity(
     val world: World,
     val name: Text = Text.empty(),
     val position: Vec3d = Vec3d.ZERO,
-    var health: Long = 100
+    var _health: Long = 100
 ) {
+    var health = _health
+        set(value) {
+            field = max(0, value)
+            updateHealthText()
+        }
 
     fun interface OnHitListener {
         fun onHit(entity: SLivingEntity): Boolean
@@ -86,6 +91,7 @@ class SLivingEntity(
         healthTextEntity.text = Text.literal(health.toString()).append(Text.literal(" ❤").formatted(Formatting.RED))
     }
 
+
     private val onHitListeners = mutableListOf<OnHitListener>()
 
     fun addOnHitListener(listener: OnHitListener) {
@@ -96,7 +102,15 @@ class SLivingEntity(
         onHitListeners.remove(listener)
     }
 
-    fun onHit() {
+    fun onHit(attacker: Entity? = null) {
+        val attackerPos = attacker?.pos
+        Stars.damageIndicatorHandler.spawnDageIndicator(
+            position.add(0.0, hitboxHeight.toDouble() * 0.75, 0.0),
+            world,
+            1,
+            attackerPos
+        )
+
         onHitListeners.forEach { if (!it.onHit(this)) return }
 
         health = max(0, health - 1)
