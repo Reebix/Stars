@@ -74,5 +74,13 @@ enum class SReforge(
                 SStat(SStatType.BONUS_ATTACK_SPEED, 20)
             ),
         )
-    ),
+    );
+
+    fun getStatByRarity(rarity: SRarity): Set<SStat> {
+        var bonus = this.bonuses[rarity]
+        if (bonus == null) {
+            bonus = bonuses[bonuses.keys.max()]
+        }
+        return bonus!!
+    }
 }

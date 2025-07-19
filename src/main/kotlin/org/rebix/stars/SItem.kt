@@ -25,6 +25,8 @@ class SItem(var id: String, var itemType: Item) {
     var reforge: SReforge = SReforge.NONE
     var hotPotatoBooks = 0
     var fumingPotatoBooks = 0
+    var isDungeon = false
+    var hasRecipe = false
 
     constructor(itemStack: ItemStack) : this(id = "NONE", itemType = itemStack.item) {
         //TODO: create lookup for itemStack
@@ -85,6 +87,7 @@ class SItem(var id: String, var itemType: Item) {
                 this.reforge = SReforge.valueOf(currentNbt.getString("reforge", "NONE").uppercase(Locale.getDefault()))
                 this.hotPotatoBooks = currentNbt.getInt("hotPotatoBooks", 0)
                 this.fumingPotatoBooks = currentNbt.getInt("fumingPotatoBooks", 0)
+                this.isDungeon = currentNbt.getBoolean("dungeon", false)
             }
         }
     }
@@ -102,8 +105,6 @@ class SItem(var id: String, var itemType: Item) {
                 rarity // Keep the same if already at max rarity or would be admin
             }
         }
-        val isDungeon = baseStats.getStats().any { it.type == SStatType.GEAR_SCORE }
-        var highestReforgeRarity = rarity
 
         // Calculate stats
         val stats = SStatManager(baseStats)
@@ -118,11 +119,8 @@ class SItem(var id: String, var itemType: Item) {
 
         // Apply reforge bonuses
         if (reforge != SReforge.NONE) {
-            highestReforgeRarity = reforge.bonuses.keys.max()
-
-            val bonuses = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestReforgeRarity])!!
+            val bonuses = reforge.getStatByRarity(effectiveRarity)
             bonuses.forEach { bonusStat -> stats.add(bonusStat) }
-
         }
 
         // Apply gemstone bonuses
@@ -158,13 +156,15 @@ class SItem(var id: String, var itemType: Item) {
 
         // Lore Builder
         val loreBuilder = LoreBuilder()
+        loreBuilder.addLine(
+            Text.literal("Right-click to view recipes!").formatted(Formatting.YELLOW)
+        )
 
         stats.sort()
         stats.forEach { stat ->
             var reforgeText = Text.empty()
             if (reforge != SReforge.NONE) {
-                val reforgeStat = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestReforgeRarity])!!
-                    .find { it.type == stat.type }
+                val reforgeStat = reforge.getStatByRarity(effectiveRarity).find { it.type == stat.type }
                 reforgeText = if (reforgeStat != null) {
                     Text.literal(" (${statText(reforgeStat).string})")
                         .formatted(Formatting.BLUE)
@@ -275,6 +275,7 @@ class SItem(var id: String, var itemType: Item) {
                 currentNbt.putString("gemstoneSlots", gemstoneSlots.toString())
                 currentNbt.putInt("hotPotatoBooks", hotPotatoBooks)
                 currentNbt.putInt("fumingPotatoBooks", fumingPotatoBooks)
+                currentNbt.putBoolean("dungeon", isDungeon)
             })
         }
 

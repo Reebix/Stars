@@ -164,7 +164,6 @@ enum class SGemstoneType(
             return display
         }
 
-    //TODO: Add This to Reforge
     fun getStatByRarity(rarity: SRarity): SStat {
         var bonus = this.bonuses[rarity]
         if (bonus == null) {

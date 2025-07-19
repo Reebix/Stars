@@ -5,6 +5,9 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
@@ -16,10 +19,14 @@ import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.scoreboard.Scoreboard
+import net.minecraft.scoreboard.ScoreboardCriterion
+import net.minecraft.scoreboard.ScoreboardDisplaySlot
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
@@ -30,8 +37,8 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
+import net.minecraft.util.math.Vec3d
 import java.util.*
 import kotlin.math.min
 
@@ -70,11 +77,77 @@ class Stars : ModInitializer {
         return starText
     }
 
+
     override fun onInitialize() {
         // This is where you can initialize your mod. This method is called when Minecraft is starting.
         // You can use this to register commands, events, and other mod-related functionality.
         println("Stars has been initialized!")
 
+        ServerEntityEvents.ENTITY_LOAD.register { entity, world ->
+
+        }
+
+        ServerLifecycleEvents.SERVER_STARTED.register { server ->
+            server.worlds.forEach { world ->
+                world.iterateEntities().forEach { entity ->
+                    if (entity.commandTags.contains("REMOVE")) {
+                        entity.discard() // Entfernt die Entität sicher aus der Welt
+                    }
+                }
+
+                val dummy = SLivingEntity(
+                    SEntityType.DUMMY,
+                    world,
+                    Text.literal("Dummy").formatted(Formatting.GOLD),
+                    position = Vec3d(-788.50, 115.0, 1753.5)
+                )
+
+                dummy.addOnHitListener { dummy -> false }
+
+            }
+
+        }
+
+        ServerWorldEvents.LOAD.register { server, world ->
+            val scoreboard: Scoreboard = server.scoreboard
+            val healthObjective = scoreboard.getNullableObjective("health")
+            if ((healthObjective == null) && (scoreboard.objectives.find { it.name == "health" } == null)) {
+                scoreboard.addObjective(
+                    "health",
+                    ScoreboardCriterion.DUMMY,
+                    Text.literal("❤").formatted(Formatting.RED),
+                    ScoreboardCriterion.RenderType.INTEGER,
+                    true,
+                    null
+                )
+            }
+
+            scoreboard.setObjectiveSlot(ScoreboardDisplaySlot.BELOW_NAME, healthObjective)
+            return@register
+        }
+
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("testing").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    val healthTextEntity =
+                        DisplayEntity.TextDisplayEntity(EntityType.TEXT_DISPLAY, player.world).apply {
+                            this.updatePosition(player.x, player.y + 2.0, player.z)
+                            this.text =
+                                Text.literal(100.toString()).append(Text.literal(" ❤").formatted(Formatting.RED))
+                            this.billboardMode = DisplayEntity.BillboardMode.CENTER
+                            this.addCommandTag("REMOVE")
+                        }
+                    player.world.spawnEntity(healthTextEntity)
+                    healthTextEntity.startRiding(player, true)
+                    1
+                }
+            )
+        }
 
 
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
@@ -179,6 +252,7 @@ class Stars : ModInitializer {
                     }
                     val player = context.source?.player!!
 
+
                     var inv = SimpleInventory(9 * 6)
                     val screenHanderFactory = object : NamedScreenHandlerFactory {
                         override fun createMenu(
@@ -186,6 +260,7 @@ class Stars : ModInitializer {
                             playerInventory: PlayerInventory,
                             player: PlayerEntity
                         ): ScreenHandler {
+                            inventoryMap[syncId] = inv
                             return GenericContainerScreenHandler.createGeneric9x6(
                                 syncId,
                                 playerInventory,
@@ -193,10 +268,12 @@ class Stars : ModInitializer {
                             )
                         }
 
+
                         override fun getDisplayName(): Text = Text.literal("Star Inventory").append(getStarText(11))
 
-
                     }
+
+
                     val emptySequencedSet: SequencedSet<ComponentType<*>> = LinkedHashSet()
                     var component = TooltipDisplayComponent(true, emptySequencedSet)
                     val item = ItemStack(Items.BLACK_STAINED_GLASS_PANE)
@@ -206,6 +283,16 @@ class Stars : ModInitializer {
                     for (i in 0 until inv.size()) {
                         inv.setStack(i, item.copy())
                     }
+
+                    val necronHandle = SItem("NECRON_HANDLE", Items.STICK)
+                    necronHandle.name = "Necron's Handle"
+                    necronHandle.rarity = SRarity.LEGENDARY
+                    necronHandle.type = SItemType.ITEM
+                    necronHandle.isDungeon = true
+
+                    necronHandle.updateItemStack()
+                    inv.setStack(9 * 1 + 4, necronHandle.itemStack)
+
 
                     val sHelmet = SItem("PERFECT_HELMET_13", Items.DIAMOND_HELMET)
                     sHelmet.name = "Perfect Helmet - Tier XIII"
@@ -235,6 +322,7 @@ class Stars : ModInitializer {
                     lividDagger.stars = 5
                     lividDagger.hotPotatoBooks = 10
                     lividDagger.fumingPotatoBooks = 5
+                    lividDagger.isDungeon = true
                     lividDagger.gemstoneSlots.add(SGemstoneSlotType.JASPER, true, SGemstoneType.FINE_JASPER)
 
                     lividDagger.updateItemStack()
@@ -253,6 +341,7 @@ class Stars : ModInitializer {
                     hype.reforge = SReforge.HEROIC
                     hype.gemstoneSlots.add(SGemstoneSlotType.SAPPHIRE, true, SGemstoneType.PERFECT_SAPPHIRE)
                     hype.gemstoneSlots.add(SGemstoneSlotType.SAPPHIRE, true, SGemstoneType.PERFECT_SAPPHIRE)
+                    lividDagger.isDungeon = true
 
                     hype.updateItemStack()
                     inv.setStack(9 * 5 + 4, hype.itemStack)
@@ -282,42 +371,12 @@ class Stars : ModInitializer {
             )
         }
 
-
-
-
-
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
-                    val base: DisplayEntity.ItemDisplayEntity =
-                        EntityType.ITEM_DISPLAY.create(player.world, null) as DisplayEntity.ItemDisplayEntity
-                    base.updatePosition(
-                        player.x,
-                        player.y + 0.4,
-                        player.z
-                    )
-                    base.itemStack = ItemStack(Items.WHITE_DYE)
-                    base.itemStack.set(
-                        DataComponentTypes.ITEM_MODEL,
-                        Identifier.of("animated_java:blueprint/blueprint/base")
-                    )
-                    player.world.spawnEntity(base)
-                    val top = DisplayEntity.ItemDisplayEntity(
-                        EntityType.ITEM_DISPLAY, player.world
-                    )
 
-                    top.updatePosition(
-                        player.x,
-                        player.y + 1.4,
-                        player.z
-                    )
-                    top.itemStack = ItemStack(Items.WHITE_DYE)
-                    top.itemStack.set(
-                        DataComponentTypes.ITEM_MODEL,
-                        Identifier.of("animated_java:blueprint/blueprint/top")
-                    )
-                    player.world.spawnEntity(top)
+                    SLivingEntity(SEntityType.DUMMY, player.world, Text.literal("Dummy"), position = player.pos)
                     1
                 }
             )
@@ -325,9 +384,9 @@ class Stars : ModInitializer {
 
 
 
-        AttackEntityCallback.EVENT.register { player, world, hand, entity, hitResult ->
-
-
+        AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->
+            val sEntity = entityMap[entity.uuid]
+            sEntity?.onHit()
             ActionResult.PASS
         }
 
@@ -405,6 +464,7 @@ class Stars : ModInitializer {
         private val MOD_ID: String = "stars"
         private var test: Boolean = false
         var instance: Stars? = null
-
+        var inventoryMap = mutableMapOf<Int, Inventory>()
+        var entityMap = mutableMapOf<UUID, SLivingEntity>()
     }
 }

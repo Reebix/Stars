@@ -4,6 +4,7 @@
   "package": "org.rebix.stars.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ScreenHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
