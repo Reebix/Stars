@@ -158,7 +158,8 @@ class SItem(var id: String, var itemType: Item) {
 
         // Lore Builder
         val loreBuilder = LoreBuilder()
-        stats.getStats().sortBy { it.type.ordinal } // Sort by type ordinal for consistent order
+
+        stats.sort()
         stats.forEach { stat ->
             var reforgeText = Text.empty()
             if (reforge != SReforge.NONE) {
@@ -202,6 +203,7 @@ class SItem(var id: String, var itemType: Item) {
                     }
                 }
             }
+
 
             // Stat Line
             loreBuilder.addLine(

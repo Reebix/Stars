@@ -49,4 +49,12 @@ class SStatManager {
         val currentStat = getStat(stat.type)
         currentStat.value += stat.value
     }
+
+    fun sort() {
+        val sortedStats = stats.values.sortedBy { it.type.ordinal }
+        stats.clear()
+        for (stat in sortedStats) {
+            stats[stat.type] = stat
+        }
+    }
 }

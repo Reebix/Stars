@@ -234,6 +234,7 @@ class Stars : ModInitializer {
                     lividDagger.reforge = SReforge.DIRTY
                     lividDagger.stars = 5
                     lividDagger.hotPotatoBooks = 10
+                    lividDagger.fumingPotatoBooks = 5
                     lividDagger.gemstoneSlots.add(SGemstoneSlotType.JASPER, true, SGemstoneType.FINE_JASPER)
 
                     lividDagger.updateItemStack()
@@ -305,7 +306,7 @@ class Stars : ModInitializer {
                     val top = DisplayEntity.ItemDisplayEntity(
                         EntityType.ITEM_DISPLAY, player.world
                     )
-                    
+
                     top.updatePosition(
                         player.x,
                         player.y + 1.4,

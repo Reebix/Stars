@@ -57,7 +57,7 @@ enum class SGemstoneType(
     ),
     FINE_SAPPHIRE(
         SRarity.RARE, "✎",
-        Formatting.BLUE, hashMapOf(
+        Formatting.AQUA, hashMapOf(
             SRarity.COMMON to SStat(SStatType.INTELLIGENCE, 7),
             SRarity.UNCOMMON to SStat(SStatType.INTELLIGENCE, 8),
             SRarity.RARE to SStat(SStatType.INTELLIGENCE, 9),
@@ -68,7 +68,7 @@ enum class SGemstoneType(
     ),
     PERFECT_SAPPHIRE(
         SRarity.LEGENDARY, "✎",
-        Formatting.BLUE, hashMapOf(
+        Formatting.AQUA, hashMapOf(
             SRarity.COMMON to SStat(SStatType.INTELLIGENCE, 12),
             SRarity.UNCOMMON to SStat(SStatType.INTELLIGENCE, 14),
             SRarity.RARE to SStat(SStatType.INTELLIGENCE, 17),
