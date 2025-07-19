@@ -18,10 +18,10 @@ class SItem(var id: String, var itemType: Item) {
     var rarity: SRarity = SRarity.COMMON
     var type = SItemType.NONE
     var reforgeable: Boolean = false
-    var baseStats: MutableList<SStat> = mutableListOf()
+    var baseStats = SStatManager()
     var stars: Int = 0
     var recombobulated: Boolean = false
-    var gemstoneSlots: MutableList<SGemstoneSlot> = mutableListOf()
+    var gemstoneSlots = GemstoneManager()
     var reforge: SReforge = SReforge.NONE
     var hotPotatoBooks = 0
     var fumingPotatoBooks = 0
@@ -49,7 +49,7 @@ class SItem(var id: String, var itemType: Item) {
                             if (parts.size == 2) {
                                 val type = SStatType.valueOf(parts[0].trim().uppercase(Locale.getDefault()))
                                 val value = parts[1].trim().toDoubleOrNull() ?: 0.0
-                                baseStats.add(SStat(type, value))
+                                baseStats.add(type, value)
                             }
                         }
                     } catch (e: Exception) {
@@ -102,12 +102,11 @@ class SItem(var id: String, var itemType: Item) {
                 rarity // Keep the same if already at max rarity or would be admin
             }
         }
-        val isDungeon = baseStats.any { it.type == SStatType.GEAR_SCORE }
+        val isDungeon = baseStats.getStats().any { it.type == SStatType.GEAR_SCORE }
         var highestReforgeRarity = rarity
 
         // Calculate stats
-        val stats: MutableList<SStat> =
-            MutableList(baseStats.size) { index -> SStat(baseStats[index].type, baseStats[index].value) }
+        val stats = SStatManager(baseStats)
 
         //Stars (Should only apply to base stats)
         if (stars > 0) {
@@ -122,14 +121,7 @@ class SItem(var id: String, var itemType: Item) {
             highestReforgeRarity = reforge.bonuses.keys.max()
 
             val bonuses = reforge.bonuses.getOrDefault(effectiveRarity, reforge.bonuses[highestReforgeRarity])!!
-            bonuses.forEach { bonusStat ->
-                val existingStat = stats.find { it.type == bonusStat.type }
-                if (existingStat != null) {
-                    existingStat.value += bonusStat.value
-                } else {
-                    stats.add(SStat(bonusStat.type, bonusStat.value))
-                }
-            }
+            bonuses.forEach { bonusStat -> stats.add(bonusStat) }
 
         }
 
@@ -138,36 +130,25 @@ class SItem(var id: String, var itemType: Item) {
         gemstoneSlots.forEach { slot ->
             if (slot.gemstone != null) {
                 val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
+                stats.add(gemstoneStat)
                 val existingGemstoneStat = gemstoneStats.find { it.type == gemstoneStat.type }
                 if (existingGemstoneStat != null) {
                     existingGemstoneStat.value += gemstoneStat.value
                 } else {
                     gemstoneStats.add(SStat(gemstoneStat.type, gemstoneStat.value))
                 }
-                val existingStat = stats.find { it.type == gemstoneStat.type }
-                if (existingStat != null) {
-                    existingStat.value += gemstoneStat.value
-                } else {
-                    stats.add(SStat(gemstoneStat.type, gemstoneStat.value))
-                }
             }
         }
 
         // Apply hot potato books
         if (hotPotatoBooks + fumingPotatoBooks > 0) {
-            stats.forEach { stat ->
-                if (type.categories.contains(SItemCategory.WEAPONS)) {
-                    if (stat.type == SStatType.DAMAGE || stat.type == SStatType.STRENGTH) {
-                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 2
-                    }
-                }
-                if (type.categories.contains(SItemCategory.ARMOR)) {
-                    if (stat.type == SStatType.DEFENSE) {
-                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 2
-                    } else if (stat.type == SStatType.HEALTH) {
-                        stat.value += (hotPotatoBooks + fumingPotatoBooks) * 4
-                    }
-                }
+            if (type.categories.contains(SItemCategory.WEAPONS)) {
+                stats.add(SStatType.DAMAGE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+                stats.add(SStatType.STRENGTH, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+            }
+            if (type.categories.contains(SItemCategory.ARMOR)) {
+                stats.add(SStatType.DEFENSE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+                stats.add(SStatType.HEALTH, (hotPotatoBooks + fumingPotatoBooks) * 4.0)
             }
         }
 
@@ -177,7 +158,7 @@ class SItem(var id: String, var itemType: Item) {
 
         // Lore Builder
         val loreBuilder = LoreBuilder()
-        stats.sortBy { it.type.ordinal } // Sort by type ordinal for consistent order
+        stats.getStats().sortBy { it.type.ordinal } // Sort by type ordinal for consistent order
         stats.forEach { stat ->
             var reforgeText = Text.empty()
             if (reforge != SReforge.NONE) {
@@ -192,7 +173,7 @@ class SItem(var id: String, var itemType: Item) {
             }
 
             var gemstoneText = Text.empty()
-            if (gemstoneSlots.isNotEmpty()) {
+            if (gemstoneSlots.hasAny()) {
                 gemstoneSlots.forEach { slot ->
                     if (slot.gemstone != null && slot.gemstone!!.getStatByRarity(effectiveRarity).type == stat.type) {
                         slot.gemstone!!.getStatByRarity(effectiveRarity)
@@ -233,7 +214,7 @@ class SItem(var id: String, var itemType: Item) {
         }
 
         // gemstone slots
-        if (gemstoneSlots.isNotEmpty()) {
+        if (gemstoneSlots.hasAny()) {
             val text = Text.empty()
             gemstoneSlots.forEach { slot ->
                 text.append(slot.getText())

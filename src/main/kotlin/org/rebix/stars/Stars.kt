@@ -210,6 +210,9 @@ class Stars : ModInitializer {
                     sHelmet.rarity = SRarity.LEGENDARY
                     sHelmet.type = SItemType.HELMET
                     sHelmet.reforgeable = true
+                    sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
+                    sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
+                    sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
                     sHelmet.baseStats.add(SStat(SStatType.DEFENSE, 350))
 
                     sHelmet.updateItemStack()
@@ -218,23 +221,20 @@ class Stars : ModInitializer {
                     val lividDagger = SItem("LIVID_DAGGER", Items.IRON_SWORD)
                     lividDagger.name = "Livid Dagger"
                     lividDagger.rarity = SRarity.LEGENDARY
-                    lividDagger.baseStats.add(SStat(SStatType.GEAR_SCORE, 1039))
-                    lividDagger.baseStats.add(SStat(SStatType.DAMAGE, 210))
-                    lividDagger.baseStats.add(SStat(SStatType.STRENGTH, 60))
-                    lividDagger.baseStats.add(SStat(SStatType.CRIT_CHANCE, 100))
-                    lividDagger.baseStats.add(SStat(SStatType.CRIT_DAMAGE, 50))
-                    lividDagger.baseStats.add(SStat(SStatType.BONUS_ATTACK_SPEED, 50))
+                    lividDagger.baseStats.add(SStatType.GEAR_SCORE, 1039)
+                    lividDagger.baseStats.add(SStatType.DAMAGE, 210)
+                    lividDagger.baseStats.add(SStatType.STRENGTH, 60)
+                    lividDagger.baseStats.add(SStatType.CRIT_CHANCE, 100)
+                    lividDagger.baseStats.add(SStatType.CRIT_DAMAGE, 50)
+                    lividDagger.baseStats.add(SStatType.BONUS_ATTACK_SPEED, 50)
                     lividDagger.type = SItemType.SWORD
                     lividDagger.reforgeable = true
                     lividDagger.reforge = SReforge.DIRTY
                     lividDagger.stars = 5
                     lividDagger.hotPotatoBooks = 10
-                    lividDagger.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.JASPER).apply {
-                        gemstone = SGemstoneType.FINE_JASPER
-                        unlocked = true
-                    })
-                    lividDagger.updateItemStack()
+                    lividDagger.gemstoneSlots.add(SGemstoneSlotType.JASPER, true, SGemstoneType.FINE_JASPER)
 
+                    lividDagger.updateItemStack()
                     inv.setStack(9 * 2 + 4, lividDagger.itemStack)
 
                     var hype = SItem("HYPERION", Items.IRON_SWORD)
@@ -248,14 +248,8 @@ class Stars : ModInitializer {
                     hype.baseStats.add(SStat(SStatType.INTELLIGENCE, 350))
                     hype.baseStats.add(SStat(SStatType.FEROCITY, 30))
                     hype.reforge = SReforge.HEROIC
-                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.SAPPHIRE).apply {
-                        gemstone = SGemstoneType.PERFECT_SAPPHIRE
-                        unlocked = true
-                    })
-                    hype.gemstoneSlots.add(SGemstoneSlot(SGemstoneSlotType.SAPPHIRE).apply {
-                        gemstone = SGemstoneType.PERFECT_SAPPHIRE
-                        unlocked = true
-                    })
+                    hype.gemstoneSlots.add(SGemstoneSlotType.SAPPHIRE, true, SGemstoneType.PERFECT_SAPPHIRE)
+                    hype.gemstoneSlots.add(SGemstoneSlotType.SAPPHIRE, true, SGemstoneType.PERFECT_SAPPHIRE)
 
                     hype.updateItemStack()
                     inv.setStack(9 * 5 + 4, hype.itemStack)
