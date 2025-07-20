@@ -357,6 +357,8 @@ class Stars : ModInitializer {
                     sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
                     sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
                     sHelmet.baseStats.add(SStat(SStatType.DEFENSE, 350))
+                    sHelmet.baseStats.add(SStatType.DAMAGE, 100)
+                    sHelmet.baseStats.add(SStatType.STRENGTH, 100)
 
                     sHelmet.updateItemStack()
                     inv.setStack(4, sHelmet.itemStack)
@@ -445,7 +447,22 @@ class Stars : ModInitializer {
 
         AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->
             val sEntity = entityMap[entity.uuid]
-            sEntity?.onHit(player.pos, DamageIndicatorStyleType.CRIT)
+            val sItem = SItem(player.getStackInHand(hand))
+//            player.sendMessage(
+//                Text.literal("You attacked ${sEntity?.name ?: "an entity"} with ${sItem.name}")
+//                    .formatted(Formatting.GOLD),
+//                false
+//            )
+            val handler = SStatHandler()
+            handler.statManager = sItem.baseStats
+            val damage = handler.calcDamage()
+//            player.sendMessage(
+//                Text.literal("You dealt $damage damage to ${sEntity?.name ?: "an entity"}")
+//                    .formatted(Formatting.RED),
+//                false
+//            )
+            val combatEntity = sEntity as? SCombatEntity
+            combatEntity?.damage(damage.first, player.pos, damage.second)
             ActionResult.PASS
         }
 

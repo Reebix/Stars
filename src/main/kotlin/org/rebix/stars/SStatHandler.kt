@@ -2,7 +2,7 @@ package org.rebix.stars
 
 class SStatHandler {
     // https://wiki.hypixel.net/Damage
-    val statManager = SStatManager()
+    var statManager = SStatManager()
 
     fun calcDamage(): Pair<Long, DamageIndicatorStyleType> {
         val baseDamage = statManager.getStat(SStatType.DAMAGE).value

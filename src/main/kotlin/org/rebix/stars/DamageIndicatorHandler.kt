@@ -26,8 +26,6 @@ class DamageIndicatorHandler {
                     }
                 } else {
                     removalList.add(Pair(entity.first, entity.second + 1))
-//                        println(entity.second)
-
                 }
 
             }
@@ -60,17 +58,26 @@ class DamageIndicatorHandler {
 
         }
 
-        val string = damageIndicatorStyleType.prefix + damage.toString() + damageIndicatorStyleType.suffix
-        val text = Text.empty()
+        val style = damageIndicatorStyleType
+        // BEWARE: Skyblocker mod can cause damage to show wrong so DISABLE OR MAKE IT COMPATIBLE
+        val string = style.prefix + damage.toString() + style.suffix
+        var text = Text.empty()
         var formattingIndex = 0
-        string.forEach { char ->
-            text.append(
-                Text.literal(char.toString()).formatted(damageIndicatorStyleType.formatting.elementAt(formattingIndex))
-            )
-            if (char != ',')
-                formattingIndex = (formattingIndex + 1) % damageIndicatorStyleType.formatting.size
+        if (style != DamageIndicatorStyleType.NORMAL)
+            string.forEach { char ->
+                text.append(
+                    Text.literal(char.toString()).formatted(style.formatting[formattingIndex])
+                )
 
+                if (char != ',') {
+                    formattingIndex = (formattingIndex + 1) % style.formatting.size
+                }
+            } else {
+            text = Text.literal(damage.toString()).formatted(style.formatting[formattingIndex])
         }
+//        print(text)
+//        text.append(Text.literal("").formatted(Formatting.GOLD))
+
 
         val indicator = ArmorStandEntity(EntityType.ARMOR_STAND, world).apply {
             this.updatePosition(pos.x, pos.y, pos.z)
@@ -84,7 +91,9 @@ class DamageIndicatorHandler {
                 (this.dataTracker.get(ArmorStandEntity.ARMOR_STAND_FLAGS) or 0x10)
             )
         }
+
         world.spawnEntity(indicator)
+        println(indicator.customName)
 
         removalList.add(Pair(indicator, 0L))
     }

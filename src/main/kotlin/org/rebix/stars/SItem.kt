@@ -156,9 +156,10 @@ class SItem(var id: String, var itemType: Item) {
 
         // Lore Builder
         val loreBuilder = LoreBuilder()
-        loreBuilder.addLine(
-            Text.literal("Right-click to view recipes!").formatted(Formatting.YELLOW)
-        )
+        if (hasRecipe)
+            loreBuilder.addLine(
+                Text.literal("Right-click to view recipes!").formatted(Formatting.YELLOW)
+            )
 
         stats.sort()
         stats.forEach { stat ->
