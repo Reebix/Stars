@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
@@ -20,6 +21,7 @@ import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.entity.projectile.thrown.EggEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
@@ -33,6 +35,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -93,7 +96,6 @@ class Stars : ModInitializer {
 
     var dummyAnim: Pair<DisplayEntity.ItemDisplayEntity, Int>? = null
 
-
     override fun onInitialize() {
         // This is where you can initialize your mod. This method is called when Minecraft is starting.
         // You can use this to register commands, events, and other mod-related functionality.
@@ -103,7 +105,37 @@ class Stars : ModInitializer {
 
         }
 
+
+
+
+
         ServerTickEvents.END_SERVER_TICK.register { server ->
+            server.playerManager.playerList.stream().forEach { player ->
+                if (player is ServerPlayerEntity) {
+                    if (player.isUsingItem || player.handSwinging) {
+                        val itemStack = player.getStackInHand(player.activeHand)
+                        var sItem = SItem(itemStack)
+                        if (sItem.isShortbow) {
+                            player.stopUsingItem()
+                            // Shortbow logic
+                            for (i in 0 until 1) {
+                                val arrow = EggEntity(
+                                    EntityType.EGG,
+                                    player.world as ServerWorld
+                                )
+                                val direction = player.rotationVector
+                                arrow.setPosition(player.x, player.eyeY - 0.1, player.z)
+                                arrow.setVelocity(direction.x, direction.y, direction.z, 1.0f, 0.0f)
+//                                arrow.addVelocity(direction)
+                                player.world.spawnEntity(arrow)
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
             if (dummyAnim != null) {
                 val i = dummyAnim!!.second
                 val j = if (i < 5) i else 10 - i
@@ -373,6 +405,8 @@ class Stars : ModInitializer {
                     terminator.baseStats.add(SStatType.CRIT_DAMAGE, 250)
                     terminator.baseStats.add(SStatType.BONUS_ATTACK_SPEED, 40)
                     terminator.baseStats.add(SStatType.SHOT_COOLDOWN, 0.5)
+                    terminator.isShortbow = true
+                    terminator.reforgeable = true
 
                     terminator.updateItemStack()
                     inv.setStack(0, terminator.itemStack)
@@ -498,12 +532,53 @@ class Stars : ModInitializer {
             ActionResult.PASS
         }
 
-
-
-        UseItemCallback.EVENT.register { player, world, hand ->
+        AttackBlockCallback.EVENT.register { player, world, hand, pos, direction ->
+            var cancel = false // Event nicht abbrechen
             if (!world.isClient) {
                 val itemStack = player.getStackInHand(hand)
                 var sItem = SItem(itemStack)
+
+                if (sItem.isShortbow) {
+                    cancel = true
+                }
+            }
+
+            if (cancel) ActionResult.FAIL else ActionResult.PASS
+        }
+
+        ServerTickEvents.END_SERVER_TICK.register { server ->
+//            ServerPlayerEntity
+        }
+
+        UseItemCallback.EVENT.register { player, world, hand ->
+            var pass = true // Event nicht abbrechen
+            if (!world.isClient) {
+                val itemStack = player.getStackInHand(hand)
+                var sItem = SItem(itemStack)
+
+
+//                if (sItem.isShortbow) {
+//                    println("Short bow")
+//                    (world as ServerWorld).server.execute {
+//                        player.stopUsingItem() // Stops on server
+//                        (player as ServerPlayerEntity).networkHandler.sendPacket(
+//                            EntityStatusS2CPacket(player, 9.toByte())
+//                        )
+//
+//                        world.server.playerManager.sendToAround(
+//                            player,
+//                            player.pos.x, player.pos.y, player.pos.z,
+//                            64.0,
+//                            player.world.registryKey,
+//                            EntityStatusS2CPacket(player, 9.toByte())
+//                        )
+//                    }
+
+
+//                    pass = false
+//                }
+
+
                 if (sItem.id == "HYPERION") {
                     player.sendMessage(Text.literal("Wither Impact!"), false)
 
@@ -563,7 +638,9 @@ class Stars : ModInitializer {
 
 
             }
-            ActionResult.PASS // Event nicht
+            if (pass)
+                ActionResult.PASS
+            else ActionResult.FAIL
         }
 
     }

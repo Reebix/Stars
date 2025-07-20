@@ -13,6 +13,7 @@ import java.util.*
 
 class SItem(var id: String, var itemType: Item) {
 
+    var isShortbow: Boolean = false
     var itemStack: ItemStack = ItemStack(itemType)
     var name: String = id
     var rarity: SRarity = SRarity.COMMON
@@ -89,6 +90,8 @@ class SItem(var id: String, var itemType: Item) {
                 this.hotPotatoBooks = currentNbt.getInt("hotPotatoBooks", 0)
                 this.fumingPotatoBooks = currentNbt.getInt("fumingPotatoBooks", 0)
                 this.isDungeon = currentNbt.getBoolean("dungeon", false)
+                this.hasRecipe = currentNbt.getBoolean("hasRecipe", false)
+                this.isShortbow = currentNbt.getBoolean("shortbow", false)
             }
         }
 
@@ -247,6 +250,12 @@ class SItem(var id: String, var itemType: Item) {
         }
 
         loreBuilder.addLine()
+
+        if (isShortbow) {
+            loreBuilder.addLine(Text.literal("Shortbow: Instantly shoots!").formatted(effectiveRarity.formatting))
+            loreBuilder.addLine()
+        }
+
         if (reforgeable && reforge == SReforge.NONE) {
             loreBuilder.addLine(Text.literal("This item can be reforged!").formatted(Formatting.DARK_GRAY))
         }
@@ -298,6 +307,8 @@ class SItem(var id: String, var itemType: Item) {
                 currentNbt.putInt("hotPotatoBooks", hotPotatoBooks)
                 currentNbt.putInt("fumingPotatoBooks", fumingPotatoBooks)
                 currentNbt.putBoolean("dungeon", isDungeon)
+                currentNbt.putBoolean("hasRecipe", hasRecipe)
+                currentNbt.putBoolean("shortbow", isShortbow)
             })
         }
 
