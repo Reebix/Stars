@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.decoration.ArmorStandEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 import kotlin.experimental.or
@@ -39,7 +38,8 @@ class DamageIndicatorHandler {
         position: Vec3d,
         world: World,
         damage: Long,
-        attackerPosition: Vec3d? = null
+        attackerPosition: Vec3d? = null,
+        damageIndicatorStyleType: DamageIndicatorStyleType = DamageIndicatorStyleType.NORMAL,
     ) {
         var pos = position
         if (attackerPosition != null) {
@@ -60,12 +60,24 @@ class DamageIndicatorHandler {
 
         }
 
+        val string = damageIndicatorStyleType.prefix + damage.toString() + damageIndicatorStyleType.suffix
+        val text = Text.empty()
+        var formattingIndex = 0
+        string.forEach { char ->
+            text.append(
+                Text.literal(char.toString()).formatted(damageIndicatorStyleType.formatting.elementAt(formattingIndex))
+            )
+            if (char != ',')
+                formattingIndex = (formattingIndex + 1) % damageIndicatorStyleType.formatting.size
+
+        }
+
         val indicator = ArmorStandEntity(EntityType.ARMOR_STAND, world).apply {
             this.updatePosition(pos.x, pos.y, pos.z)
             this.setNoGravity(true)
             this.isInvisible = true
             this.isCustomNameVisible = true
-            this.customName = Text.literal(damage.toString()).formatted(Formatting.GRAY)
+            this.customName = text
             this.addCommandTag("REMOVE")
             this.dataTracker.set(
                 ArmorStandEntity.ARMOR_STAND_FLAGS,

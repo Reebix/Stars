@@ -7,6 +7,7 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
@@ -37,8 +38,11 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
+import net.minecraft.util.math.AffineTransformation
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
+import org.joml.Quaternionf
+import org.joml.Vector3f
 import java.util.*
 import kotlin.math.min
 
@@ -77,6 +81,18 @@ class Stars : ModInitializer {
         return starText
     }
 
+    fun animateHit(
+        entity: DisplayEntity.ItemDisplayEntity,
+    ) {
+        dummyAnim = Pair(
+            entity,
+            0
+        )
+    }
+
+
+    var dummyAnim: Pair<DisplayEntity.ItemDisplayEntity, Int>? = null
+
 
     override fun onInitialize() {
         // This is where you can initialize your mod. This method is called when Minecraft is starting.
@@ -87,6 +103,26 @@ class Stars : ModInitializer {
 
         }
 
+        ServerTickEvents.END_SERVER_TICK.register { server ->
+            if (dummyAnim != null) {
+                val i = dummyAnim!!.second
+                val j = if (i < 5) i else 10 - i
+                dummyAnim!!.first.setTransformation(
+                    AffineTransformation(
+                        Vector3f(0.0f, 0.0f, 0.0f),
+                        Quaternionf(0.0, 0.0, 0.0, 1.0),
+                        Vector3f(1f, 1f, 1f),
+                        Quaternionf(0.0, 0.0, -j * 0.01, 1.0)
+                    )
+                )
+                if (i >= 10) {
+                    dummyAnim = null
+                    return@register
+                }
+                dummyAnim = Pair(dummyAnim!!.first, i + 1)
+            }
+        }
+
         ServerLifecycleEvents.SERVER_STARTED.register { server ->
             server.worlds.forEach { world ->
                 world.iterateEntities().forEach { entity ->
@@ -95,13 +131,19 @@ class Stars : ModInitializer {
                     }
                 }
 
-                val dummy = SLivingEntity(
+                val dummy = SCombatEntity(
                     SEntityType.DUMMY,
                     world,
                     Text.literal("Dummy").formatted(Formatting.GOLD),
-                    position = Vec3d(-788.50, 115.0, 1753.5)
+                    position = Vec3d(-788.50, 115.0, 1753.5),
+                    _maxHealth = 0
                 )
-                dummy.addOnHitListener { dummy -> false }
+                dummy.addOnHitListener { dummy ->
+                    val body = dummy.parts.last() as DisplayEntity.ItemDisplayEntity
+                    animateHit(body)
+                    false
+                }
+
 
             }
 
@@ -388,12 +430,12 @@ class Stars : ModInitializer {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    SLivingEntity(
+                    SCombatEntity(
                         SEntityType.DUMMY,
                         player.world,
                         Text.literal("Dummy"),
                         position = player.pos
-                    ).health = 100_000
+                    ).health = 100
                     1
                 }
             )
@@ -403,7 +445,7 @@ class Stars : ModInitializer {
 
         AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->
             val sEntity = entityMap[entity.uuid]
-            sEntity?.onHit(player)
+            sEntity?.onHit(player.pos, DamageIndicatorStyleType.CRIT)
             ActionResult.PASS
         }
 

@@ -16,12 +16,13 @@ import net.minecraft.world.World
 import kotlin.math.max
 
 
-class SLivingEntity(
+open class SLivingEntity(
     val type: SEntityType,
     val world: World,
     val name: Text = Text.empty(),
     val position: Vec3d = Vec3d.ZERO,
-    var _health: Long = 100
+    _health: Long = 100,
+    val _maxHealth: Long = 100
 ) {
     var health = _health
         set(value) {
@@ -37,9 +38,10 @@ class SLivingEntity(
     var hitboxHeight = type.defaultHitbox.second
 
     var interactionEntity: InteractionEntity
-    var healthTextEntity: DisplayEntity.TextDisplayEntity
+//    var healthTextEntity: DisplayEntity.TextDisplayEntity
 
     var parts: MutableList<Entity> = mutableListOf()
+    var healthText = Text.empty()
 
     init {
         interactionEntity = InteractionEntity(
@@ -57,13 +59,13 @@ class SLivingEntity(
 //        print("Spawning entity with UUID: ${interactionEntity.uuid} at position: $position")
         world.spawnEntity(interactionEntity)
 
-        healthTextEntity = DisplayEntity.TextDisplayEntity(EntityType.TEXT_DISPLAY, world).apply {
-            this.updatePosition(position.x, position.y + hitboxHeight, position.z)
-            this.text = Text.literal(health.toString()).append(Text.literal(" ❤").formatted(Formatting.RED))
-            this.billboardMode = DisplayEntity.BillboardMode.CENTER
-            this.addCommandTag("REMOVE")
-        }
-        world.spawnEntity(healthTextEntity)
+//        healthTextEntity = DisplayEntity.TextDisplayEntity(EntityType.TEXT_DISPLAY, world).apply {
+//            this.updatePosition(position.x, position.y + hitboxHeight, position.z)
+//            this.text = Text.empty()
+//            this.billboardMode = DisplayEntity.BillboardMode.CENTER
+//            this.addCommandTag("REMOVE")
+//        }
+//        world.spawnEntity(healthTextEntity)
 
         for (part in type.parts) {
             val entity = DisplayEntity.ItemDisplayEntity(EntityType.ITEM_DISPLAY, world)
@@ -79,6 +81,8 @@ class SLivingEntity(
             world.spawnEntity(entity)
         }
 
+        updateHealthText()
+
 
     }
 
@@ -87,8 +91,31 @@ class SLivingEntity(
         interactionEntity.interactionHeight = hitboxHeight
     }
 
+    fun updateName() {
+        val newName = name.copy()
+        interactionEntity.customName = newName.append(healthText)
+    }
+
     fun updateHealthText() {
-        healthTextEntity.text = Text.literal(health.toString()).append(Text.literal(" ❤").formatted(Formatting.RED))
+        if (_maxHealth <= 0) {
+            healthText =
+                Text.literal(" N/A").formatted(Formatting.RED).append(Text.literal("❤").formatted(Formatting.RED))
+            updateName()
+            return
+        }
+
+        val healthString: String = health.toString()
+        val maxHealthString = _maxHealth.toString()
+        healthText =
+            Text.literal(" $healthString")
+                .formatted(if (_maxHealth / 2 >= health) Formatting.YELLOW else Formatting.GREEN)
+                .append(
+                    Text.literal("/").formatted(
+                        Formatting.WHITE
+                    )
+                ).append(Text.literal(maxHealthString).formatted(Formatting.GREEN))
+                .append(Text.literal("❤").formatted(Formatting.RED))
+        updateName()
     }
 
 
@@ -102,18 +129,23 @@ class SLivingEntity(
         onHitListeners.remove(listener)
     }
 
-    fun onHit(attacker: Entity? = null) {
-        val attackerPos = attacker?.pos
+    fun onHit(
+        attackerPosition: Vec3d? = null,
+        hitType: DamageIndicatorStyleType = DamageIndicatorStyleType.NORMAL,
+        damage: Long = 1
+    ) {
+        val attackerPos = attackerPosition
         Stars.damageIndicatorHandler.spawnDageIndicator(
             position.add(0.0, hitboxHeight.toDouble() * 0.75, 0.0),
             world,
-            1,
-            attackerPos
+            damage,
+            attackerPos,
+            hitType
         )
 
         onHitListeners.forEach { if (!it.onHit(this)) return }
 
-        health = max(0, health - 1)
+        health = max(0, health - damage)
         if (health <= 0) {
             kill()
         } else {
@@ -124,7 +156,6 @@ class SLivingEntity(
 
     fun kill() {
         interactionEntity.kill(world as ServerWorld?)
-        healthTextEntity.kill(world)
         parts.forEach { it.kill(world) }
         Stars.entityMap.remove(interactionEntity.uuid)
     }
