@@ -4,6 +4,7 @@ class SStatHandler {
     // https://wiki.hypixel.net/Damage
     var statManager = SStatManager()
 
+    // TODO: Replace Log with double for nearly infinite damage
     fun calcDamage(): Pair<Long, DamageIndicatorStyleType> {
         val baseDamage = statManager.getStat(SStatType.DAMAGE).value
         val strength = statManager.getStat(SStatType.STRENGTH).value

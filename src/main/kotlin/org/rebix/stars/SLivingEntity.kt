@@ -22,7 +22,7 @@ open class SLivingEntity(
     val name: Text = Text.empty(),
     val position: Vec3d = Vec3d.ZERO,
     _health: Long = 100,
-    val _maxHealth: Long = 100
+    var _maxHealth: Long = 100
 ) {
     var health = _health
         set(value) {
@@ -104,8 +104,19 @@ open class SLivingEntity(
             return
         }
 
-        val healthString: String = health.toString()
-        val maxHealthString = _maxHealth.toString()
+        val healthString: String =
+            if (_maxHealth / 100_000 >= 1) if (health / 1_000_000 >= 1) if (health / 1_000_000_000 >= 1) "${
+                String.format("%.1f", health.toDouble() / 1_000_000_000).replace(",", ".").replace(".0", "")
+            }B" else "${
+                String.format("%.1f", health.toDouble() / 1_000_000).replace(",", ".").replace(".0", "")
+            }M" else "${health / 1_000}k" else health.toString()
+
+        val maxHealthString =
+            if (_maxHealth / 100_000 >= 1) if (_maxHealth / 1_000_000 >= 1) if (_maxHealth / 1_000_000_000 >= 1) "${
+                String.format("%.1f", _maxHealth.toDouble() / 1_000_000_000).replace(",", ".").replace(".0", "")
+            }B" else "${
+                String.format("%.1f", _maxHealth.toDouble() / 1_000_000).replace(",", ".").replace(".0", "")
+            }M" else "${_maxHealth / 1_000}k" else _maxHealth.toString()
         healthText =
             Text.literal(" $healthString")
                 .formatted(if (_maxHealth / 2 >= health) Formatting.YELLOW else Formatting.GREEN)

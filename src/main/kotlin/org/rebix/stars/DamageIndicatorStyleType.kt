@@ -8,5 +8,9 @@ enum class DamageIndicatorStyleType(
     val suffix: String = ""
 ) {
     NORMAL(listOf(Formatting.GRAY)),
-    CRIT(listOf(Formatting.WHITE, Formatting.WHITE, Formatting.YELLOW, Formatting.GOLD, Formatting.RED), "✧", "✧"),
+    CRIT(
+        listOf(Formatting.WHITE, Formatting.WHITE, Formatting.YELLOW, Formatting.GOLD, Formatting.RED, Formatting.RED),
+        "✧",
+        "✧"
+    ),
 }

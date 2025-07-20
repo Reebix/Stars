@@ -343,6 +343,8 @@ class Stars : ModInitializer {
                     necronHandle.rarity = SRarity.LEGENDARY
                     necronHandle.type = SItemType.ITEM
                     necronHandle.isDungeon = true
+                    necronHandle.baseStats.add(SStat(SStatType.DAMAGE, 100000))
+                    necronHandle.baseStats.add(SStat(SStatType.STRENGTH, 1000))
 
                     necronHandle.updateItemStack()
                     inv.setStack(9 * 1 + 4, necronHandle.itemStack)
@@ -357,8 +359,23 @@ class Stars : ModInitializer {
                     sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
                     sHelmet.gemstoneSlots.add(SGemstoneSlotType.AMETHYST, true, SGemstoneType.FINE_AMETHYST)
                     sHelmet.baseStats.add(SStat(SStatType.DEFENSE, 350))
-                    sHelmet.baseStats.add(SStatType.DAMAGE, 100)
-                    sHelmet.baseStats.add(SStatType.STRENGTH, 100)
+                    sHelmet.baseStats.add(SStatType.DAMAGE, 10000)
+                    sHelmet.baseStats.add(SStatType.STRENGTH, 10000)
+                    sHelmet.baseStats.add(SStatType.CRIT_CHANCE, 10000)
+                    sHelmet.baseStats.add(SStatType.CRIT_DAMAGE, 10000)
+
+                    val terminator = SItem("TERMINATOR", Items.BOW)
+                    terminator.name = "Terminator"
+                    terminator.rarity = SRarity.LEGENDARY
+                    terminator.type = SItemType.BOW
+                    terminator.baseStats.add(SStatType.DAMAGE, 310)
+                    terminator.baseStats.add(SStatType.STRENGTH, 50)
+                    terminator.baseStats.add(SStatType.CRIT_DAMAGE, 250)
+                    terminator.baseStats.add(SStatType.BONUS_ATTACK_SPEED, 40)
+                    terminator.baseStats.add(SStatType.SHOT_COOLDOWN, 0.5)
+
+                    terminator.updateItemStack()
+                    inv.setStack(0, terminator.itemStack)
 
                     sHelmet.updateItemStack()
                     inv.setStack(4, sHelmet.itemStack)
@@ -422,6 +439,19 @@ class Stars : ModInitializer {
                             sItem.updateItemStack()
                             //[434] ♫ [VIP+] Rebbix is holding [Pitchin' Hellfire Rod ✪✪✪✪✪]
                             ///give @s minecraft:white_dye[minecraft:item_model="animated_java:blueprint/blueprint/base"]
+                            /*
+                            < 125 SkyBlock icons health.pngHP	10
+< 165 SkyBlock icons health.pngHP	11
+< 230 SkyBlock icons health.pngHP	12
+< 300 SkyBlock icons health.pngHP	13
+< 400 SkyBlock icons health.pngHP	14
+< 500 SkyBlock icons health.pngHP	15
+< 650 SkyBlock icons health.pngHP	16
+< 800 SkyBlock icons health.pngHP	17
+< 1,000 SkyBlock icons health.pngHP	18
+< 1,250 SkyBlock icons health.pngHP	19
+1,250+ SkyBlock icons health.pngHP	20
+                             */
                             1
                         })
             )
@@ -432,12 +462,14 @@ class Stars : ModInitializer {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    SCombatEntity(
+                    val dummy = SCombatEntity(
                         SEntityType.DUMMY,
                         player.world,
                         Text.literal("Dummy"),
                         position = player.pos
-                    ).health = 100
+                    )
+                    dummy._maxHealth = 1_500_000_000
+                    dummy.health = 1_500_000_000
                     1
                 }
             )
@@ -454,7 +486,7 @@ class Stars : ModInitializer {
 //                false
 //            )
             val handler = SStatHandler()
-            handler.statManager = sItem.baseStats
+            handler.statManager = sItem.effectiveStats
             val damage = handler.calcDamage()
 //            player.sendMessage(
 //                Text.literal("You dealt $damage damage to ${sEntity?.name ?: "an entity"}")

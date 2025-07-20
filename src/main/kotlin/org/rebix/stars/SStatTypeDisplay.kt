@@ -4,4 +4,5 @@ enum class SStatTypeDisplay {
     NONE,
     BASE,
     PERCENTAGE,
+    SECONDS,
 }

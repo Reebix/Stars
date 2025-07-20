@@ -60,7 +60,7 @@ class DamageIndicatorHandler {
 
         val style = damageIndicatorStyleType
         // BEWARE: Skyblocker mod can cause damage to show wrong so DISABLE OR MAKE IT COMPATIBLE
-        val string = style.prefix + damage.toString() + style.suffix
+        val string = style.prefix + String.format("%,d", damage).replace(".", ",") + style.suffix
         var text = Text.empty()
         var formattingIndex = 0
         if (style != DamageIndicatorStyleType.NORMAL)
@@ -69,9 +69,8 @@ class DamageIndicatorHandler {
                     Text.literal(char.toString()).formatted(style.formatting[formattingIndex])
                 )
 
-                if (char != ',') {
-                    formattingIndex = (formattingIndex + 1) % style.formatting.size
-                }
+                formattingIndex = (formattingIndex + 1) % style.formatting.size
+
             } else {
             text = Text.literal(damage.toString()).formatted(style.formatting[formattingIndex])
         }
@@ -93,8 +92,6 @@ class DamageIndicatorHandler {
         }
 
         world.spawnEntity(indicator)
-        println(indicator.customName)
-
         removalList.add(Pair(indicator, 0L))
     }
 

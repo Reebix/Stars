@@ -28,5 +28,6 @@ enum class SStatType(
     FISHING_SPEED("Fishing Speed", Formatting.AQUA),
     FORAGING_FORTUNE("Foraging Fortune", Formatting.GOLD),
     FARMING_FORTUNE("Farming Fortune", Formatting.GOLD),
+    SHOT_COOLDOWN("Shot Cooldown", Formatting.GREEN, SStatTypeDisplay.SECONDS),
 
 }

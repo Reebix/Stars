@@ -19,6 +19,7 @@ class SItem(var id: String, var itemType: Item) {
     var type = SItemType.NONE
     var reforgeable: Boolean = false
     var baseStats = SStatManager()
+    var effectiveStats = SStatManager()
     var stars: Int = 0
     var recombobulated: Boolean = false
     var gemstoneSlots = GemstoneManager()
@@ -90,6 +91,66 @@ class SItem(var id: String, var itemType: Item) {
                 this.isDungeon = currentNbt.getBoolean("dungeon", false)
             }
         }
+
+        this.updateStats()
+    }
+
+    val gemstoneStats: MutableList<SStat> = mutableListOf()
+
+    fun updateStats() {
+        effectiveStats = SStatManager(baseStats)
+
+        var effectiveRarity = rarity
+        if (recombobulated) {
+            // If recombobulated, increase the rarity by one level
+            effectiveRarity = if (rarity.ordinal < SRarity.entries.size - 2) {
+                SRarity.entries[rarity.ordinal + 1]
+            } else {
+                rarity // Keep the same if already at max rarity or would be admin
+            }
+        }
+
+
+        //Stars (Should only apply to base stats)
+        if (stars > 0) {
+            effectiveStats.forEach { stat ->
+                if (stat.type != SStatType.GEAR_SCORE)
+                    stat.value *= 1 + (0.02 * stars)
+            }
+        }
+
+        // Apply reforge bonuses
+        if (reforge != SReforge.NONE) {
+            val bonuses = reforge.getStatByRarity(effectiveRarity)
+            bonuses.forEach { bonusStat -> effectiveStats.add(bonusStat) }
+        }
+
+        // Apply gemstone bonuses
+        gemstoneStats.clear()
+        gemstoneSlots.forEach { slot ->
+            if (slot.gemstone != null) {
+                val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
+                effectiveStats.add(gemstoneStat)
+                val existingGemstoneStat = gemstoneStats.find { it.type == gemstoneStat.type }
+                if (existingGemstoneStat != null) {
+                    existingGemstoneStat.value += gemstoneStat.value
+                } else {
+                    gemstoneStats.add(SStat(gemstoneStat.type, gemstoneStat.value))
+                }
+            }
+        }
+
+        // Apply hot potato books
+        if (hotPotatoBooks + fumingPotatoBooks > 0) {
+            if (type.categories.contains(SItemCategory.WEAPONS)) {
+                effectiveStats.add(SStatType.DAMAGE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+                effectiveStats.add(SStatType.STRENGTH, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+            }
+            if (type.categories.contains(SItemCategory.ARMOR)) {
+                effectiveStats.add(SStatType.DEFENSE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
+                effectiveStats.add(SStatType.HEALTH, (hotPotatoBooks + fumingPotatoBooks) * 4.0)
+            }
+        }
     }
 
 
@@ -106,52 +167,12 @@ class SItem(var id: String, var itemType: Item) {
             }
         }
 
-        // Calculate stats
-        val stats = SStatManager(baseStats)
-
-        //Stars (Should only apply to base stats)
-        if (stars > 0) {
-            stats.forEach { stat ->
-                if (stat.type != SStatType.GEAR_SCORE)
-                    stat.value *= 1 + (0.02 * stars)
-            }
-        }
-
-        // Apply reforge bonuses
-        if (reforge != SReforge.NONE) {
-            val bonuses = reforge.getStatByRarity(effectiveRarity)
-            bonuses.forEach { bonusStat -> stats.add(bonusStat) }
-        }
-
-        // Apply gemstone bonuses
-        val gemstoneStats: MutableList<SStat> = mutableListOf()
-        gemstoneSlots.forEach { slot ->
-            if (slot.gemstone != null) {
-                val gemstoneStat = slot.gemstone!!.getStatByRarity(effectiveRarity)
-                stats.add(gemstoneStat)
-                val existingGemstoneStat = gemstoneStats.find { it.type == gemstoneStat.type }
-                if (existingGemstoneStat != null) {
-                    existingGemstoneStat.value += gemstoneStat.value
-                } else {
-                    gemstoneStats.add(SStat(gemstoneStat.type, gemstoneStat.value))
-                }
-            }
-        }
-
-        // Apply hot potato books
-        if (hotPotatoBooks + fumingPotatoBooks > 0) {
-            if (type.categories.contains(SItemCategory.WEAPONS)) {
-                stats.add(SStatType.DAMAGE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
-                stats.add(SStatType.STRENGTH, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
-            }
-            if (type.categories.contains(SItemCategory.ARMOR)) {
-                stats.add(SStatType.DEFENSE, (hotPotatoBooks + fumingPotatoBooks) * 2.0)
-                stats.add(SStatType.HEALTH, (hotPotatoBooks + fumingPotatoBooks) * 4.0)
-            }
-        }
+        // Update stats
+        updateStats()
 
         fun statText(stat: SStat): MutableText {
-            return Text.literal("${if (stat.type.display == SStatTypeDisplay.BASE || stat.type.display == SStatTypeDisplay.PERCENTAGE) if (stat.value >= 0) "+" else "-" else ""}${stat.formattedValue}${if (stat.type.display == SStatTypeDisplay.PERCENTAGE) "%" else ""}")
+            return Text.literal("${if (stat.type.display == SStatTypeDisplay.BASE || stat.type.display == SStatTypeDisplay.PERCENTAGE) if (stat.value >= 0) "+" else "-" else ""}${stat.formattedValue}${if (stat.type.display == SStatTypeDisplay.PERCENTAGE) "%" else if (stat.type.display == SStatTypeDisplay.SECONDS) "s" else ""}")
+                .formatted(stat.type.formatting)
         }
 
         // Lore Builder
@@ -161,8 +182,8 @@ class SItem(var id: String, var itemType: Item) {
                 Text.literal("Right-click to view recipes!").formatted(Formatting.YELLOW)
             )
 
-        stats.sort()
-        stats.forEach { stat ->
+        effectiveStats.sort()
+        effectiveStats.forEach { stat ->
             var reforgeText = Text.empty()
             if (reforge != SReforge.NONE) {
                 val reforgeStat = reforge.getStatByRarity(effectiveRarity).find { it.type == stat.type }
