@@ -21,11 +21,12 @@ import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.passive.ChickenEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.entity.projectile.thrown.EggEntity
+import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.network.packet.s2c.play.EntitiesDestroyS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.scoreboard.Scoreboard
 import net.minecraft.scoreboard.ScoreboardCriterion
@@ -64,6 +65,8 @@ class Stars : ModInitializer {
         colors.add(Formatting.GREEN)
         colors.add(Formatting.YELLOW)
     }
+
+//    val invisList = mutableListOf<Pair<ArrowEntity, Long>>()
 
     fun getStarText(amount: Int): Text {
         if (amount == 0) return Text.empty()
@@ -110,6 +113,39 @@ class Stars : ModInitializer {
 
 
         ServerTickEvents.END_SERVER_TICK.register { server ->
+
+            /*
+            val listCopy = invisList.toList()
+            invisList.clear()
+
+            listCopy.forEach { entity ->
+                if (entity.second >= 1) {
+                    if (entity.first.isAlive) {
+                        entity.first.createSpawnPacket(
+                            EntityTrackerEntry(
+                                entity.first.world as ServerWorld,
+                                entity.first,
+                                0,
+                                true,
+                                null,
+                                null
+                            )
+                        )?.let { packet ->
+                            server.playerManager.sendToAll(packet)
+                        }
+                        EntityVelocityUpdateS2CPacket(entity.first).let { packet ->
+                            server.playerManager.sendToAll(packet)
+                        }
+                    }
+                } else {
+                    invisList.add(Pair(entity.first, entity.second + 1))
+                }
+
+            }
+
+
+             */
+
             server.playerManager.playerList.stream().forEach { player ->
                 if (player is ServerPlayerEntity) {
                     if (player.isUsingItem || player.handSwinging) {
@@ -119,15 +155,61 @@ class Stars : ModInitializer {
                             player.stopUsingItem()
                             // Shortbow logic
                             for (i in 0 until 1) {
-                                val arrow = EggEntity(
-                                    EntityType.EGG,
+                                val arrow = ArrowEntity(
+                                    EntityType.ARROW,
                                     player.world as ServerWorld
                                 )
-                                val direction = player.rotationVector
-                                arrow.setPosition(player.x, player.eyeY - 0.1, player.z)
-                                arrow.setVelocity(direction.x, direction.y, direction.z, 1.0f, 0.0f)
-//                                arrow.addVelocity(direction)
+                                val direction = player.rotationVector.normalize()
+                                val factor = 0.075
+                                val forewardOffset = 0.5
+                                val velocity: Float = 2.5f
+                                val spawnBase = Vec3d(player.x, player.eyeY - 0.1, player.z).add(
+                                    direction.multiply(forewardOffset)
+                                )
+                                val rightDirection = Vec3d(
+                                    -direction.z,
+                                    0.0,
+                                    direction.x
+                                ).normalize()
+
+                                val leftDirection = rightDirection.multiply(-1.0)
+
+                                val arrowRight = ArrowEntity(
+                                    EntityType.ARROW,
+                                    player.world as ServerWorld
+                                )
+                                arrowRight.setPosition(spawnBase)
+                                arrowRight.setVelocity(
+                                    direction.x + rightDirection.x * factor,
+                                    direction.y,
+                                    direction.z + rightDirection.z * factor,
+                                    velocity, 0.0f
+                                )
+                                player.world.spawnEntity(arrowRight)
+
+                                val arrowLeft = ArrowEntity(
+                                    EntityType.ARROW,
+                                    player.world as ServerWorld
+                                )
+                                arrowLeft.setPosition(spawnBase)
+                                arrowLeft.setVelocity(
+                                    direction.x + leftDirection.x * factor,
+                                    direction.y,
+                                    direction.z + leftDirection.z * factor,
+                                    velocity, 0.0f
+                                )
+                                player.world.spawnEntity(arrowLeft)
+                                arrow.setPosition(spawnBase)
+                                arrow.setVelocity(direction.x, direction.y, direction.z, velocity, 0.0f)
+                                val destroyPacket = EntitiesDestroyS2CPacket(
+                                    arrow.id, arrowRight.id, arrowLeft.id
+                                )
                                 player.world.spawnEntity(arrow)
+                                player.networkHandler.sendPacket(destroyPacket)
+
+//                                invisList.add(Pair(arrow, 0))
+//                                invisList.add(Pair(arrowRight, 0))
+//                                invisList.add(Pair(arrowLeft, 0))
                             }
                         }
                     }

@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "2.1.21"
-    id("fabric-loom") version "1.11.0-alpha.28"
+    id("fabric-loom") version "1.11.4"
     id("maven-publish")
 }
 
@@ -65,10 +65,12 @@ tasks.processResources {
     filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand("version" to project.version,
+        expand(
+            "version" to project.version,
             "minecraft_version" to project.property("minecraft_version"),
             "loader_version" to project.property("loader_version"),
-            "kotlin_loader_version" to project.property("kotlin_loader_version"))
+            "kotlin_loader_version" to project.property("kotlin_loader_version")
+        )
     }
 }
 
@@ -90,7 +92,6 @@ tasks.jar {
         rename { "${it}_${project.base.archivesName}" }
     }
 }
-
 
 
 // configure the maven publication
