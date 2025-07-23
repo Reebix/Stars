@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
+import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
@@ -107,10 +108,6 @@ class Stars : ModInitializer {
 
         }
 
-
-
-
-
         ServerTickEvents.END_SERVER_TICK.register { server ->
 
             /*
@@ -145,6 +142,12 @@ class Stars : ModInitializer {
 
              */
 
+            entityMap.forEach { (_, entity) ->
+                if (entity is SCombatEntity) {
+                    entity.update()
+                }
+            }
+
             server.playerManager.playerList.stream().forEach { player ->
                 if (player is ServerPlayerEntity) {
                     if (player.isUsingItem || player.handSwinging) {
@@ -161,7 +164,7 @@ class Stars : ModInitializer {
                                 val direction = player.rotationVector.normalize()
                                 val factor = 0.075
                                 val forewardOffset = 0.5
-                                val velocity: Float = 2.5f
+                                val velocity: Float = 2f
                                 val spawnBase = Vec3d(player.x, player.eyeY - 0.1, player.z).add(
                                     direction.multiply(forewardOffset)
                                 )
@@ -200,6 +203,9 @@ class Stars : ModInitializer {
                                 player.world.spawnEntity(arrowLeft)
                                 arrow.setPosition(spawnBase)
                                 arrow.setVelocity(direction.x, direction.y, direction.z, velocity, 0.0f)
+                                arrowLeft.owner = player
+                                arrowRight.owner = player
+                                arrow.owner = player
 //                                val destroyPacket = EntitiesDestroyS2CPacket(
 //                                    arrow.id, arrowRight.id, arrowLeft.id
 //                                )
@@ -261,6 +267,8 @@ class Stars : ModInitializer {
             }
 
         }
+
+
 
         ServerWorldEvents.LOAD.register { server, world ->
             val scoreboard: Scoreboard = server.scoreboard
@@ -583,6 +591,9 @@ class Stars : ModInitializer {
                         Text.literal("Dummy"),
                         position = player.pos
                     )
+                    dummy.hitboxWidth = 3.0f
+                    dummy.hitboxHeight = 3.0f
+                    dummy.updateHitbox()
                     dummy._maxHealth = 1_500_000_000
                     dummy.health = 1_500_000_000
                     1
@@ -595,21 +606,23 @@ class Stars : ModInitializer {
         AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->
             val sEntity = entityMap[entity.uuid]
             val sItem = SItem(player.getStackInHand(hand))
+            if (!sItem.isShortbow) {
 //            player.sendMessage(
 //                Text.literal("You attacked ${sEntity?.name ?: "an entity"} with ${sItem.name}")
 //                    .formatted(Formatting.GOLD),
 //                false
 //            )
-            val handler = SStatHandler()
-            handler.statManager = sItem.effectiveStats
-            val damage = handler.calcDamage()
+                val handler = SStatHandler()
+                handler.statManager = sItem.effectiveStats
+                val damage = handler.calcDamage()
 //            player.sendMessage(
 //                Text.literal("You dealt $damage damage to ${sEntity?.name ?: "an entity"}")
 //                    .formatted(Formatting.RED),
 //                false
 //            )
-            val combatEntity = sEntity as? SCombatEntity
-            combatEntity?.damage(damage.first, player.pos, damage.second)
+                val combatEntity = sEntity as? SCombatEntity
+                combatEntity?.damage(damage.first, player.pos, damage.second)
+            }
             ActionResult.PASS
         }
 
@@ -629,6 +642,20 @@ class Stars : ModInitializer {
 
         ServerTickEvents.END_SERVER_TICK.register { server ->
 //            ServerPlayerEntity
+        }
+
+        UseEntityCallback.EVENT.register { player, world, hand, entity, _ ->
+            var pass = true // Event nicht abbrechen
+            if (!world.isClient) {
+                val itemStack = player.getStackInHand(hand)
+                var sItem = SItem(itemStack)
+
+                if (sItem.isShortbow) {
+                    player.setCurrentHand(hand)
+                    pass = false
+                }
+            }
+            if (pass) ActionResult.PASS else ActionResult.FAIL
         }
 
         UseItemCallback.EVENT.register { player, world, hand ->
@@ -677,17 +704,25 @@ class Stars : ModInitializer {
                     )
                     val allEntities = serverWorld.getOtherEntities(
                         player, Box(
-                            player.x - 500.0,
-                            player.y - 500.0,
-                            player.z - 500.0,
-                            player.x + 500.0,
-                            player.y + 500.0,
-                            player.z + 500.0
+                            player.x - 5.0,
+                            player.y - 5.0,
+                            player.z - 5.0,
+                            player.x + 5.0,
+                            player.y + 5.0,
+                            player.z + 5.0
                         )
                     )
 
                     allEntities.forEach {
-                        it.damage(serverWorld, player.damageSources.playerAttack(player), 1.0F)
+                        val entity = entityMap[it.uuid]
+                        entity?.let { sCombatEntity ->
+                            if (sCombatEntity is SCombatEntity) {
+                                val handler = SStatHandler()
+                                handler.statManager = sItem.effectiveStats
+                                val damage = handler.calcAbilityDamage(10_000.0, 0.3)
+                                sCombatEntity.damage(damage.first, player.pos, damage.second)
+                            }
+                        }
                     }
 
                 }
