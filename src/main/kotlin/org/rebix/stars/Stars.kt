@@ -26,7 +26,6 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
-import net.minecraft.network.packet.s2c.play.EntitiesDestroyS2CPacket
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.scoreboard.Scoreboard
 import net.minecraft.scoreboard.ScoreboardCriterion
@@ -201,11 +200,11 @@ class Stars : ModInitializer {
                                 player.world.spawnEntity(arrowLeft)
                                 arrow.setPosition(spawnBase)
                                 arrow.setVelocity(direction.x, direction.y, direction.z, velocity, 0.0f)
-                                val destroyPacket = EntitiesDestroyS2CPacket(
-                                    arrow.id, arrowRight.id, arrowLeft.id
-                                )
+//                                val destroyPacket = EntitiesDestroyS2CPacket(
+//                                    arrow.id, arrowRight.id, arrowLeft.id
+//                                )
                                 player.world.spawnEntity(arrow)
-                                player.networkHandler.sendPacket(destroyPacket)
+//                                player.networkHandler.sendPacket(destroyPacket)
 
 //                                invisList.add(Pair(arrow, 0))
 //                                invisList.add(Pair(arrowRight, 0))
