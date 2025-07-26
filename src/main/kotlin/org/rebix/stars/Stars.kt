@@ -9,10 +9,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback
-import net.fabricmc.fabric.api.event.player.UseEntityCallback
-import net.fabricmc.fabric.api.event.player.UseItemCallback
+import net.fabricmc.fabric.api.event.player.*
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
@@ -508,7 +505,7 @@ class Stars : ModInitializer {
                     terminator.name = "Terminator"
                     terminator.rarity = SRarity.LEGENDARY
                     terminator.type = SItemType.BOW
-                    terminator.baseStats.add(SStatType.DAMAGE, 310)
+                    terminator.baseStats.add(SStatType.DAMAGE, 310000000)
                     terminator.baseStats.add(SStatType.STRENGTH, 50)
                     terminator.baseStats.add(SStatType.CRIT_DAMAGE, 250)
                     terminator.baseStats.add(SStatType.BONUS_ATTACK_SPEED, 40)
@@ -582,17 +579,7 @@ class Stars : ModInitializer {
                             //[434] ♫ [VIP+] Rebbix is holding [Pitchin' Hellfire Rod ✪✪✪✪✪]
                             ///give @s minecraft:white_dye[minecraft:item_model="animated_java:blueprint/blueprint/base"]
                             /*
-                            < 125 SkyBlock icons health.pngHP	10
-< 165 SkyBlock icons health.pngHP	11
-< 230 SkyBlock icons health.pngHP	12
-< 300 SkyBlock icons health.pngHP	13
-< 400 SkyBlock icons health.pngHP	14
-< 500 SkyBlock icons health.pngHP	15
-< 650 SkyBlock icons health.pngHP	16
-< 800 SkyBlock icons health.pngHP	17
-< 1,000 SkyBlock icons health.pngHP	18
-< 1,250 SkyBlock icons health.pngHP	19
-1,250+ SkyBlock icons health.pngHP	20
+
                              */
                             1
                         })
@@ -610,8 +597,8 @@ class Stars : ModInitializer {
                         Text.literal("Dummy"),
                         position = player.pos
                     )
-                    dummy.hitboxWidth = 3.0f
-                    dummy.hitboxHeight = 3.0f
+                    dummy.hitboxWidth = 30.0f
+                    dummy.hitboxHeight = 30.0f
                     dummy.updateHitbox()
                     dummy._maxHealth = 1_500_000_000
                     dummy.health = 1_500_000_000
@@ -643,6 +630,17 @@ class Stars : ModInitializer {
                 combatEntity?.damage(damage.first, player.pos, damage.second)
             }
             ActionResult.PASS
+        }
+
+
+        UseBlockCallback.EVENT.register { player, world, hand, pos ->
+            var pass = true // Event nicht abbrechen
+            if (!world.isClient) {
+                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+                    pass = false
+                }
+            }
+            if (pass) ActionResult.PASS else ActionResult.FAIL
         }
 
         AttackBlockCallback.EVENT.register { player, world, hand, pos, direction ->

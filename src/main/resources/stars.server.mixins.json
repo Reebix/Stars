@@ -4,6 +4,8 @@
   "package": "org.rebix.stars.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "CropBlockMixin",
+    "FarmlandBlockMixin",
     "ScreenHandlerMixin"
   ],
   "injectors": {

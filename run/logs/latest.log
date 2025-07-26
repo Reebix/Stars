@@ -1,5 +1,5 @@
-[20:18:59] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
-[20:18:59] [main/INFO] (FabricLoader) Loading 45 mods:
+[23:46:06] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
+[23:46:07] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.127.0+1.21.5
 	- fabric-api-base 0.4.62+73a52b4b49
 	- fabric-api-lookup-api-v1 1.6.96+86c3a9f149
@@ -45,25 +45,25 @@
 	- minecraft 1.21.5
 	- mixinextras 0.4.1
 	- stars 1.0-SNAPSHOT
-[20:18:59] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[20:18:59] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[20:18:59] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[20:19:00] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[20:19:06] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
-[20:19:07] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
-[20:19:07] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
-[20:19:07] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[20:19:09] [main/INFO] (Minecraft) Loaded 1373 recipes
-[20:19:09] [main/INFO] (Minecraft) Loaded 1484 advancements
-[20:19:09] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 2.204 ms
-[20:19:09] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
-[20:19:09] [Server thread/INFO] (Minecraft) Loading properties
-[20:19:09] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[20:19:09] [Server thread/INFO] (Minecraft) Generating keypair
-[20:19:09] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
-[20:19:09] [Server thread/INFO] (Minecraft) Using default channel type
-[20:19:09] [Server thread/INFO] (Minecraft) Preparing level "world"
-[20:19:10] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
+[23:46:07] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[23:46:07] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[23:46:07] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[23:46:07] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[23:46:14] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
+[23:46:15] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
+[23:46:15] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
+[23:46:15] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[23:46:16] [main/INFO] (Minecraft) Loaded 1373 recipes
+[23:46:16] [main/INFO] (Minecraft) Loaded 1484 advancements
+[23:46:16] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.008 ms
+[23:46:16] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
+[23:46:16] [Server thread/INFO] (Minecraft) Loading properties
+[23:46:16] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[23:46:16] [Server thread/INFO] (Minecraft) Generating keypair
+[23:46:16] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
+[23:46:16] [Server thread/INFO] (Minecraft) Using default channel type
+[23:46:17] [Server thread/INFO] (Minecraft) Preparing level "world"
+[23:46:17] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
 java.lang.IllegalArgumentException: An objective with the name 'health' already exists!
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:50) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:403) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
@@ -86,31 +86,33 @@ java.lang.IllegalArgumentException: An objective with the name 'health' already 
 	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:290) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
-[20:19:10] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[20:19:11] [Worker-Main-14/INFO] (Minecraft) Preparing spawn area: 0%
-[20:19:11] [Worker-Main-14/INFO] (Minecraft) Preparing spawn area: 0%
-[20:19:11] [Server thread/INFO] (Minecraft) Time elapsed: 1074 ms
-[20:19:11] [Server thread/INFO] (Minecraft) Done (1.451s)! For help, type "help"
-[20:19:11] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[20:19:15] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:63869] logged in with entity id 52 at (-792.520653217942, 115.0, 1754.1412601159511)
-[20:19:15] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[20:20:12] [Server thread/INFO] (Minecraft) Rebbix was killed
-[20:20:12] [Server thread/INFO] (Minecraft) [Rebbix: Killed Rebbix]
-[20:22:14] [Server thread/INFO] (Minecraft) Rebbix lost connection: Disconnected
-[20:22:14] [Server thread/INFO] (Minecraft) Rebbix left the game
-[20:22:38] [User Authenticator #2/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[20:22:41] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:63471] logged in with entity id 3194 at (2.306404026305721, 70.0, -80.68103915763443)
-[20:22:41] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[20:23:22] [Server thread/INFO] (Minecraft) [Rebbix: Stopping the server]
-[20:23:22] [Server thread/INFO] (Minecraft) Stopping server
-[20:23:22] [Server thread/INFO] (Minecraft) Saving players
-[20:23:22] [Server thread/INFO] (Minecraft) Saving worlds
-[20:23:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[20:23:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[20:23:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/stars:hub
-[20:23:22] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
-[20:23:22] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
-[20:23:22] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[20:23:22] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (hub): All chunks are saved
-[20:23:22] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[20:23:22] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[23:46:17] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[23:46:18] [Worker-Main-20/INFO] (Minecraft) Preparing spawn area: 0%
+[23:46:18] [Worker-Main-20/INFO] (Minecraft) Preparing spawn area: 0%
+[23:46:18] [Server thread/INFO] (Minecraft) Time elapsed: 973 ms
+[23:46:18] [Server thread/INFO] (Minecraft) Done (1.291s)! For help, type "help"
+[23:46:19] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
+[23:46:22] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:60212] logged in with entity id 55 at (-793.6108633431429, 115.0, 1752.735001264497)
+[23:46:22] [Server thread/INFO] (Minecraft) Rebbix joined the game
+[23:46:23] [Server thread/WARN] (Minecraft) UUID of added entity already exists: ZombieEntity['Zombie'/74, l='ServerLevel[world]', x=-798.73, y=103.25, z=1811.38]
+[23:46:41] [Server thread/INFO] (Minecraft) [Rebbix: Changed the block at 39, 68, -83]
+[23:46:48] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule randomTickSpeed is now set to: 30000]
+[23:46:50] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2330ms or 46 ticks behind
+[23:47:05] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule randomTickSpeed is now set to: 3]
+[23:47:14] [Server thread/INFO] (Minecraft) [Rebbix: Changed the block at 39, 68, -83]
+[23:48:45] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule doMobSpawning is now set to: false]
+[23:48:48] [Server thread/INFO] (Minecraft) [Rebbix: Stopping the server]
+[23:48:48] [Server thread/INFO] (Minecraft) Stopping server
+[23:48:48] [Server thread/INFO] (Minecraft) Saving players
+[23:48:48] [Server thread/INFO] (Minecraft) Rebbix lost connection: Server closed
+[23:48:48] [Server thread/INFO] (Minecraft) Rebbix left the game
+[23:48:48] [Server thread/INFO] (Minecraft) Saving worlds
+[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/stars:hub
+[23:48:49] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
+[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (hub): All chunks are saved
+[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
