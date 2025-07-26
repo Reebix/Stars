@@ -1,6 +1,7 @@
 package org.rebix.stars
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.decoration.ArmorStandEntity
 import net.minecraft.server.world.ServerWorld
@@ -12,7 +13,7 @@ import kotlin.experimental.or
 class DamageIndicatorHandler {
     //CRIT: White, White, Yellow, Gold, Red   repeat
     //      ✧        7     7      3     ,7     65✧
-    val removalList = mutableListOf<Pair<ArmorStandEntity, Long>>()
+    val removalList = mutableListOf<Pair<Entity, Long>>()
 
     init {
         ServerTickEvents.END_SERVER_TICK.register { server ->
@@ -72,7 +73,8 @@ class DamageIndicatorHandler {
                 formattingIndex = (formattingIndex + 1) % style.formatting.size
 
             } else {
-            text = Text.literal(damage.toString()).formatted(style.formatting[formattingIndex])
+            text = Text.literal(String.format("%,d", damage).replace(".", ","))
+                .formatted(style.formatting[formattingIndex])
         }
 //        print(text)
 //        text.append(Text.literal("").formatted(Formatting.GOLD))
