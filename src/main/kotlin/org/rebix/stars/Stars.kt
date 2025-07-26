@@ -104,6 +104,12 @@ class Stars : ModInitializer {
         // You can use this to register commands, events, and other mod-related functionality.
         println("Stars has been initialized!")
 
+        ModDimensions.register()
+
+        ServerLifecycleEvents.SERVER_STARTED.register { server ->
+
+        }
+
         ServerEntityEvents.ENTITY_LOAD.register { entity, world ->
 
         }
@@ -242,13 +248,10 @@ class Stars : ModInitializer {
             }
         }
 
+
         ServerLifecycleEvents.SERVER_STARTED.register { server ->
             server.worlds.forEach { world ->
-                world.iterateEntities().forEach { entity ->
-                    if (entity.commandTags.contains("REMOVE")) {
-                        entity.kill(world)
-                    }
-                }
+
 
                 val dummy = SCombatEntity(
                     SEntityType.DUMMY,
@@ -319,6 +322,22 @@ class Stars : ModInitializer {
                         }
                     player.world.spawnEntity(healthTextEntity)
                     healthTextEntity.startRiding(player, true)
+                    1
+                }
+            )
+        }
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("hub").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    player.teleport(
+                        player.server!!.getWorld(ModDimensions.HUB_DIMENSION_KEY)!!,
+                        -2.50, 70.00, -69.50, setOf(), 180.0f, 0.0f, false
+                    )
                     1
                 }
             )
@@ -635,6 +654,10 @@ class Stars : ModInitializer {
                 if (sItem.isShortbow) {
                     cancel = true
                 }
+
+                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+                    cancel = true
+                }
             }
 
             if (cancel) ActionResult.FAIL else ActionResult.PASS
@@ -762,7 +785,7 @@ class Stars : ModInitializer {
     }
 
     companion object {
-        private val MOD_ID: String = "stars"
+        val MOD_ID: String = "stars"
         private var test: Boolean = false
         var instance: Stars? = null
         var inventoryMap = mutableMapOf<Int, Inventory>()

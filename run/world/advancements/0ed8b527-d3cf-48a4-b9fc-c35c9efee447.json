@@ -7,6 +7,7 @@
   },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
+      "minecraft:badlands": "2025-07-26 19:57:06 +0200",
       "minecraft:beach": "2025-06-16 19:34:38 +0200",
       "minecraft:forest": "2025-07-20 23:57:44 +0200",
       "minecraft:sparse_jungle": "2025-06-16 19:27:46 +0200",
@@ -487,6 +488,12 @@
   "minecraft:recipes/building_blocks/end_stone_brick_stairs_from_end_stone_stonecutting": {
     "criteria": {
       "has_end_stone": "2025-07-21 00:04:13 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/glow_item_frame": {
+    "criteria": {
+      "has_item_frame": "2025-07-26 19:43:08 +0200"
     },
     "done": true
   },
