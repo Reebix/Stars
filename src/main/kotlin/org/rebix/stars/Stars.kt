@@ -558,8 +558,6 @@ class Stars : ModInitializer {
                     hype.updateItemStack()
                     inv.setStack(9 * 5 + 4, hype.itemStack)
 
-
-
                     player.openHandledScreen(screenHanderFactory)
 
                     1
@@ -591,22 +589,17 @@ class Stars : ModInitializer {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    val dummy = SCombatEntity(
-                        SEntityType.DUMMY,
-                        player.world,
-                        Text.literal("Dummy"),
-                        position = player.pos
-                    )
-                    dummy.hitboxWidth = 30.0f
-                    dummy.hitboxHeight = 30.0f
-                    dummy.updateHitbox()
-                    dummy._maxHealth = 1_500_000_000
-                    dummy.health = 1_500_000_000
+                    for (i in 0 until 100)
+                        SCombatEntity(
+                            SEntityType.ZOMBIE,
+                            player.world,
+                            Text.literal("Zombie"),
+                            position = player.pos
+                        )
                     1
                 }
             )
         }
-
 
 
         AttackEntityCallback.EVENT.register { player, world, hand, entity, _ ->

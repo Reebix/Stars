@@ -4,9 +4,13 @@
   "package": "org.rebix.stars.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ArrowEntityMixin",
     "CropBlockMixin",
+    "DamageSourceMixin",
     "FarmlandBlockMixin",
-    "ScreenHandlerMixin"
+    "LivingEntityMixin",
+    "ScreenHandlerMixin",
+    "ZombieEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

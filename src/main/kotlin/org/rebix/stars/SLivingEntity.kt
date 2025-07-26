@@ -3,6 +3,7 @@ package org.rebix.stars
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.decoration.InteractionEntity
 import net.minecraft.item.ItemStack
@@ -34,30 +35,37 @@ open class SLivingEntity(
         fun onHit(entity: SLivingEntity): Boolean
     }
 
-    var hitboxWidth = type.defaultHitbox.first
-    var hitboxHeight = type.defaultHitbox.second
+    var hitboxWidth = type.defaultHitbox?.first ?: 0.8f
+    var hitboxHeight = type.defaultHitbox?.second ?: 1.9f
 
-    var interactionEntity: InteractionEntity
+    var interactionEntity: InteractionEntity? = null
+    var baseEntity: Entity? = null
 //    var healthTextEntity: DisplayEntity.TextDisplayEntity
 
     var parts: MutableList<Entity> = mutableListOf()
     var healthText = Text.empty()
 
     init {
-        interactionEntity = InteractionEntity(
-            EntityType.INTERACTION,
-            world
-        ).apply {
-            this.updatePosition(position.x, position.y, position.z)
-            this.interactionWidth = hitboxWidth
-            this.interactionHeight = hitboxHeight
+        if (type.defaultHitbox != null) {
+            interactionEntity = InteractionEntity(
+                EntityType.INTERACTION,
+                world
+            ).apply {
+                this.updatePosition(position.x, position.y, position.z)
+                this.interactionWidth = hitboxWidth
+                this.interactionHeight = hitboxHeight
+            }
+            baseEntity = interactionEntity
+
+        } else {
+            baseEntity = type.baseEntity!!.create(world, SpawnReason.LOAD)
         }
-        interactionEntity.addCommandTag("REMOVE")
-        interactionEntity.customName = name
-        interactionEntity.isCustomNameVisible = true
-        Stars.entityMap[interactionEntity.uuid] = this
-//        print("Spawning entity with UUID: ${interactionEntity.uuid} at position: $position")
-        world.spawnEntity(interactionEntity)
+        baseEntity!!.updatePosition(position.x, position.y, position.z)
+        baseEntity!!.customName = name
+        baseEntity!!.isCustomNameVisible = true
+        baseEntity!!.addCommandTag("REMOVE")
+        Stars.entityMap[baseEntity!!.uuid] = this
+        world.spawnEntity(baseEntity!!)
 
 //        healthTextEntity = DisplayEntity.TextDisplayEntity(EntityType.TEXT_DISPLAY, world).apply {
 //            this.updatePosition(position.x, position.y + hitboxHeight, position.z)
@@ -87,13 +95,15 @@ open class SLivingEntity(
     }
 
     fun updateHitbox() {
-        interactionEntity.interactionWidth = hitboxWidth
-        interactionEntity.interactionHeight = hitboxHeight
+        interactionEntity?.interactionWidth = hitboxWidth
+        interactionEntity?.interactionHeight = hitboxHeight
     }
 
     fun updateName() {
         val newName = name.copy()
-        interactionEntity.customName = newName.append(healthText)
+
+        baseEntity!!.customName = newName.append(healthText)
+
     }
 
     fun updateHealthText() {
@@ -166,9 +176,10 @@ open class SLivingEntity(
     }
 
     fun kill() {
-        interactionEntity.kill(world as ServerWorld?)
-        parts.forEach { it.kill(world) }
-        Stars.entityMap.remove(interactionEntity.uuid)
+
+        parts.forEach { it.kill(world as ServerWorld?) }
+        Stars.entityMap.remove(baseEntity?.uuid)
+        baseEntity?.kill(world as ServerWorld?)
     }
 
 

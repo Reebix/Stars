@@ -1,5 +1,5 @@
-[23:46:06] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
-[23:46:07] [main/INFO] (FabricLoader) Loading 45 mods:
+[01:10:56] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
+[01:10:56] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.127.0+1.21.5
 	- fabric-api-base 0.4.62+73a52b4b49
 	- fabric-api-lookup-api-v1 1.6.96+86c3a9f149
@@ -45,25 +45,25 @@
 	- minecraft 1.21.5
 	- mixinextras 0.4.1
 	- stars 1.0-SNAPSHOT
-[23:46:07] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[23:46:07] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[23:46:07] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[23:46:07] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[23:46:14] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
-[23:46:15] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
-[23:46:15] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
-[23:46:15] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[23:46:16] [main/INFO] (Minecraft) Loaded 1373 recipes
-[23:46:16] [main/INFO] (Minecraft) Loaded 1484 advancements
-[23:46:16] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.008 ms
-[23:46:16] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
-[23:46:16] [Server thread/INFO] (Minecraft) Loading properties
-[23:46:16] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[23:46:16] [Server thread/INFO] (Minecraft) Generating keypair
-[23:46:16] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
-[23:46:16] [Server thread/INFO] (Minecraft) Using default channel type
-[23:46:17] [Server thread/INFO] (Minecraft) Preparing level "world"
-[23:46:17] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
+[01:10:57] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[01:10:57] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[01:10:57] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[01:10:57] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[01:11:04] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
+[01:11:04] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
+[01:11:04] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
+[01:11:04] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[01:11:05] [main/INFO] (Minecraft) Loaded 1373 recipes
+[01:11:05] [main/INFO] (Minecraft) Loaded 1484 advancements
+[01:11:05] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.041 ms
+[01:11:05] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
+[01:11:05] [Server thread/INFO] (Minecraft) Loading properties
+[01:11:05] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[01:11:05] [Server thread/INFO] (Minecraft) Generating keypair
+[01:11:06] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
+[01:11:06] [Server thread/INFO] (Minecraft) Using default channel type
+[01:11:06] [Server thread/INFO] (Minecraft) Preparing level "world"
+[01:11:06] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
 java.lang.IllegalArgumentException: An objective with the name 'health' already exists!
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:50) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:403) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
@@ -86,33 +86,159 @@ java.lang.IllegalArgumentException: An objective with the name 'health' already 
 	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:290) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
-[23:46:17] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[23:46:18] [Worker-Main-20/INFO] (Minecraft) Preparing spawn area: 0%
-[23:46:18] [Worker-Main-20/INFO] (Minecraft) Preparing spawn area: 0%
-[23:46:18] [Server thread/INFO] (Minecraft) Time elapsed: 973 ms
-[23:46:18] [Server thread/INFO] (Minecraft) Done (1.291s)! For help, type "help"
-[23:46:19] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[23:46:22] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:60212] logged in with entity id 55 at (-793.6108633431429, 115.0, 1752.735001264497)
-[23:46:22] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[23:46:23] [Server thread/WARN] (Minecraft) UUID of added entity already exists: ZombieEntity['Zombie'/74, l='ServerLevel[world]', x=-798.73, y=103.25, z=1811.38]
-[23:46:41] [Server thread/INFO] (Minecraft) [Rebbix: Changed the block at 39, 68, -83]
-[23:46:48] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule randomTickSpeed is now set to: 30000]
-[23:46:50] [Server thread/WARN] (Minecraft) Can't keep up! Is the server overloaded? Running 2330ms or 46 ticks behind
-[23:47:05] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule randomTickSpeed is now set to: 3]
-[23:47:14] [Server thread/INFO] (Minecraft) [Rebbix: Changed the block at 39, 68, -83]
-[23:48:45] [Server thread/INFO] (Minecraft) [Rebbix: Gamerule doMobSpawning is now set to: false]
-[23:48:48] [Server thread/INFO] (Minecraft) [Rebbix: Stopping the server]
-[23:48:48] [Server thread/INFO] (Minecraft) Stopping server
-[23:48:48] [Server thread/INFO] (Minecraft) Saving players
-[23:48:48] [Server thread/INFO] (Minecraft) Rebbix lost connection: Server closed
-[23:48:48] [Server thread/INFO] (Minecraft) Rebbix left the game
-[23:48:48] [Server thread/INFO] (Minecraft) Saving worlds
-[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[23:48:48] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/stars:hub
-[23:48:49] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
-[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved
-[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (hub): All chunks are saved
-[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[23:48:49] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[01:11:06] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[01:11:07] [Worker-Main-15/INFO] (Minecraft) Preparing spawn area: 0%
+[01:11:07] [Worker-Main-15/INFO] (Minecraft) Preparing spawn area: 0%
+[01:11:07] [Server thread/INFO] (Minecraft) Time elapsed: 980 ms
+[01:11:07] [Server thread/INFO] (Minecraft) Done (1.298s)! For help, type "help"
+[01:11:14] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
+[01:11:17] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:60121] logged in with entity id 83 at (2.300000011920929, 70.0, -20.49811670824022)
+[01:11:17] [Server thread/INFO] (Minecraft) Rebbix joined the game
+[01:11:23] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/84, l='ServerLevel[world]', x=2.57, y=70.00, z=-25.84] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:11:23] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/85, l='ServerLevel[world]', x=2.11, y=70.00, z=-27.57] died: Zombie 0/100❤ was killed
+[01:11:23] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 45/100❤'/86, l='ServerLevel[world]', x=2.80, y=70.00, z=-27.10] died: Zombie 45/100❤ was killed
+[01:11:23] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 70/100❤'/87, l='ServerLevel[world]', x=2.12, y=70.00, z=-26.61] died: Zombie 70/100❤ was killed while fighting Rebbix
+[01:11:32] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/99, l='ServerLevel[world]', x=5.69, y=70.00, z=-49.55] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:28] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/123, l='ServerLevel[world]', x=5.33, y=71.09, z=-82.10] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:33] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/150, l='ServerLevel[world]', x=-2.83, y=70.00, z=-77.49] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:33] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/151, l='ServerLevel[world]', x=-2.15, y=70.00, z=-78.49] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:33] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/155, l='ServerLevel[world]', x=-1.51, y=70.00, z=-78.51] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/149, l='ServerLevel[world]', x=-2.68, y=70.00, z=-78.47] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/154, l='ServerLevel[world]', x=-3.49, y=70.00, z=-79.49] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/153, l='ServerLevel[world]', x=-2.87, y=70.00, z=-79.51] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/156, l='ServerLevel[world]', x=-3.95, y=70.00, z=-77.52] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/147, l='ServerLevel[world]', x=-2.24, y=70.00, z=-79.49] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:34] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/152, l='ServerLevel[world]', x=-1.05, y=70.00, z=-79.50] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:35] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/148, l='ServerLevel[world]', x=-4.21, y=70.00, z=-79.72] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/291, l='ServerLevel[world]', x=-11.21, y=70.00, z=-77.97] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/293, l='ServerLevel[world]', x=-10.80, y=70.00, z=-76.94] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/290, l='ServerLevel[world]', x=-12.09, y=70.83, z=-77.64] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/292, l='ServerLevel[world]', x=-10.61, y=70.00, z=-78.03] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/294, l='ServerLevel[world]', x=-9.84, y=70.00, z=-78.03] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/280, l='ServerLevel[world]', x=-9.11, y=70.00, z=-78.38] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:39] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/296, l='ServerLevel[world]', x=-9.35, y=70.00, z=-77.38] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/281, l='ServerLevel[world]', x=-8.34, y=70.00, z=-78.29] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/295, l='ServerLevel[world]', x=-9.09, y=70.00, z=-76.56] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/289, l='ServerLevel[world]', x=-8.43, y=70.00, z=-76.26] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/288, l='ServerLevel[world]', x=-7.60, y=70.00, z=-77.58] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/287, l='ServerLevel[world]', x=-7.76, y=70.00, z=-76.88] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/284, l='ServerLevel[world]', x=-7.10, y=70.00, z=-76.15] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/279, l='ServerLevel[world]', x=-6.83, y=70.00, z=-76.88] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/286, l='ServerLevel[world]', x=-6.93, y=70.00, z=-78.57] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/285, l='ServerLevel[world]', x=-6.69, y=70.00, z=-77.70] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/282, l='ServerLevel[world]', x=-7.87, y=70.00, z=-74.80] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/283, l='ServerLevel[world]', x=-7.41, y=70.00, z=-75.94] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/277, l='ServerLevel[world]', x=-6.48, y=70.00, z=-76.64] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:40] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/278, l='ServerLevel[world]', x=-4.46, y=70.00, z=-75.09] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/472, l='ServerLevel[world]', x=-2.60, y=70.00, z=-87.63] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/445, l='ServerLevel[world]', x=-1.06, y=70.00, z=-88.03] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/446, l='ServerLevel[world]', x=-0.44, y=70.00, z=-87.39] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/452, l='ServerLevel[world]', x=0.39, y=70.00, z=-86.50] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/451, l='ServerLevel[world]', x=1.24, y=70.00, z=-86.85] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/450, l='ServerLevel[world]', x=0.45, y=70.00, z=-87.18] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/447, l='ServerLevel[world]', x=-0.92, y=70.00, z=-86.88] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/448, l='ServerLevel[world]', x=-0.30, y=70.00, z=-87.00] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/476, l='ServerLevel[world]', x=-1.86, y=70.00, z=-86.93] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/478, l='ServerLevel[world]', x=-1.37, y=70.06, z=-86.37] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/449, l='ServerLevel[world]', x=-0.54, y=70.06, z=-86.23] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/481, l='ServerLevel[world]', x=-2.95, y=70.00, z=-86.84] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/473, l='ServerLevel[world]', x=-3.76, y=70.00, z=-86.95] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/455, l='ServerLevel[world]', x=0.09, y=70.06, z=-85.87] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/479, l='ServerLevel[world]', x=-1.55, y=70.00, z=-85.79] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:55] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/475, l='ServerLevel[world]', x=-2.09, y=70.00, z=-85.84] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/484, l='ServerLevel[world]', x=-0.91, y=70.06, z=-85.65] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/469, l='ServerLevel[world]', x=-6.23, y=70.00, z=-87.23] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/471, l='ServerLevel[world]', x=-5.28, y=70.00, z=-87.68] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/487, l='ServerLevel[world]', x=-4.64, y=70.00, z=-87.12] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/470, l='ServerLevel[world]', x=-6.16, y=70.00, z=-86.34] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/474, l='ServerLevel[world]', x=-4.70, y=70.00, z=-87.86] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:56] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/495, l='ServerLevel[world]', x=-4.59, y=70.00, z=-86.57] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/496, l='ServerLevel[world]', x=-6.01, y=70.00, z=-85.74] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/468, l='ServerLevel[world]', x=-5.26, y=70.00, z=-85.97] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/494, l='ServerLevel[world]', x=-5.25, y=70.00, z=-85.38] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/493, l='ServerLevel[world]', x=-5.84, y=70.00, z=-84.84] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/490, l='ServerLevel[world]', x=-4.85, y=70.00, z=-84.82] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/491, l='ServerLevel[world]', x=-4.76, y=70.00, z=-84.26] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/498, l='ServerLevel[world]', x=-6.09, y=70.00, z=-84.10] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/538, l='ServerLevel[world]', x=-4.14, y=70.00, z=-84.89] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/518, l='ServerLevel[world]', x=-5.21, y=70.00, z=-83.67] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/519, l='ServerLevel[world]', x=-4.15, y=70.00, z=-83.92] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/489, l='ServerLevel[world]', x=-4.33, y=70.00, z=-85.54] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/539, l='ServerLevel[world]', x=-3.58, y=70.00, z=-84.71] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/477, l='ServerLevel[world]', x=-4.56, y=70.00, z=-86.73] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/482, l='ServerLevel[world]', x=-4.33, y=70.00, z=-86.23] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/488, l='ServerLevel[world]', x=-3.66, y=70.00, z=-86.12] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/499, l='ServerLevel[world]', x=-9.32, y=70.00, z=-85.47] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/462, l='ServerLevel[world]', x=-3.76, y=70.00, z=-85.47] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/480, l='ServerLevel[world]', x=-3.70, y=70.00, z=-86.80] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/486, l='ServerLevel[world]', x=-3.08, y=70.00, z=-85.51] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/540, l='ServerLevel[world]', x=-3.07, y=70.00, z=-85.01] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/485, l='ServerLevel[world]', x=-3.08, y=70.00, z=-86.18] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/460, l='ServerLevel[world]', x=-2.51, y=70.00, z=-85.94] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/537, l='ServerLevel[world]', x=-3.10, y=70.00, z=-84.19] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/535, l='ServerLevel[world]', x=-3.78, y=70.00, z=-83.77] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/517, l='ServerLevel[world]', x=-5.88, y=70.00, z=-82.89] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/531, l='ServerLevel[world]', x=-5.04, y=70.00, z=-83.01] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/528, l='ServerLevel[world]', x=-4.02, y=70.00, z=-82.32] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/530, l='ServerLevel[world]', x=-3.79, y=70.00, z=-82.81] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/443, l='ServerLevel[world]', x=-3.49, y=70.00, z=-81.60] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/527, l='ServerLevel[world]', x=-2.86, y=70.00, z=-82.45] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/442, l='ServerLevel[world]', x=-4.30, y=70.00, z=-81.38] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:57] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/529, l='ServerLevel[world]', x=-3.91, y=70.00, z=-83.12] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/510, l='ServerLevel[world]', x=-3.19, y=70.00, z=-82.13] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/504, l='ServerLevel[world]', x=-3.19, y=70.00, z=-80.58] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/513, l='ServerLevel[world]', x=-3.13, y=70.00, z=-82.81] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/441, l='ServerLevel[world]', x=-3.03, y=70.00, z=-81.27] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/532, l='ServerLevel[world]', x=-4.73, y=70.00, z=-83.89] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/536, l='ServerLevel[world]', x=-3.99, y=70.00, z=-84.41] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/534, l='ServerLevel[world]', x=-3.44, y=70.00, z=-83.63] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/461, l='ServerLevel[world]', x=-4.50, y=70.00, z=-85.66] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/456, l='ServerLevel[world]', x=-3.65, y=70.00, z=-86.75] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/459, l='ServerLevel[world]', x=-3.21, y=70.00, z=-85.52] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/466, l='ServerLevel[world]', x=-4.12, y=70.00, z=-84.98] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/483, l='ServerLevel[world]', x=-5.06, y=70.00, z=-86.57] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/463, l='ServerLevel[world]', x=-2.06, y=70.00, z=-85.53] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/465, l='ServerLevel[world]', x=-3.58, y=70.00, z=-84.91] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/521, l='ServerLevel[world]', x=-2.95, y=70.00, z=-84.26] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/520, l='ServerLevel[world]', x=-1.50, y=70.00, z=-85.41] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/506, l='ServerLevel[world]', x=-3.01, y=70.00, z=-80.51] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/511, l='ServerLevel[world]', x=-3.44, y=70.00, z=-83.29] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/509, l='ServerLevel[world]', x=-3.06, y=70.00, z=-82.01] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/508, l='ServerLevel[world]', x=-2.58, y=70.00, z=-81.47] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/503, l='ServerLevel[world]', x=-2.32, y=70.00, z=-79.79] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/507, l='ServerLevel[world]', x=-1.69, y=70.00, z=-81.13] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/500, l='ServerLevel[world]', x=-0.23, y=70.00, z=-77.23] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/502, l='ServerLevel[world]', x=-1.62, y=70.00, z=-79.88] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/533, l='ServerLevel[world]', x=-3.18, y=70.00, z=-83.53] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/458, l='ServerLevel[world]', x=-3.17, y=70.00, z=-86.14] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/464, l='ServerLevel[world]', x=-2.75, y=70.00, z=-84.72] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/454, l='ServerLevel[world]', x=-4.01, y=70.00, z=-87.56] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/501, l='ServerLevel[world]', x=-1.26, y=70.00, z=-79.24] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/505, l='ServerLevel[world]', x=-0.93, y=70.00, z=-80.86] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/492, l='ServerLevel[world]', x=-2.01, y=70.00, z=-86.63] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/457, l='ServerLevel[world]', x=-3.87, y=70.00, z=-86.84] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/523, l='ServerLevel[world]', x=-1.34, y=70.06, z=-85.11] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/453, l='ServerLevel[world]', x=-3.21, y=70.00, z=-87.55] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/522, l='ServerLevel[world]', x=-2.05, y=70.00, z=-84.62] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/524, l='ServerLevel[world]', x=-1.34, y=70.00, z=-84.56] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/497, l='ServerLevel[world]', x=-0.51, y=70.06, z=-85.99] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/512, l='ServerLevel[world]', x=-3.40, y=70.00, z=-82.88] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/526, l='ServerLevel[world]', x=-2.78, y=70.00, z=-83.35] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/516, l='ServerLevel[world]', x=-1.89, y=70.00, z=-82.74] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/514, l='ServerLevel[world]', x=-2.36, y=70.00, z=-83.85] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/515, l='ServerLevel[world]', x=-1.15, y=70.00, z=-82.64] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:58] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/467, l='ServerLevel[world]', x=-1.10, y=70.00, z=-83.29] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:13:59] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/525, l='ServerLevel[world]', x=-4.59, y=70.00, z=-83.52] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:14:01] [Server thread/INFO] (Minecraft) Named entity ZombieEntity['Zombie 0/100❤'/444, l='ServerLevel[world]', x=-8.42, y=70.00, z=-79.42] died: Zombie 0/100❤ was killed while fighting Rebbix
+[01:14:04] [Server thread/INFO] (Minecraft) Rebbix has made the advancement [Acquire Hardware]
+[01:14:15] [Server thread/INFO] (Minecraft) Rebbix was killed
+[01:14:15] [Server thread/INFO] (Minecraft) [Rebbix: Killed Rebbix]
+[01:17:00] [Server thread/INFO] (Minecraft) [Rebbix: Applied effect Jump Boost to Rebbix]
+[01:17:05] [Server thread/INFO] (Minecraft) [Rebbix: Applied effect Jump Boost to Rebbix]
+[01:17:12] [Server thread/INFO] (Minecraft) [Rebbix: Applied effect Jump Boost to Rebbix]
+[01:17:35] [Server thread/INFO] (Minecraft) [Rebbix: Removed every effect from Rebbix]
+[01:17:38] [Server thread/INFO] (Minecraft) [Rebbix: Applied effect Jump Boost to Rebbix]
+[01:17:55] [Server thread/INFO] (Minecraft) [Rebbix: Applied effect Speed to Rebbix]
+[01:18:07] [Server thread/INFO] (Minecraft) [Rebbix: Removed effect Speed from Rebbix]
+[01:21:54] [Server thread/INFO] (Minecraft) Rebbix lost connection: Disconnected
+[01:21:54] [Server thread/INFO] (Minecraft) Rebbix left the game

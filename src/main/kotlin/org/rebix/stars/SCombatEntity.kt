@@ -1,5 +1,6 @@
 package org.rebix.stars
 
+import net.minecraft.entity.decoration.InteractionEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ArrowEntity
 import net.minecraft.server.world.ServerWorld
@@ -29,28 +30,29 @@ class SCombatEntity(
     }
 
     fun update() {
-        val living = this.interactionEntity
-        // Bounding Box um 0.5 Blöcke in Y-Richtung erweitern
-        val searchBox = living.boundingBox.expand(0.0, 0.5, 0.0)
-        // Alle Pfeile im Suchbereich holen
-        val arrows = world.getEntitiesByClass(ArrowEntity::class.java, searchBox) { true }
-        for (arrow in arrows) {
-            // Wenn Pfeil aktiv und sich überschneidet
-            if (arrow.isAlive && arrow.boundingBox.intersects(living.boundingBox)) {
-                // Schaden basierend auf Pfeil-Damage anwenden
+        val living = this.baseEntity
+        if (living is InteractionEntity) {
+            // Bounding Box um 0.5 Blöcke in Y-Richtung erweitern
+            val searchBox = living.boundingBox.expand(0.0, 0.5, 0.0)
+            // Alle Pfeile im Suchbereich holen
+            val arrows = world.getEntitiesByClass(ArrowEntity::class.java, searchBox) { true }
+            for (arrow in arrows) {
+                // Wenn Pfeil aktiv und sich überschneidet
+                if (arrow.isAlive && arrow.boundingBox.intersects(living.boundingBox)) {
+                    // Schaden basierend auf Pfeil-Damage anwenden
 
-                if (arrow.owner?.isPlayer == true) {
-                    val player = arrow.owner!! as PlayerEntity
-                    val sItem = SItem(player.getStackInHand(Hand.MAIN_HAND))
+                    if (arrow.owner?.isPlayer == true) {
+                        val player = arrow.owner!! as PlayerEntity
+                        val sItem = SItem(player.getStackInHand(Hand.MAIN_HAND))
 
-                    val handler = SStatHandler()
-                    handler.statManager = sItem.effectiveStats
-                    val damage = handler.calcDamage()
-                    damage(damage.first, player.pos, damage.second)
-                    // Pfeil entfernen
-                    arrow.kill(arrow.world as ServerWorld)
+                        val handler = SStatHandler()
+                        handler.statManager = sItem.effectiveStats
+                        val damage = handler.calcDamage()
+                        damage(damage.first, player.pos, damage.second)
+                        // Pfeil entfernen
+                        arrow.kill(arrow.world as ServerWorld)
+                    }
                 }
-
             }
         }
     }
