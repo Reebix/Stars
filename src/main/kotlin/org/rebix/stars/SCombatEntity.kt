@@ -54,6 +54,8 @@ class SCombatEntity(
                     }
                 }
             }
+        } else {
+            position = baseEntity!!.pos
         }
     }
 

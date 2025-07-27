@@ -21,7 +21,7 @@ open class SLivingEntity(
     val type: SEntityType,
     val world: World,
     val name: Text = Text.empty(),
-    val position: Vec3d = Vec3d.ZERO,
+    var position: Vec3d = Vec3d.ZERO,
     _health: Long = 100,
     var _maxHealth: Long = 100
 ) {
