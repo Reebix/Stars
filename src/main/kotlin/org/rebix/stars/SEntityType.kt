@@ -21,4 +21,7 @@ enum class SEntityType(
     ZOMBIE_VILAGER(
         baseEntity = EntityType.ZOMBIE_VILLAGER,
     ),
+    BLAZE(
+        baseEntity = EntityType.BLAZE,
+    ),
 }

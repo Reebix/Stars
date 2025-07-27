@@ -8,8 +8,12 @@
     "CropBlockMixin",
     "DamageSourceMixin",
     "FarmlandBlockMixin",
+    "FireBlockMixin",
+    "FlowableFluidMixin",
+    "FluidBlockMixin",
     "LivingEntityMixin",
     "ScreenHandlerMixin",
+    "WorldMixin",
     "ZombieEntityMixin"
   ],
   "injectors": {

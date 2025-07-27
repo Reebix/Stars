@@ -17,7 +17,7 @@ class FarmlandBlockMixinHook {
         ci: CallbackInfo
     ) {
 
-        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
             ci.cancel()
         }
 
@@ -25,7 +25,7 @@ class FarmlandBlockMixinHook {
     }
 
     fun setToDirt(entity: Entity, state: BlockState, world: World, pos: BlockPos, ci: CallbackInfo) {
-        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
             ci.cancel()
         }
     }

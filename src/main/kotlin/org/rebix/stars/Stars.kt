@@ -324,6 +324,23 @@ class Stars : ModInitializer {
             )
         }
 
+
+        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("nether").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    player.teleport(
+                        player.server!!.getWorld(ModDimensions.NETHER_DIMENSION_KEY)!!,
+                        -360.50, 80.00, -430.50, setOf(), 180.0f, 0.0f, false
+                    )
+                    1
+                }
+            )
+        }
+
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("hub").executes { context: CommandContext<ServerCommandSource?>? ->
@@ -589,13 +606,17 @@ class Stars : ModInitializer {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    for (i in 0 until 100)
-                        SCombatEntity(
-                            SEntityType.ZOMBIE,
+                    for (i in 0 until 100) {
+                        val dummy = SCombatEntity(
+                            SEntityType.BLAZE,
                             player.world,
-                            Text.literal("Zombie"),
+                            Text.literal("Dummy").formatted(Formatting.GOLD),
                             position = player.pos
                         )
+                        dummy._maxHealth = 100_000
+                        dummy.health = 100_000
+                        dummy.updateHealthText()
+                    }
                     1
                 }
             )
@@ -629,7 +650,7 @@ class Stars : ModInitializer {
         UseBlockCallback.EVENT.register { player, world, hand, pos ->
             var pass = true // Event nicht abbrechen
             if (!world.isClient) {
-                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
                     pass = false
                 }
             }
@@ -646,7 +667,7 @@ class Stars : ModInitializer {
                     cancel = true
                 }
 
-                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY) {
+                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
                     cancel = true
                 }
             }
