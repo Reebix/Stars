@@ -12,6 +12,7 @@
     "FlowableFluidMixin",
     "FluidBlockMixin",
     "LivingEntityMixin",
+    "PortalManagerMixin",
     "ScreenHandlerMixin",
     "WorldMixin",
     "ZombieEntityMixin"
