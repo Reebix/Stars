@@ -32,6 +32,7 @@ import org.rebix.stars.combat.SCombatEntity
 import org.rebix.stars.combat.entity.SEntityType
 import org.rebix.stars.combat.entity.SLivingEntity
 import org.rebix.stars.dimensions.ModDimensions
+import org.rebix.stars.dimensions.WorldRegenerationHandler
 import org.rebix.stars.item.SItem
 import org.rebix.stars.stats.SStatHandler
 import java.util.*
@@ -64,9 +65,10 @@ class Stars : ModInitializer {
         // You can use this to register commands, events, and other mod-related functionality.
         println("Stars has been initialized!")
 
+        CommandRegistry.INSTANCE.registerCommands()
+        WorldRegenerationHandler.INSTANCE.addHardcodedBlocks()
         ModDimensions.register()
 
-        CommandRegistry().registerCommands()
 
         ServerTickEvents.END_SERVER_TICK.register { server ->
             entityMap.forEach { (_, entity) ->

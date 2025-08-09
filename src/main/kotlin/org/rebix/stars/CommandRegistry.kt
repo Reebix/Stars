@@ -4,6 +4,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback
+import net.minecraft.block.BlockState
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
@@ -15,18 +17,23 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import org.rebix.stars.Stars.Companion.inventoryMap
 import org.rebix.stars.combat.SCombatEntity
 import org.rebix.stars.combat.entity.SEntityType
 import org.rebix.stars.dimensions.ModDimensions
+import org.rebix.stars.dimensions.WorldRegenerationHandler
 import org.rebix.stars.item.*
 import org.rebix.stars.stats.SStat
 import org.rebix.stars.stats.SStatType
@@ -45,8 +52,136 @@ class CommandRegistry {
         colors.add(Formatting.YELLOW)
     }
 
+    companion object {
+        val INSTANCE = CommandRegistry()
+    }
+
+    var currentlyScanning = false
+    var scanningArray: MutableList<Pair<BlockPos, BlockState>> = mutableListOf()
+
+    /**
+     * Registers all commands for the mod.
+     */
     fun registerCommands() {
         CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+            dispatcher.register(
+                CommandManager.literal("regenall").executes { context: CommandContext<ServerCommandSource?>? ->
+                    WorldRegenerationHandler.INSTANCE.regenAll()
+                    1
+                }
+            )
+
+            dispatcher.register(
+                CommandManager.literal("hideall").executes { context: CommandContext<ServerCommandSource?>? ->
+                    WorldRegenerationHandler.INSTANCE.hideAllRegenerationBlocks()
+                    1
+                }
+            )
+
+            dispatcher.register(
+                CommandManager.literal("scanblocks").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+
+                    if (currentlyScanning) {
+                        currentlyScanning = false
+                        player.sendMessage(Text.literal("Stars mod finished scanning!"))
+
+                        // in CommandRegistry.kt
+
+                        fun valueToJson(value: Comparable<*>): String =
+                            when (value) {
+                                is Boolean, is Number -> value.toString()
+                                is Direction.Axis -> "\"${value.name.lowercase()}\""
+                                is Enum<*> -> "\"${value.name.lowercase()}\""
+                                else -> "\"$value\""
+                            }
+
+                        fun posToJson(pos: BlockPos): String =
+                            """{"x":${pos.x},"y":${pos.y},"z":${pos.z}}"""
+
+                        fun stateToJson(state: BlockState): String {
+                            val id = Registries.BLOCK.getId(state.block).toString()
+                            val sb = StringBuilder()
+                            sb.append("{\"block\":\"").append(id).append("\",\"properties\":{")
+                            var first = true
+                            for (entry in state.entries) {
+                                if (!first) sb.append(",")
+                                first = false
+                                val prop = entry.key
+                                val value = entry.value
+                                sb.append("\"").append(prop.name).append("\":").append(valueToJson(value))
+                            }
+                            sb.append("}}")
+                            return sb.toString()
+                        }
+
+                        fun toJsonArray(scanningArray: List<Pair<BlockPos, BlockState>>): String =
+                            buildString {
+                                append("[")
+                                scanningArray.forEachIndexed { index, (pos, state) ->
+                                    append("""{"pos":${posToJson(pos)},"state":${stateToJson(state)}}""")
+                                    if (index < scanningArray.lastIndex) append(",")
+                                }
+                                append("]")
+                            }
+
+                        // Nutzung nach dem Scannen:
+                        val jsonOutput = toJsonArray(scanningArray)
+                        println(jsonOutput)
+
+                        /*
+                        fun formatBlockPos(pos: BlockPos): String =
+                            "BlockPos(${pos.x}, ${pos.y}, ${pos.z})"
+
+                        fun formatValue(prop: Property<*>, value: Comparable<*>): String =
+                            when (value) {
+                                is Boolean, is Number -> value.toString()
+
+                                is Direction.Axis -> "Direction.Axis.${value.name}"
+
+                                is Enum<*> ->
+                                    // z.B. Direction.Axis.X
+                                    "${value::class.simpleName}.${value.name}"
+
+                                else -> "\"$value\""
+                            }
+                        Pair(
+                            BlockPos(-114, 74, -28),
+                            Blocks.OAK_LOG.defaultState.with(Properties.AXIS, Direction.Axis.Y)
+                        )
+                        fun formatBlockState(state: BlockState): String =
+                            buildString {
+                                val id = Registries.BLOCK.getId(state.block).path.uppercase()
+                                append("Blocks.$id.defaultState")
+                                state.entries.forEach { (prop, value) ->
+                                    append(".with(Properties.${prop.name.uppercase()}, ${formatValue(prop, value)})")
+                                }
+                            }
+
+                        println("Scanning Array:\n")
+                        print("listOf(")
+                        scanningArray.forEach { (pos, state) ->
+                            print("    Pair(${formatBlockPos(pos)}, ${formatBlockState(state)}),")
+                        }
+
+                         */
+                        print("\n\n")
+
+
+//                        println(scanningArray)
+//                        println(
+//                            scanningArray.toString().replace("(", "Vec3d(").replace("[", "listOf(").replace("]", ")")
+//                        )
+                        return@executes 1
+                    }
+                    currentlyScanning = true
+                    player.sendMessage(Text.literal("Stars mod is now scanning!"))
+                    1
+                }
+            )
             dispatcher.register(
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
@@ -65,10 +200,8 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             // Register a command that can be used in the game
             dispatcher.register(
                 CommandManager.literal("star").executes { context: CommandContext<ServerCommandSource?>? ->
@@ -226,9 +359,8 @@ class CommandRegistry {
                             1
                         })
             )
-        }
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+
             dispatcher.register(
                 CommandManager.literal("removetagged").executes { context: CommandContext<ServerCommandSource?>? ->
                     context!!.source!!.world.iterateEntities().forEach { entity ->
@@ -239,10 +371,10 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+
+
             dispatcher.register(
                 CommandManager.literal("testing").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -262,10 +394,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
-
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("nether").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -279,9 +408,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("hub").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -295,10 +422,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
-
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("updateitem").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -311,9 +435,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("recombobulate").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -327,9 +449,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
 
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("analyze").executes { context: CommandContext<ServerCommandSource?>? ->
                     if (context!!.source?.player == null) {
@@ -342,8 +462,7 @@ class CommandRegistry {
                     1
                 }
             )
-        }
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
+
             dispatcher.register(
                 CommandManager.literal("setrarity").then(
                     CommandManager.argument("rarity", StringArgumentType.word())
@@ -366,9 +485,6 @@ class CommandRegistry {
                             1
                         }
                 ))
-        }
-
-        CommandRegistrationCallback.EVENT.register { dispatcher, registryAccess, environment ->
             dispatcher.register(
                 CommandManager.literal("giveitem").then(
                     CommandManager.argument("id", StringArgumentType.string()).then(
@@ -388,6 +504,79 @@ class CommandRegistry {
                             1
                         }
                     )))
+        }
+
+        AttackBlockCallback.EVENT.register { player, world, hand, blockPos, dir ->
+            fun shpawnHighlight(
+                player: PlayerEntity,
+                pos: BlockPos,
+                state: BlockState
+            ) {
+                val highlight = DisplayEntity.BlockDisplayEntity(
+                    EntityType.BLOCK_DISPLAY,
+                    player.world
+                )
+                highlight.updatePosition(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+                highlight.blockState = state
+
+                // Glow-Effekt aktivieren
+                highlight.isGlowing = true
+
+                // Entität spawnen
+                player.world.spawnEntity(highlight)
+            }
+            if (currentlyScanning) {
+                if (!player.isSneaking) {
+
+                    if (!scanningArray.any { it.first == blockPos }) {
+                        scanningArray.add(Pair(blockPos, world.getBlockState(blockPos)))
+                        shpawnHighlight(player, blockPos, world.getBlockState(blockPos))
+                        player.sendMessage(Text.literal("Added block at $blockPos to scanning array!"), false)
+                    }
+                } else {
+
+                    // Innerhalb von UseBlockCallback.EVENT.register
+                    val targetState = world.getBlockState(blockPos)
+                    val visited = mutableSetOf<BlockPos>()
+
+                    blockPos
+
+                    fun recursiveAdd(pos: BlockPos) {
+                        if (pos in visited) return
+
+                        // Nur gleiche Blockarten hinzufügen
+                        if (world.getBlockState(pos).block != targetState.block) return
+
+                        visited += pos
+                        scanningArray += pos to targetState
+                        shpawnHighlight(player, pos, targetState)
+
+                        // Nachbarn in allen 6 Richtungen prüfen
+                        for (dx in -1..1) {
+                            for (dy in -1..1) {
+                                for (dz in -1..1) {
+                                    if (dx == 0 && dy == 0 && dz == 0) continue
+                                    recursiveAdd(pos.add(dx, dy, dz))
+                                }
+                            }
+                        }
+                    }
+
+                    recursiveAdd(blockPos)
+                    player.sendMessage(
+                        Text.literal("Added connected blocks at $blockPos to scanning array! Total: ${visited.size}"),
+                        false
+                    )
+                    visited.forEach { blockP ->
+                        if (!scanningArray.any { it.first == blockP }) {
+                            scanningArray.add(Pair(blockP, targetState))
+                        }
+                    }
+
+                }
+
+            }
+            ActionResult.PASS
         }
 
 

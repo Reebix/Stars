@@ -10,14 +10,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 class FarmlandBlockMixinHook {
     fun onLandedUpon(
-        world: World,
-        state: BlockState,
+        world: World?,
+        state: BlockState?,
         pos: BlockPos,
-        entity: Entity,
-        fallDistance: Double,
+        entity: Entity?,
+        fallDistance: Double?,
         ci: CallbackInfo
     ) {
-        if (ModDimensions.DIMENSION_DICT[world.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
+        if (ModDimensions.DIMENSION_DICT[world?.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
             // Prevent crop growth in the hub dimension
             ci.cancel()
         }
@@ -25,8 +25,8 @@ class FarmlandBlockMixinHook {
 
     }
 
-    fun setToDirt(entity: Entity, state: BlockState, world: World, pos: BlockPos, ci: CallbackInfo) {
-        if (ModDimensions.DIMENSION_DICT[world.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
+    fun setToDirt(entity: Entity?, state: BlockState?, world: World?, pos: BlockPos?, ci: CallbackInfo) {
+        if (ModDimensions.DIMENSION_DICT[world?.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
             // Prevent crop growth in the hub dimension
             ci.cancel()
         }

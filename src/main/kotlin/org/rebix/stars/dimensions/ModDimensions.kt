@@ -5,9 +5,11 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Identifier
 import net.minecraft.world.GameRules
+import net.minecraft.world.World
 import org.rebix.stars.Stars
 
 class ModDimensions {
@@ -44,6 +46,10 @@ class ModDimensions {
                     cancel = true
                 }
 
+                // Check For Allowed Blocks
+                if (WorldRegenerationHandler.INSTANCE.isBlockAllowed(world.registryKey, pos)) cancel = false
+                WorldRegenerationHandler.INSTANCE.enqueueBlockForRegeneration(world.registryKey, pos)
+
                 if (cancel) ActionResult.FAIL else ActionResult.PASS
             }
 
@@ -63,15 +69,24 @@ class ModDimensions {
                 DIMENSION_DICT.forEach { (dimensionKey, tags) ->
                     val dimension = server.getWorld(dimensionKey)
                     if (dimension != null) {
+                        worldDictionary[dimensionKey] = dimension
+
                         if (tags.contains(DimensionTags.NO_FIRE)) {
                             dimension.gameRules.get(GameRules.DO_FIRE_TICK)
                                 .set(false, server)
                         }
-
                     }
                 }
             }
 
+        }
+
+        val worldDictionary: MutableMap<RegistryKey<World>, ServerWorld> = mutableMapOf()
+
+        fun getWorld(registryKey: RegistryKey<World>): ServerWorld {
+            return worldDictionary.getOrElse(registryKey) {
+                throw IllegalArgumentException("World with key $registryKey not found")
+            }
         }
     }
 }

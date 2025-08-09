@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import org.rebix.stars.getStarText
+import org.rebix.stars.CommandRegistry
 import org.rebix.stars.stats.SStat
 import org.rebix.stars.stats.SStatManager
 import org.rebix.stars.stats.SStatType
@@ -299,7 +299,7 @@ class SItem(var id: String, var itemType: Item) {
             DataComponentTypes.ITEM_NAME,
             reforgeText.append(
                 Text.literal(name)
-            ).formatted(effectiveRarity.formatting).append(getStarText(stars))
+            ).formatted(effectiveRarity.formatting).append(CommandRegistry.INSTANCE.getStarText(stars))
 
         )
 
