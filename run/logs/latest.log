@@ -1,5 +1,5 @@
-[15:49:39] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
-[15:49:40] [main/INFO] (FabricLoader) Loading 45 mods:
+[16:33:24] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
+[16:33:24] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.127.0+1.21.5
 	- fabric-api-base 0.4.62+73a52b4b49
 	- fabric-api-lookup-api-v1 1.6.96+86c3a9f149
@@ -45,25 +45,25 @@
 	- minecraft 1.21.5
 	- mixinextras 0.4.1
 	- stars 1.0-SNAPSHOT
-[15:49:40] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[15:49:40] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[15:49:40] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[15:49:40] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[15:49:46] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
-[15:49:46] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
-[15:49:46] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
-[15:49:47] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[15:49:48] [main/INFO] (Minecraft) Loaded 1373 recipes
-[15:49:48] [main/INFO] (Minecraft) Loaded 1484 advancements
-[15:49:48] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.105 ms
-[15:49:48] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
-[15:49:48] [Server thread/INFO] (Minecraft) Loading properties
-[15:49:48] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[15:49:48] [Server thread/INFO] (Minecraft) Generating keypair
-[15:49:48] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
-[15:49:48] [Server thread/INFO] (Minecraft) Using default channel type
-[15:49:48] [Server thread/INFO] (Minecraft) Preparing level "world"
-[15:49:48] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
+[16:33:24] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[16:33:24] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[16:33:24] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[16:33:25] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[16:33:31] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
+[16:33:31] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
+[16:33:31] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
+[16:33:31] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[16:33:33] [main/INFO] (Minecraft) Loaded 1373 recipes
+[16:33:33] [main/INFO] (Minecraft) Loaded 1484 advancements
+[16:33:33] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.234 ms
+[16:33:33] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
+[16:33:33] [Server thread/INFO] (Minecraft) Loading properties
+[16:33:33] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[16:33:33] [Server thread/INFO] (Minecraft) Generating keypair
+[16:33:33] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
+[16:33:33] [Server thread/INFO] (Minecraft) Using default channel type
+[16:33:33] [Server thread/INFO] (Minecraft) Preparing level "world"
+[16:33:33] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
 java.lang.IllegalArgumentException: An objective with the name 'health' already exists!
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:50) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:403) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
@@ -86,11 +86,11 @@ java.lang.IllegalArgumentException: An objective with the name 'health' already 
 	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:290) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
-[15:49:49] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[15:49:49] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[15:49:49] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
-[15:49:49] [Server thread/INFO] (Minecraft) Time elapsed: 824 ms
-[15:49:49] [Server thread/INFO] (Minecraft) Done (1.111s)! For help, type "help"
-[15:49:50] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[15:49:53] [Server thread/INFO] (Minecraft) Rebbix[/87.78.11.188:59809] logged in with entity id 83 at (-2.5, 70.0, -69.5)
-[15:49:53] [Server thread/INFO] (Minecraft) Rebbix joined the game
+[16:33:34] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[16:33:34] [Worker-Main-18/INFO] (Minecraft) Preparing spawn area: 0%
+[16:33:34] [Worker-Main-18/INFO] (Minecraft) Preparing spawn area: 0%
+[16:33:35] [Server thread/INFO] (Minecraft) Time elapsed: 978 ms
+[16:33:35] [Server thread/INFO] (Minecraft) Done (1.316s)! For help, type "help"
+[16:33:38] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
+[16:33:41] [Server thread/INFO] (Minecraft) Rebbix[/87.78.11.188:64714] logged in with entity id 86 at (-117.85519066043717, 74.0, -32.369109558707365)
+[16:33:41] [Server thread/INFO] (Minecraft) Rebbix joined the game
