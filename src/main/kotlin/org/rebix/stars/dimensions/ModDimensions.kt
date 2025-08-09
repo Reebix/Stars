@@ -9,7 +9,6 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Identifier
 import net.minecraft.world.GameRules
 import org.rebix.stars.Stars
-import org.rebix.stars.dimensions.DimensionTags.NO_GROWTH
 
 class ModDimensions {
     companion object {
@@ -17,7 +16,7 @@ class ModDimensions {
         val HUB_TYPE_KEY = RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Identifier.of(Stars.MOD_ID, "hub"))!!
         val HUB_DIMENSION_TAGS =
             setOf(
-                NO_GROWTH, DimensionTags.NO_PORTAL,
+                DimensionTags.NO_GROWTH, DimensionTags.NO_NETHER_PORTAL, DimensionTags.NO_END_PORTAL,
                 DimensionTags.NO_BREAKING, DimensionTags.NO_INTERACTING, DimensionTags.NO_FLUIDS, DimensionTags.NO_FIRE,
             )
 
@@ -27,7 +26,7 @@ class ModDimensions {
             RegistryKey.of(RegistryKeys.DIMENSION_TYPE, Identifier.of(Stars.MOD_ID, "nether"))!!
         val NETHER_DIMENSION_TAGS =
             setOf(
-                NO_GROWTH, DimensionTags.NO_PORTAL,
+                DimensionTags.NO_GROWTH, DimensionTags.NO_NETHER_PORTAL, DimensionTags.NO_END_PORTAL,
                 DimensionTags.NO_BREAKING, DimensionTags.NO_INTERACTING, DimensionTags.NO_FLUIDS, DimensionTags.NO_FIRE,
             )
 
