@@ -4,7 +4,8 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import org.rebix.stars.ModDimensions
+import org.rebix.stars.dimensions.DimensionTags
+import org.rebix.stars.dimensions.ModDimensions
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 class FarmlandBlockMixinHook {
@@ -16,8 +17,8 @@ class FarmlandBlockMixinHook {
         fallDistance: Double,
         ci: CallbackInfo
     ) {
-
-        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
+        if (ModDimensions.DIMENSION_DICT[world.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
+            // Prevent crop growth in the hub dimension
             ci.cancel()
         }
 
@@ -25,7 +26,8 @@ class FarmlandBlockMixinHook {
     }
 
     fun setToDirt(entity: Entity, state: BlockState, world: World, pos: BlockPos, ci: CallbackInfo) {
-        if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
+        if (ModDimensions.DIMENSION_DICT[world.registryKey]?.contains(DimensionTags.NO_GROWTH) == true) {
+            // Prevent crop growth in the hub dimension
             ci.cancel()
         }
     }

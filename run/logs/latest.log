@@ -1,5 +1,5 @@
-[19:49:43] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
-[19:49:43] [main/INFO] (FabricLoader) Loading 45 mods:
+[15:49:39] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.5 with Fabric Loader 0.16.14
+[15:49:40] [main/INFO] (FabricLoader) Loading 45 mods:
 	- fabric-api 0.127.0+1.21.5
 	- fabric-api-base 0.4.62+73a52b4b49
 	- fabric-api-lookup-api-v1 1.6.96+86c3a9f149
@@ -45,25 +45,25 @@
 	- minecraft 1.21.5
 	- mixinextras 0.4.1
 	- stars 1.0-SNAPSHOT
-[19:49:44] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[19:49:44] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[19:49:44] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[19:49:44] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[19:49:51] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
-[19:49:51] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
-[19:49:51] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
-[19:49:51] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[19:49:53] [main/INFO] (Minecraft) Loaded 1373 recipes
-[19:49:53] [main/INFO] (Minecraft) Loaded 1484 advancements
-[19:49:53] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.342 ms
-[19:49:53] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
-[19:49:53] [Server thread/INFO] (Minecraft) Loading properties
-[19:49:53] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[19:49:53] [Server thread/INFO] (Minecraft) Generating keypair
-[19:49:53] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
-[19:49:53] [Server thread/INFO] (Minecraft) Using default channel type
-[19:49:53] [Server thread/INFO] (Minecraft) Preparing level "world"
-[19:49:53] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
+[15:49:40] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/Rebix/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
+[15:49:40] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[15:49:40] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[15:49:40] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[15:49:46] [main/INFO] (Minecraft) [STDOUT]: Stars has been initialized!
+[15:49:46] [main/WARN] (Minecraft) You specified a resource pack without providing a sha1 hash. Pack will be updated on the client only if you change the name of the pack.
+[15:49:46] [main/WARN] (Minecraft) resource-pack-id missing, using default of 84345ec3-d678-3c30-a58c-51371a27f987
+[15:49:47] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[15:49:48] [main/INFO] (Minecraft) Loaded 1373 recipes
+[15:49:48] [main/INFO] (Minecraft) Loaded 1484 advancements
+[15:49:48] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 65 new biomes in 1.105 ms
+[15:49:48] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.5
+[15:49:48] [Server thread/INFO] (Minecraft) Loading properties
+[15:49:48] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[15:49:48] [Server thread/INFO] (Minecraft) Generating keypair
+[15:49:48] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25566
+[15:49:48] [Server thread/INFO] (Minecraft) Using default channel type
+[15:49:48] [Server thread/INFO] (Minecraft) Preparing level "world"
+[15:49:48] [Server thread/ERROR] (Minecraft) Error loading saved data: SavedDataType[scoreboard]
 java.lang.IllegalArgumentException: An objective with the name 'health' already exists!
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:50) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.scoreboard.Scoreboard.addObjective(Scoreboard.java:403) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
@@ -86,47 +86,11 @@ java.lang.IllegalArgumentException: An objective with the name 'health' already 
 	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:671) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:290) ~[minecraft-common-736b6061eb-1.21.5-net.fabricmc.yarn.1_21_5.1.21.5+build.1-v2.jar:?]
 	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
-[19:49:54] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[19:49:54] [Worker-Main-12/INFO] (Minecraft) Preparing spawn area: 0%
-[19:49:54] [Worker-Main-12/INFO] (Minecraft) Preparing spawn area: 0%
-[19:49:55] [Server thread/INFO] (Minecraft) Time elapsed: 944 ms
-[19:49:55] [Server thread/INFO] (Minecraft) Done (1.367s)! For help, type "help"
-[19:50:49] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
-[19:50:52] [Server thread/INFO] (Minecraft) Rebbix[/78.34.177.107:63325] logged in with entity id 77 at (-360.50359427306523, 80.0, -423.5205114428352)
-[19:50:52] [Server thread/INFO] (Minecraft) Rebbix joined the game
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/855, l='ServerLevel[world]', x=-359.20, y=80.00, z=-470.51] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/824, l='ServerLevel[world]', x=-361.10, y=80.00, z=-472.58] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/862, l='ServerLevel[world]', x=-361.79, y=80.00, z=-473.79] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/861, l='ServerLevel[world]', x=-362.46, y=80.00, z=-473.34] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/867, l='ServerLevel[world]', x=-362.69, y=80.00, z=-474.01] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/854, l='ServerLevel[world]', x=-365.81, y=80.00, z=-470.69] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/871, l='ServerLevel[world]', x=-361.79, y=80.00, z=-474.76] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/849, l='ServerLevel[world]', x=-364.02, y=80.00, z=-473.73] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/865, l='ServerLevel[world]', x=-363.17, y=80.00, z=-474.65] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/873, l='ServerLevel[world]', x=-361.04, y=80.00, z=-476.08] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/863, l='ServerLevel[world]', x=-363.14, y=80.00, z=-476.10] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/864, l='ServerLevel[world]', x=-365.98, y=80.00, z=-475.50] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/870, l='ServerLevel[world]', x=-362.56, y=80.00, z=-476.99] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/828, l='ServerLevel[world]', x=-363.90, y=80.00, z=-476.63] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/795, l='ServerLevel[world]', x=-359.54, y=80.00, z=-476.90] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/872, l='ServerLevel[world]', x=-360.38, y=80.00, z=-477.07] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/850, l='ServerLevel[world]', x=-360.43, y=80.00, z=-477.87] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/891, l='ServerLevel[world]', x=-363.03, y=80.00, z=-478.22] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/879, l='ServerLevel[world]', x=-361.83, y=80.00, z=-477.63] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/835, l='ServerLevel[world]', x=-361.24, y=80.00, z=-478.27] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/877, l='ServerLevel[world]', x=-359.83, y=80.00, z=-478.20] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/842, l='ServerLevel[world]', x=-361.96, y=80.00, z=-478.89] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/890, l='ServerLevel[world]', x=-360.63, y=80.00, z=-478.52] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/874, l='ServerLevel[world]', x=-359.95, y=80.00, z=-478.79] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/838, l='ServerLevel[world]', x=-358.73, y=80.00, z=-479.04] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/888, l='ServerLevel[world]', x=-362.58, y=80.50, z=-480.15] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/837, l='ServerLevel[world]', x=-361.58, y=80.50, z=-480.37] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/859, l='ServerLevel[world]', x=-359.36, y=80.50, z=-480.25] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:42] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/847, l='ServerLevel[world]', x=-357.33, y=80.00, z=-478.94] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:43] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/853, l='ServerLevel[world]', x=-359.99, y=80.50, z=-480.29] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:43] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/889, l='ServerLevel[world]', x=-359.72, y=81.00, z=-481.48] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:43] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/878, l='ServerLevel[world]', x=-358.03, y=80.50, z=-479.85] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:43] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/887, l='ServerLevel[world]', x=-358.63, y=80.50, z=-480.60] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:43] [Server thread/INFO] (Minecraft) Named entity BlazeEntity['Dummy 0k/100k❤'/868, l='ServerLevel[world]', x=-362.21, y=80.00, z=-478.73] died: Dummy 0k/100k❤ was killed while fighting Rebbix
-[19:51:45] [Server thread/INFO] (Minecraft) Rebbix lost connection: Disconnected
-[19:51:45] [Server thread/INFO] (Minecraft) Rebbix left the game
+[15:49:49] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[15:49:49] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[15:49:49] [Worker-Main-2/INFO] (Minecraft) Preparing spawn area: 0%
+[15:49:49] [Server thread/INFO] (Minecraft) Time elapsed: 824 ms
+[15:49:49] [Server thread/INFO] (Minecraft) Done (1.111s)! For help, type "help"
+[15:49:50] [User Authenticator #1/INFO] (Minecraft) UUID of player Rebbix is 0ed8b527-d3cf-48a4-b9fc-c35c9efee447
+[15:49:53] [Server thread/INFO] (Minecraft) Rebbix[/87.78.11.188:59809] logged in with entity id 83 at (-2.5, 70.0, -69.5)
+[15:49:53] [Server thread/INFO] (Minecraft) Rebbix joined the game

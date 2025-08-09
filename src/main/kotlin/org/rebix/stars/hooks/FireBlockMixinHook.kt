@@ -8,6 +8,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 
 class FireBlockMixinHook {
     fun scheduledTick(world: ServerWorld, pos: BlockPos, state: BlockState, random: Random, ci: CallbackInfo) {
-        ci.cancel()
     }
 }

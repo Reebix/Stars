@@ -9,7 +9,10 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
-import net.fabricmc.fabric.api.event.player.*
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback
+import net.fabricmc.fabric.api.event.player.UseEntityCallback
+import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
 import net.minecraft.component.DataComponentTypes
@@ -44,6 +47,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.Vec3d
 import org.joml.Quaternionf
 import org.joml.Vector3f
+import org.rebix.stars.dimensions.ModDimensions
 import java.util.*
 import kotlin.math.min
 
@@ -112,38 +116,6 @@ class Stars : ModInitializer {
         }
 
         ServerTickEvents.END_SERVER_TICK.register { server ->
-
-            /*
-            val listCopy = invisList.toList()
-            invisList.clear()
-
-            listCopy.forEach { entity ->
-                if (entity.second >= 1) {
-                    if (entity.first.isAlive) {
-                        entity.first.createSpawnPacket(
-                            EntityTrackerEntry(
-                                entity.first.world as ServerWorld,
-                                entity.first,
-                                0,
-                                true,
-                                null,
-                                null
-                            )
-                        )?.let { packet ->
-                            server.playerManager.sendToAll(packet)
-                        }
-                        EntityVelocityUpdateS2CPacket(entity.first).let { packet ->
-                            server.playerManager.sendToAll(packet)
-                        }
-                    }
-                } else {
-                    invisList.add(Pair(entity.first, entity.second + 1))
-                }
-
-            }
-
-
-             */
 
             entityMap.forEach { (_, entity) ->
                 if (entity is SCombatEntity) {
@@ -647,16 +619,6 @@ class Stars : ModInitializer {
         }
 
 
-        UseBlockCallback.EVENT.register { player, world, hand, pos ->
-            var pass = true // Event nicht abbrechen
-            if (!world.isClient) {
-                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
-                    pass = false
-                }
-            }
-            if (pass) ActionResult.PASS else ActionResult.FAIL
-        }
-
         AttackBlockCallback.EVENT.register { player, world, hand, pos, direction ->
             var cancel = false // Event nicht abbrechen
             if (!world.isClient) {
@@ -664,10 +626,6 @@ class Stars : ModInitializer {
                 var sItem = SItem(itemStack)
 
                 if (sItem.isShortbow) {
-                    cancel = true
-                }
-
-                if (world.registryKey == ModDimensions.HUB_DIMENSION_KEY || world.registryKey == ModDimensions.NETHER_DIMENSION_KEY) {
                     cancel = true
                 }
             }
