@@ -2,8 +2,7 @@ package org.rebix.stars.dimensions
 
 enum class DimensionTags {
     NO_GROWTH,
-    NO_NETHER_PORTAL,
-    NO_END_PORTAL,
+    NO_PORTAL,
     NO_BREAKING,
     NO_INTERACTING,
     NO_FLUIDS,
