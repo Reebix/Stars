@@ -87,8 +87,8 @@ open class SLivingEntity(
                 Identifier.of(part.second)
             )
             parts.add(entity)
-            entity.addCommandTag("REMOVE")
             world.spawnEntity(entity)
+            entity.addCommandTag("REMOVE")
         }
 
         updateHealthText()

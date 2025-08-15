@@ -1,6 +1,7 @@
 package org.rebix.stars
 
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
@@ -8,6 +9,7 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.event.player.UseItemCallback
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.entity.passive.ChickenEntity
@@ -189,6 +191,15 @@ class Stars : ModInitializer {
                     false
                 }
 
+
+            }
+
+        }
+
+        ServerEntityEvents.ENTITY_LOAD.register { entity, _ ->
+            if (entity.commandTags.contains("REMOVE")) {
+                entityMap.remove(entity.uuid)
+                entity.remove(Entity.RemovalReason.DISCARDED)
 
             }
 
