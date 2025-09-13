@@ -79,7 +79,7 @@ class Stars : ModInitializer {
                 }
             }
 
-            server.playerManager.playerList.stream().forEach { player ->
+            server.playerManager.playerList.forEach { player ->
                 if (player is ServerPlayerEntity) {
                     if (player.isUsingItem || player.handSwinging) {
                         val itemStack = player.getStackInHand(player.activeHand)
