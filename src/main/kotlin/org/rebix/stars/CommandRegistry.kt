@@ -5,6 +5,9 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.block.BlockState
 import net.minecraft.command.argument.ItemStackArgumentType
 import net.minecraft.component.ComponentType
@@ -17,16 +20,21 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.network.PacketByteBuf
+import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.packet.CustomPayload
 import net.minecraft.registry.Registries
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import org.rebix.stars.Stars.Companion.inventoryMap
@@ -41,9 +49,42 @@ import java.util.*
 import kotlin.math.min
 
 class CommandRegistry {
+
+    data class SwitchServerPayload(val serverName: String) : CustomPayload {
+
+        companion object {
+            val ID = CustomPayload.Id<SwitchServerPayload>(
+                Identifier.of("proxycommand", "command_packet")
+            )
+
+            val CODEC: PacketCodec<PacketByteBuf, SwitchServerPayload> =
+                PacketCodec.of(
+                    { value, buf -> buf.writeString(value.serverName) },
+                    { buf -> SwitchServerPayload(buf.readString()) }
+                )
+        }
+
+        override fun getId(): CustomPayload.Id<out CustomPayload> = ID
+    }
+
     val colors: Vector<Formatting> = Vector()
 
+    fun requestSwitch(player: ServerPlayerEntity, serverName: String) {
+        val buf = PacketByteBufs.create()
+        buf.writeString(serverName)
+        ServerPlayNetworking.send(
+            player,
+            SwitchServerPayload(serverName),
+        )
+    }
+
+
     init {
+        PayloadTypeRegistry.playS2C().register(
+            SwitchServerPayload.ID,
+            SwitchServerPayload.CODEC
+        )
+
         colors.add(Formatting.GOLD)
         colors.add(Formatting.LIGHT_PURPLE)
         colors.add(Formatting.AQUA)
@@ -67,6 +108,17 @@ class CommandRegistry {
             dispatcher.register(
                 CommandManager.literal("regenall").executes { context: CommandContext<ServerCommandSource?>? ->
                     WorldRegenerationHandler.INSTANCE.regenAll()
+                    1
+                }
+            )
+
+            dispatcher.register(
+                CommandManager.literal("switch").executes { context: CommandContext<ServerCommandSource?>? ->
+                    if (context!!.source?.player == null) {
+                        context.getSource()!!.sendFeedback({ Text.literal("You are not a player!") }, false)
+                    }
+                    val player = context.source?.player!!
+                    requestSwitch(player, "server factions")
                     1
                 }
             )
@@ -186,17 +238,16 @@ class CommandRegistry {
                 CommandManager.literal("dummy").executes { context: CommandContext<ServerCommandSource?>? ->
                     val player = context!!.source?.player!!
 
-                    for (i in 0 until 100) {
-                        val dummy = SCombatEntity(
-                            SEntityType.BLAZE,
-                            player.world,
-                            Text.literal("Dummy").formatted(Formatting.GOLD),
-                            position = player.pos
-                        )
-                        dummy._maxHealth = 100_000
-                        dummy.health = 100_000
-                        dummy.updateHealthText()
-                    }
+                    val dummy = SCombatEntity(
+                        SEntityType.BLAZE,
+                        player.world,
+                        Text.literal("Dummy").formatted(Formatting.GOLD),
+                        position = player.pos
+                    )
+                    dummy._maxHealth = 100_000
+                    dummy.health = 100_000
+                    dummy.updateHealthText()
+
                     1
                 }
             )
@@ -231,12 +282,14 @@ class CommandRegistry {
 
                     }
 
-
+                    
                     val emptySequencedSet: SequencedSet<ComponentType<*>> = LinkedHashSet()
                     var component = TooltipDisplayComponent(true, emptySequencedSet)
                     val item = ItemStack(Items.BLACK_STAINED_GLASS_PANE)
                     item.set(DataComponentTypes.ITEM_NAME, Text.literal(" "))
                     item.set(DataComponentTypes.TOOLTIP_DISPLAY, component)
+
+//                    player.inventory.offerOrDrop(item.copy())
 
                     for (i in 0 until inv.size()) {
                         inv.setStack(i, item.copy())

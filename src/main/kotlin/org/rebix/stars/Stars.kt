@@ -1,5 +1,6 @@
 package org.rebix.stars
 
+
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
@@ -39,6 +40,8 @@ import java.util.*
 
 
 class Stars : ModInitializer {
+
+
 
 
     init {
@@ -271,6 +274,8 @@ class Stars : ModInitializer {
             }
             if (pass) ActionResult.PASS else ActionResult.FAIL
         }
+
+
 
         UseItemCallback.EVENT.register { player, world, hand ->
             var pass = true // Event nicht abbrechen

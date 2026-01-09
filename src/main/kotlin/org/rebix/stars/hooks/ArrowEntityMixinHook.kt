@@ -18,7 +18,7 @@ class ArrowEntityMixinHook {
         if (arrowEntity.owner?.isPlayer == true && combatEntity != null) {
             val player = arrowEntity.owner!! as PlayerEntity
             val sItem = SItem(player.getStackInHand(Hand.MAIN_HAND))
-
+            
             val handler = SStatHandler()
             handler.statManager = sItem.effectiveStats
             val damage = handler.calcDamage()

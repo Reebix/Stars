@@ -20,4 +20,5 @@ public class ScreenHandlerMixin {
         screenHandlerMixinHook.onClickSlot(slotIndex, button, actionType, player, ci);
 
     }
+
 }
